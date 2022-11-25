@@ -26,24 +26,21 @@ buildscript {
 		immutablesVersion = "2.9.2"
 		openServiceBrokerVersion = "3.5.3"
 		pmdVersion = "6.29.0"
-		springBootVersion = "2.7.5"
-		springCredhubVersion = "2.3.0"
-		springFrameworkVersion = "5.3.22"
-		wiremockVersion = "2.27.2"
+		springBootVersion = "3.0.0"
+		springCredhubVersion = "3.0.0-SNAPSHOT"
+		springFrameworkVersion = "6.0.0"
+		wiremockVersion = "2.35.0"
 	}
 }
 
 plugins {
-	id "io.spring.nohttp" version "0.0.10"
+	id "io.spring.nohttp"
 	id 'distribution'
 	id 'jacoco'
 }
 
 ext {
-	javaApi = "https://docs.oracle.com/javase/8/docs/api/"
-	if (JavaVersion.current() >= JavaVersion.VERSION_11) {
-		javaApi = "https://docs.oracle.com/en/java/javase/11/docs/api"
-	}
+	javaApi = "https://docs.oracle.com/javase/17/docs/api/"
 	javadocLinks = [
 		javaApi,
 		"https://docs.spring.io/spring-framework/docs/${springFrameworkVersion}/javadoc-api/"
@@ -53,17 +50,6 @@ ext {
 description = "Spring Cloud App Broker"
 
 allprojects {
-	repositories {
-		mavenCentral()
-		maven { url "https://repo.spring.io/release" }
-		if (version =~ /((-M|-RC)[0-9]+|-SNAPSHOT)$/) {
-			maven { url "https://repo.spring.io/milestone" }
-		}
-		if (version.endsWith('-SNAPSHOT')) {
-			maven { url "https://repo.spring.io/snapshot" }
-		}
-	}
-
 	afterEvaluate { project ->
 		if (project.description == null || project.description.isEmpty()) {
 			throw new InvalidUserDataException("A project description is required for publishing to maven central")
@@ -78,8 +64,9 @@ configure(javaProjects) {
 	task dependencyReport(type: DependencyReportTask)
 
 	java {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
+		toolchain {
+			languageVersion = JavaLanguageVersion.of(17)
+		}
 	}
 
 	[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
@@ -111,6 +98,11 @@ configure(javaProjects) {
 			useJUnitPlatform()
 			scanForTestClasses = true
 			group = "verification"
+
+			// add jvm arg to resolve BlockHound issues, see https://github.com/reactor/BlockHound/issues/33
+			jvmArgs += [
+				"-XX:+AllowRedefinitionToAddDeleteMethods"
+			]
 
 			testLogging {
 				exceptionFormat = "full"
