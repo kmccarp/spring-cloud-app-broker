@@ -123,14 +123,13 @@ class CredHubPersistingCreateServiceInstanceAppBindingWorkflowTest {
 			.serviceDefinitionId("foo-definition-id")
 			.bindResource(BindResource.builder()
 				.appGuid("app-id")
-				.properties("credential_client_id", "client-id")
+				.properties("credential_client_id","client-id")
 				.build())
 			.build();
 
-		Map<String, Object> credentials = new HashMap<String, Object>() {{
-			put("credential4", "value4");
-			put("credential5", "value5");
-		}};
+		Map<String, Object> credentials = new HashMap<>();
+		credentials.put("credential4","value4");
+		credentials.put("credential5","value5");
 
 		CreateServiceInstanceAppBindingResponseBuilder responseBuilder = CreateServiceInstanceAppBindingResponse
 			.builder()

@@ -53,7 +53,7 @@ class CredHubAutoConfigurationTest {
 	void servicesAreNotCreatedWithoutCredHubOnClasspath() {
 		contextRunner
 			.withClassLoader(new FilteredClassLoader(ReactiveCredHubOperations.class))
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context)
 					.hasSingleBean(CredentialGenerator.class)
 					.getBean(CredentialGenerator.class)
@@ -68,7 +68,7 @@ class CredHubAutoConfigurationTest {
 	@Test
 	void servicesAreCreatedWithCredHubConfigured() {
 		contextRunner
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context)
 					.hasSingleBean(CredentialGenerator.class)
 					.getBean(CredentialGenerator.class)

@@ -113,7 +113,7 @@ public class ApplicationLogStreamPublisher implements ApplicationListener<Servic
 		}
 	}
 
-	private final static class Registration {
+	private static final class Registration {
 
 		private final Disposable subscription;
 
