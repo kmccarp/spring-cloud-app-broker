@@ -32,30 +32,30 @@ public class BackingApplicationsParametersTransformationService {
 	private final ExtensionLocator<ParametersTransformer<BackingApplication>> locator;
 
 	public BackingApplicationsParametersTransformationService(
-		List<ParametersTransformerFactory<BackingApplication, ?>> factories) {
+List<ParametersTransformerFactory<BackingApplication, ?>> factories) {
 		locator = new ExtensionLocator<>(factories);
 	}
 
 	public Mono<List<BackingApplication>> transformParameters(List<BackingApplication> backingApplications,
-		Map<String, Object> parameters) {
+Map<String, Object> parameters) {
 		return Flux.fromIterable(backingApplications)
-			.flatMap(backingApplication -> {
-				List<ParametersTransformerSpec> specs = getTransformerSpecsForApplication(backingApplication);
+	.flatMap(backingApplication -> {
+		List<ParametersTransformerSpec> specs = getTransformerSpecsForApplication(backingApplication);
 
-				return Flux.fromIterable(specs)
-					.flatMap(spec -> {
-						ParametersTransformer<BackingApplication> transformer = locator
-							.getByName(spec.getName(), spec.getArgs());
-						return transformer.transform(backingApplication, parameters);
-					})
-					.then(Mono.just(backingApplication));
-			})
-			.collectList();
+		return Flux.fromIterable(specs)
+	.flatMap(spec -> {
+		ParametersTransformer<BackingApplication> transformer = locator
+	.getByName(spec.getName(), spec.getArgs());
+		return transformer.transform(backingApplication, parameters);
+	})
+	.then(Mono.just(backingApplication));
+	})
+	.collectList();
 	}
 
 	private List<ParametersTransformerSpec> getTransformerSpecsForApplication(BackingApplication backingApplication) {
 		return backingApplication.getParametersTransformers() == null ? Collections.emptyList() :
-			backingApplication.getParametersTransformers();
+	backingApplication.getParametersTransformers();
 	}
 
 }

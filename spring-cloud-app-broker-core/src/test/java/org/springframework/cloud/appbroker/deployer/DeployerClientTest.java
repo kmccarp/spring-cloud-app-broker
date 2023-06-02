@@ -54,29 +54,29 @@ class DeployerClientTest {
 	private AppDeployer appDeployer;
 
 	private static ArgumentMatcher<DeployApplicationRequest> matchesDeploymentRequest(String appName, String appArchive,
-		Map<String, String> properties,
-		Map<String, Object> environment,
-		List<String> services) {
+Map<String, String> properties,
+Map<String, Object> environment,
+List<String> services) {
 		return request ->
-			request.getName().equals(appName) &&
-				request.getPath().equals(appArchive) &&
-				request.getProperties().equals(properties) &&
-				request.getEnvironment().equals(environment) &&
-				request.getServices().equals(services);
+	request.getName().equals(appName) &&
+request.getPath().equals(appArchive) &&
+request.getProperties().equals(properties) &&
+request.getEnvironment().equals(environment) &&
+request.getServices().equals(services);
 	}
 
 	private static ArgumentMatcher<UpdateApplicationRequest> matchesUpdateRequest(String appName, String appArchive,
-		Map<String, String> properties,
-		Map<String, Object> environment,
-		List<String> services,
-		String serviceInstanceId) {
+Map<String, String> properties,
+Map<String, Object> environment,
+List<String> services,
+String serviceInstanceId) {
 		return request ->
-			request.getName().equals(appName) &&
-				request.getPath().equals(appArchive) &&
-				request.getProperties().equals(properties) &&
-				request.getEnvironment().equals(environment) &&
-				request.getServices().equals(services) &&
-				request.getServiceInstanceId().equals(serviceInstanceId);
+	request.getName().equals(appName) &&
+request.getPath().equals(appArchive) &&
+request.getProperties().equals(properties) &&
+request.getEnvironment().equals(environment) &&
+request.getServices().equals(services) &&
+request.getServiceInstanceId().equals(serviceInstanceId);
 	}
 
 	@BeforeEach
@@ -93,19 +93,19 @@ class DeployerClientTest {
 			setupAppDeployer();
 
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.deploy(application, "instance-id"))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should()
-				.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
-					Collections.emptyMap(), Collections.emptyList())));
+		.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
+	Collections.emptyMap(), Collections.emptyList())));
 		}
 
 		@Test
@@ -113,24 +113,26 @@ class DeployerClientTest {
 		void shouldDeployAppWithProperties() {
 			setupAppDeployer();
 
-			Map<String, String> properties = new HashMap<String, String>() {{
-				put("memory", "1G");
-				put("instances", "2");
-			}};
+			Map<String, String> properties = new HashMap<String, String>() {
+				{
+					put("memory", "1G");
+					put("instances", "2");
+				}
+			};
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.properties(properties)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.properties(properties)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.deploy(application, "instance-id"))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, properties,
-				Collections.emptyMap(), Collections.emptyList())));
+		Collections.emptyMap(), Collections.emptyList())));
 		}
 
 		@Test
@@ -139,24 +141,24 @@ class DeployerClientTest {
 			setupAppDeployer();
 
 			BackingApplication application =
-				BackingApplication
-					.builder()
-					.name(APP_NAME)
-					.path(APP_PATH)
-					.services(ServicesSpec.builder()
-						.serviceInstanceName("my-db-service")
-						.build())
-					.build();
+		BackingApplication
+	.builder()
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.services(ServicesSpec.builder()
+.serviceInstanceName("my-db-service")
+.build())
+	.build();
 
 			// when
 			StepVerifier.create(deployerClient.deploy(application, "instance-id"))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should()
-				.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
-					Collections.emptyMap(), Collections.singletonList("my-db-service"))));
+		.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
+	Collections.emptyMap(), Collections.singletonList("my-db-service"))));
 		}
 
 		@Test
@@ -164,32 +166,34 @@ class DeployerClientTest {
 		void shouldDeployAppWithEnvironmentVariables() {
 			setupAppDeployer();
 
-			Map<String, Object> environment = new HashMap<String, Object>() {{
-				put("ENV_VAR_1", "value1");
-				put("ENV_VAR_2", "value2");
-			}};
+			Map<String, Object> environment = new HashMap<String, Object>() {
+				{
+					put("ENV_VAR_1", "value1");
+					put("ENV_VAR_2", "value2");
+				}
+			};
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.environment(environment)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.environment(environment)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.deploy(application, "instance-id"))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should()
-				.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
-					environment, Collections.emptyList())));
+		.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
+	environment, Collections.emptyList())));
 		}
 
 		private void setupAppDeployer() {
 			given(appDeployer.deploy(any()))
-				.willReturn(Mono.just(DeployApplicationResponse.builder()
-					.name(APP_NAME)
-					.build()));
+		.willReturn(Mono.just(DeployApplicationResponse.builder()
+	.name(APP_NAME)
+	.build()));
 		}
 	}
 
@@ -203,26 +207,26 @@ class DeployerClientTest {
 			final String serviceInstanceId = "instance-id";
 
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.preUpdate(application, serviceInstanceId))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().preUpdate(argThat(matchesUpdateRequest(APP_NAME,
-				APP_PATH, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyList(), serviceInstanceId)));
+		APP_PATH, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyList(), serviceInstanceId)));
 		}
 
 
 		private void setupAppDeployer() {
 			given(appDeployer.preUpdate(any()))
-				.willReturn(Mono.just(UpdateApplicationResponse.builder()
-					.name(APP_NAME)
-					.build()));
+		.willReturn(Mono.just(UpdateApplicationResponse.builder()
+	.name(APP_NAME)
+	.build()));
 		}
 	}
 
@@ -236,26 +240,26 @@ class DeployerClientTest {
 			final String serviceInstanceId = "instance-id";
 
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.update(application, serviceInstanceId))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().update(argThat(matchesUpdateRequest(APP_NAME,
-				APP_PATH, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyList(), serviceInstanceId)));
+		APP_PATH, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyList(), serviceInstanceId)));
 		}
 
 
 		private void setupAppDeployer() {
 			given(appDeployer.update(any()))
-				.willReturn(Mono.just(UpdateApplicationResponse.builder()
-					.name(APP_NAME)
-					.build()));
+		.willReturn(Mono.just(UpdateApplicationResponse.builder()
+	.name(APP_NAME)
+	.build()));
 		}
 	}
 
@@ -265,20 +269,20 @@ class DeployerClientTest {
 		@Test
 		void shouldUndeployApp() {
 			given(appDeployer.undeploy(any()))
-				.willReturn(Mono.just(UndeployApplicationResponse.builder()
-					.name(APP_NAME)
-					.build()));
+		.willReturn(Mono.just(UndeployApplicationResponse.builder()
+	.name(APP_NAME)
+	.build()));
 
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.undeploy(application))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().undeploy(argThat(request -> APP_NAME.equals(request.getName())));
 		}
@@ -286,18 +290,18 @@ class DeployerClientTest {
 		@Test
 		void shouldNotReturnErrorWhenUndeployingAppThatDoesNotExist() {
 			given(appDeployer.undeploy(any()))
-				.willReturn(Mono.error(new IllegalStateException("app does not exist")));
+		.willReturn(Mono.error(new IllegalStateException("app does not exist")));
 
 			BackingApplication application = BackingApplication.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.build();
+		.name(APP_NAME)
+		.path(APP_PATH)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.undeploy(application))
-				// then
-				.expectNext(APP_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(APP_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().undeploy(argThat(request -> APP_NAME.equals(request.getName())));
 		}
@@ -310,22 +314,22 @@ class DeployerClientTest {
 		@Test
 		void shouldCreateServiceInstance() {
 			given(appDeployer.createServiceInstance(any()))
-				.willReturn(Mono.just(CreateServiceInstanceResponse.builder()
-					.name(SERVICE_INSTANCE_NAME)
-					.build()));
+		.willReturn(Mono.just(CreateServiceInstanceResponse.builder()
+	.name(SERVICE_INSTANCE_NAME)
+	.build()));
 
 			BackingService service = BackingService.builder()
-				.serviceInstanceName(SERVICE_INSTANCE_NAME)
-				.build();
+		.serviceInstanceName(SERVICE_INSTANCE_NAME)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.createServiceInstance(service))
-				// then
-				.expectNext(SERVICE_INSTANCE_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(SERVICE_INSTANCE_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().createServiceInstance(argThat(request ->
-				SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
+		SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
 		}
 
 	}
@@ -336,41 +340,41 @@ class DeployerClientTest {
 		@Test
 		void shouldUpdateServiceInstance() {
 			given(appDeployer.updateServiceInstance(any()))
-				.willReturn(Mono.just(UpdateServiceInstanceResponse.builder()
-					.name(SERVICE_INSTANCE_NAME)
-					.build()));
+		.willReturn(Mono.just(UpdateServiceInstanceResponse.builder()
+	.name(SERVICE_INSTANCE_NAME)
+	.build()));
 
 			BackingService service = BackingService.builder()
-				.serviceInstanceName(SERVICE_INSTANCE_NAME)
-				.build();
+		.serviceInstanceName(SERVICE_INSTANCE_NAME)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.updateServiceInstance(service))
-				// then
-				.expectNext(SERVICE_INSTANCE_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(SERVICE_INSTANCE_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().updateServiceInstance(argThat(request ->
-				SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
+		SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
 		}
 
 		@Test
 		void shouldReturnErrorWhenUpdatingServiceInstanceThatDoesNotExist() {
 			given(appDeployer.updateServiceInstance(any()))
-				.willReturn(Mono.error(new IllegalStateException("service instance does not exist")));
+		.willReturn(Mono.error(new IllegalStateException("service instance does not exist")));
 
 			BackingService service = BackingService.builder()
-				.serviceInstanceName(SERVICE_INSTANCE_NAME)
-				.build();
+		.serviceInstanceName(SERVICE_INSTANCE_NAME)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.updateServiceInstance(service))
-				// then
-				.expectErrorMessage("service instance does not exist")
-				.verify();
+		// then
+		.expectErrorMessage("service instance does not exist")
+		.verify();
 
 			then(appDeployer).should().updateServiceInstance(argThat(request ->
-				SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
+		SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
 		}
 
 	}
@@ -381,41 +385,41 @@ class DeployerClientTest {
 		@Test
 		void shouldDeleteServiceInstance() {
 			given(appDeployer.deleteServiceInstance(any()))
-				.willReturn(Mono.just(DeleteServiceInstanceResponse.builder()
-					.name(SERVICE_INSTANCE_NAME)
-					.build()));
+		.willReturn(Mono.just(DeleteServiceInstanceResponse.builder()
+	.name(SERVICE_INSTANCE_NAME)
+	.build()));
 
 			BackingService service = BackingService.builder()
-				.serviceInstanceName(SERVICE_INSTANCE_NAME)
-				.build();
+		.serviceInstanceName(SERVICE_INSTANCE_NAME)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.deleteServiceInstance(service))
-				// then
-				.expectNext(SERVICE_INSTANCE_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(SERVICE_INSTANCE_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().deleteServiceInstance(argThat(request ->
-				SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
+		SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
 		}
 
 		@Test
 		void shouldNotReturnErrorWhenDeletingServiceInstanceThatDoesNotExist() {
 			given(appDeployer.deleteServiceInstance(any()))
-				.willReturn(Mono.error(new IllegalStateException("service instance does not exist")));
+		.willReturn(Mono.error(new IllegalStateException("service instance does not exist")));
 
 			BackingService service = BackingService.builder()
-				.serviceInstanceName(SERVICE_INSTANCE_NAME)
-				.build();
+		.serviceInstanceName(SERVICE_INSTANCE_NAME)
+		.build();
 
 			// when
 			StepVerifier.create(deployerClient.deleteServiceInstance(service))
-				// then
-				.expectNext(SERVICE_INSTANCE_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(SERVICE_INSTANCE_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().deleteServiceInstance(argThat(request ->
-				SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
+		SERVICE_INSTANCE_NAME.equals(request.getServiceInstanceName())));
 		}
 
 	}
@@ -432,9 +436,9 @@ class DeployerClientTest {
 
 			// when
 			StepVerifier.create(deployerClient.deleteSpace("test-space"))
-				// then
-				.expectNext(RETURNED_SPACE_NAME)
-				.verifyComplete();
+		// then
+		.expectNext(RETURNED_SPACE_NAME)
+		.verifyComplete();
 
 			then(appDeployer).should().deleteBackingSpace(argThat(space -> "test-space".equals(space.getName())));
 		}
@@ -442,9 +446,9 @@ class DeployerClientTest {
 
 		private void setupAppDeployer() {
 			given(appDeployer.deleteBackingSpace(any()))
-				.willReturn(Mono.just(DeleteBackingSpaceResponse.builder()
-					.name(RETURNED_SPACE_NAME)
-					.build()));
+		.willReturn(Mono.just(DeleteBackingSpaceResponse.builder()
+	.name(RETURNED_SPACE_NAME)
+	.build()));
 		}
 	}
 

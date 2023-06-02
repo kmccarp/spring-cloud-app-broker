@@ -81,17 +81,10 @@ class CloudFoundryAppDeployerDeleteSpaceTest {
 		given(cloudFoundryClient.organizations()).willReturn(clientOrganizations);
 
 		given(operationsOrganizations
-			.get(
-				OrganizationInfoRequest
-					.builder()
-					.name("default-org")
-					.build()))
-			.willReturn(Mono.just(
-				OrganizationDetail
-					.builder()
-					.id("default-org-id")
-					.name("default-org")
-					.quota(OrganizationQuota
+	.get(
+OrganizationInfoRequest.builder().name("default-org").build()))
+	.willReturn(Mono.just(
+OrganizationDetail.builder().id("default-org-id").name("default-org").quota(OrganizationQuota
 						.builder()
 						.id("quota-id")
 						.instanceMemoryLimit(0)
@@ -101,80 +94,75 @@ class CloudFoundryAppDeployerDeleteSpaceTest {
 						.totalMemoryLimit(0)
 						.totalRoutes(0)
 						.totalServiceInstances(0)
-						.build())
-					.build()));
+						.build()).build()));
 
 		appDeployer = new CloudFoundryAppDeployer(deploymentProperties, cloudFoundryOperations, cloudFoundryClient,
-			operationsUtils, targetProperties, resourceLoader);
+	operationsUtils, targetProperties, resourceLoader);
 	}
 
 	@Test
 	void deleteSpaceIfExists() {
 		given(clientOrganizations
-			.listSpaces(ListOrganizationSpacesRequest
-				.builder()
-				.name("test-space-name")
-				.organizationId("default-org-id")
-				.page(1)
-				.build()))
-			.willReturn(Mono.just(ListOrganizationSpacesResponse
-				.builder()
-				.resource(SpaceResource
-					.builder()
-					.entity(SpaceEntity
+	.listSpaces(ListOrganizationSpacesRequest
+.builder()
+.name("test-space-name")
+.organizationId("default-org-id")
+.page(1)
+.build()))
+	.willReturn(Mono.just(ListOrganizationSpacesResponse
+.builder()
+.resource(SpaceResource.builder().entity(SpaceEntity
 						.builder()
 						.name("test-space-name")
-						.build())
-					.metadata(Metadata
+						.build()).metadata(Metadata
 						.builder()
 						.id("test-space-id")
-						.build())
-					.build())
-				.build()));
+						.build()).build())
+.build()));
 
 		given(cloudFoundryClient.spaces()).willReturn(clientSpaces);
 		given(clientSpaces
-			.delete(DeleteSpaceRequest
-				.builder()
-				.spaceId("test-space-id")
-				.recursive(true)
-				.build()))
-			.willReturn(Mono.empty());
+	.delete(DeleteSpaceRequest
+.builder()
+.spaceId("test-space-id")
+.recursive(true)
+.build()))
+	.willReturn(Mono.empty());
 
 		DeleteBackingSpaceRequest request =
-			DeleteBackingSpaceRequest.builder()
-				.name("test-space-name")
-				.build();
+	DeleteBackingSpaceRequest.builder()
+.name("test-space-name")
+.build();
 
 		StepVerifier.create(
-			appDeployer.deleteBackingSpace(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo("test-space-name"))
-			.verifyComplete();
+	appDeployer.deleteBackingSpace(request))
+	.assertNext(response -> assertThat(response.getName()).isEqualTo("test-space-name"))
+	.verifyComplete();
 	}
 
 	@Test
 	void doNothingIfSpaceDoesNotExist() {
 		given(clientOrganizations
-			.listSpaces(ListOrganizationSpacesRequest
-				.builder()
-				.name("test-space-name")
-				.organizationId("default-org-id")
-				.page(1)
-				.build()))
-			.willReturn(Mono.just(ListOrganizationSpacesResponse
-				.builder()
-				.resources()
-				.build()));
+	.listSpaces(ListOrganizationSpacesRequest
+.builder()
+.name("test-space-name")
+.organizationId("default-org-id")
+.page(1)
+.build()))
+	.willReturn(Mono.just(ListOrganizationSpacesResponse
+.builder()
+.resources()
+.build()));
 
 		DeleteBackingSpaceRequest request =
-			DeleteBackingSpaceRequest.builder()
-				.name("test-space-name")
-				.build();
+	DeleteBackingSpaceRequest.builder()
+.name("test-space-name")
+.build();
 
 		StepVerifier.create(
-			appDeployer.deleteBackingSpace(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo("test-space-name"))
-			.verifyComplete();
+	appDeployer.deleteBackingSpace(request))
+	.assertNext(response -> assertThat(response.getName()).isEqualTo("test-space-name"))
+	.verifyComplete();
 	}
 
 }

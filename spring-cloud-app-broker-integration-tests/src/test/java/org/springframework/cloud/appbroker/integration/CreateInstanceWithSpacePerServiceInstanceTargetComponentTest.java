@@ -33,18 +33,9 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithSpacePerServiceInstanceTargetComponentTest.BACKING_SERVICE_NAME;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithSpacePerServiceInstanceTargetComponentTest.BACKING_SI_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-
-	"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].services[0].plan=standard",
-
-	"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,"spring.cloud.appbroker.services[0].services[0].plan=standard",
+"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
 })
 class CreateInstanceWithSpacePerServiceInstanceTargetComponentTest extends WiremockComponentTest {
 
@@ -81,18 +72,18 @@ class CreateInstanceWithSpacePerServiceInstanceTargetComponentTest extends Wirem
 
 		// when a service instance is created
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.put(brokerFixture.createServiceInstanceUrl(), serviceInstanceId)
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.put(brokerFixture.createServiceInstanceUrl(), serviceInstanceId)
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), serviceInstanceId)
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), serviceInstanceId)
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

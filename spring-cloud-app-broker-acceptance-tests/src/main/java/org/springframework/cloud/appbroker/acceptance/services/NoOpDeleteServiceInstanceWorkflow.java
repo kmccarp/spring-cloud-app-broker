@@ -44,7 +44,7 @@ public class NoOpDeleteServiceInstanceWorkflow implements DeleteServiceInstanceW
 
 	@Override
 	public Mono<DeleteServiceInstanceResponseBuilder> buildResponse(DeleteServiceInstanceRequest request,
-		DeleteServiceInstanceResponseBuilder responseBuilder) {
+DeleteServiceInstanceResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

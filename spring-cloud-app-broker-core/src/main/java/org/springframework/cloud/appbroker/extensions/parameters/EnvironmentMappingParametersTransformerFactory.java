@@ -28,8 +28,7 @@ import reactor.util.Loggers;
 
 import org.springframework.cloud.appbroker.deployer.BackingApplication;
 
-public class EnvironmentMappingParametersTransformerFactory extends
-	ParametersTransformerFactory<BackingApplication, EnvironmentMappingParametersTransformerFactory.Config> {
+public class EnvironmentMappingParametersTransformerFactory extendsParametersTransformerFactory<BackingApplication, EnvironmentMappingParametersTransformerFactory.Config> {
 
 	private static final Logger LOG = Loggers.getLogger(EnvironmentMappingParametersTransformerFactory.class);
 
@@ -45,29 +44,29 @@ public class EnvironmentMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingApplication> transform(BackingApplication backingApplication,
-		Map<String, Object> parameters,
-		List<String> include) {
+Map<String, Object> parameters,
+List<String> include) {
 		if (parameters != null) {
 			parameters
-				.keySet().stream()
-				.filter(include::contains)
-				.forEach(key -> {
-					Object value = parameters.get(key);
-					String valueString;
-					if (value instanceof String) {
-						valueString = value.toString();
-					}
-					else {
-						try {
-							valueString = OBJECT_MAPPER.writeValueAsString(value);
-						}
-						catch (JsonProcessingException e) {
-							LOG.error("Failed to write object as JSON String", e);
-							valueString = value.toString();
-						}
-					}
-					backingApplication.addEnvironment(key, valueString);
-				});
+		.keySet().stream()
+		.filter(include::contains)
+		.forEach(key -> {
+			Object value = parameters.get(key);
+			String valueString;
+			if (value instanceof String) {
+				valueString = value.toString();
+			}
+			else {
+				try {
+					valueString = OBJECT_MAPPER.writeValueAsString(value);
+				}
+				catch (JsonProcessingException e) {
+					LOG.error("Failed to write object as JSON String", e);
+					valueString = value.toString();
+				}
+			}
+			backingApplication.addEnvironment(key, valueString);
+		});
 		}
 
 		return Mono.just(backingApplication);

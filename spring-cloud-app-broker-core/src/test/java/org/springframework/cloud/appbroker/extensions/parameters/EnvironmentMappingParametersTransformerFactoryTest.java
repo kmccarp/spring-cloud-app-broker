@@ -35,14 +35,14 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 	@BeforeEach
 	void setUp() {
 		transformer = new EnvironmentMappingParametersTransformerFactory()
-			.createWithConfig(config ->
-				config.setInclude("parameter1,parameter2,parameter4,parameter5"));
+	.createWithConfig(config ->
+config.setInclude("parameter1,parameter2,parameter4,parameter5"));
 	}
 
 	@Test
 	void parametersAreMappedToApplicationEnvironment() {
 		BackingApplication backingApplication = BackingApplication.builder()
-			.build();
+	.build();
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
@@ -52,9 +52,9 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 		parameters.put("parameter5", Collections.singletonList(Collections.singletonMap("key5", "value5")));
 
 		StepVerifier
-			.create(transformer.transform(backingApplication, parameters))
-			.expectNext(backingApplication)
-			.verifyComplete();
+	.create(transformer.transform(backingApplication, parameters))
+	.expectNext(backingApplication)
+	.verifyComplete();
 
 		assertThat(backingApplication.getEnvironment()).containsEntry("parameter1", "value1");
 		assertThat(backingApplication.getEnvironment()).containsEntry("parameter2", "{\"key2\":\"value2\"}");
@@ -66,9 +66,9 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 	@Test
 	void parametersOverrideApplicationEnvironment() {
 		BackingApplication backingApplication = BackingApplication.builder()
-			.environment("parameter1", "config-value1")
-			.environment("parameter3", "config-value3")
-			.build();
+	.environment("parameter1", "config-value1")
+	.environment("parameter3", "config-value3")
+	.build();
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
@@ -76,9 +76,9 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 		parameters.put("parameter3", "value3");
 
 		StepVerifier
-			.create(transformer.transform(backingApplication, parameters))
-			.expectNext(backingApplication)
-			.verifyComplete();
+	.create(transformer.transform(backingApplication, parameters))
+	.expectNext(backingApplication)
+	.verifyComplete();
 
 		assertThat(backingApplication.getEnvironment()).containsEntry("parameter1", "value1");
 		assertThat(backingApplication.getEnvironment()).containsEntry("parameter2", "value2");

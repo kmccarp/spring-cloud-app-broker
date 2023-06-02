@@ -66,7 +66,7 @@ public class ParametersTransformerSpec {
 
 		public ParametersTransformerSpecBuilder spec(ParametersTransformerSpec spec) {
 			return this.name(spec.getName())
-				.args(spec.getArgs());
+		.args(spec.getArgs());
 		}
 
 		public ParametersTransformerSpecBuilder name(String name) {

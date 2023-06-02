@@ -62,7 +62,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 				catch (final IntrospectionException e) {
 					if (LOG.isErrorEnabled()) {
 						LOG.error(String.format("Error when creating PropertyDescriptor for method '%s'. This " +
-							"property will be ignored. %s", m), e);
+					"property will be ignored. %s", m), e);
 					}
 				}
 			}
@@ -78,8 +78,8 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 	private String camelCasePropertyName(final Method m) {
 		final String methodName = m.getName().substring(WRITE_METHOD_PREFIX.length());
 		return methodName.length() > 1 ?
-			Introspector.decapitalize(methodName) :
-			methodName.toLowerCase(Locale.ENGLISH);
+	Introspector.decapitalize(methodName) :
+	methodName.toLowerCase(Locale.ENGLISH);
 	}
 
 	/**

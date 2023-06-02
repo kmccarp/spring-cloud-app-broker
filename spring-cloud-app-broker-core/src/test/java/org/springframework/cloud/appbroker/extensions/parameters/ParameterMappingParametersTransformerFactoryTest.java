@@ -34,8 +34,8 @@ class ParameterMappingParametersTransformerFactoryTest {
 	@BeforeEach
 	void setUp() {
 		transformer = new ParameterMappingParametersTransformerFactory()
-			.createWithConfig(config ->
-				config.setInclude("parameter1,parameter2"));
+	.createWithConfig(config ->
+config.setInclude("parameter1,parameter2"));
 	}
 
 	@Test
@@ -51,14 +51,14 @@ class ParameterMappingParametersTransformerFactoryTest {
 		expectedParameters.put("parameter2", "value2");
 
 		BackingService backingService =
-			BackingService.builder()
-				.parameters(expectedParameters)
-				.build();
+	BackingService.builder()
+.parameters(expectedParameters)
+.build();
 
 		StepVerifier
-			.create(transformer.transform(backingService, inputParameters))
-			.expectNext(backingService)
-			.verifyComplete();
+	.create(transformer.transform(backingService, inputParameters))
+	.expectNext(backingService)
+	.verifyComplete();
 
 		assertThat(backingService.getParameters()).containsEntry("parameter1", "value1");
 		assertThat(backingService.getParameters()).containsEntry("parameter2", "value2");

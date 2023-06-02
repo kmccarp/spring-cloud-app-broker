@@ -84,30 +84,29 @@ public class UaaStubFixture extends WiremockStubFixture {
 	 */
 	private void stubRetrieveAccessToken() {
 		stubFor(post(urlPathEqualTo("/oauth/token"))
-			.withMetadata(optionalStubMapping())
-			.willReturn(ok()
-				.withBody(uaa("put-oauth-token"))));
+	.withMetadata(optionalStubMapping())
+	.willReturn(ok()
+.withBody(uaa("put-oauth-token"))));
 	}
 
 	private void stubRetrieveTokenKeys() {
 		stubFor(get(urlPathEqualTo("/token_keys"))
-			.withMetadata(optionalStubMapping())
-			.willReturn(ok()
-				.withBody(uaa("get-token-keys"))));
+	.withMetadata(optionalStubMapping())
+	.willReturn(ok()
+.withBody(uaa("get-token-keys"))));
 	}
 
 	public void stubCreateClient(String clientId) {
 		stubFor(post(urlPathEqualTo("/oauth/clients"))
-			.withRequestBody(matchingJsonPath("$.[?(@.client_id == '" + clientId + "')]"))
-			.willReturn(ok()
-				.withBody(uaa("post-oauth-clients",
-					replace("@client-id", clientId)))));
+	.withRequestBody(matchingJsonPath("$.[?(@.client_id == '" + clientId + "')]"))
+	.willReturn(ok()
+.withBody(uaa("post-oauth-clients",replace("@client-id", clientId)))));
 	}
 
 	public void stubDeleteClient(String clientId) {
 		stubFor(delete(urlPathEqualTo("/oauth/clients/" + clientId))
-			.willReturn(ok()
-				.withBody(uaa("delete-oauth-clients"))));
+	.willReturn(ok()
+.withBody(uaa("delete-oauth-clients"))));
 	}
 
 	private String uaa(String fileRoot, StringReplacementPair... replacements) {

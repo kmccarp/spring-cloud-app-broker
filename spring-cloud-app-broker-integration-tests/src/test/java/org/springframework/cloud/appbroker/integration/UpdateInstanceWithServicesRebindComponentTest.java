@@ -36,16 +36,7 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceWith
 import static org.springframework.cloud.appbroker.integration.UpdateInstanceWithServicesRebindComponentTest.PLAN_NAME;
 import static org.springframework.cloud.appbroker.integration.UpdateInstanceWithServicesRebindComponentTest.SERVICE_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=" + SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].services[0].plan=" + BACKING_PLAN_NAME,
-	"spring.cloud.appbroker.services[0].services[0].rebind-on-update=true"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=" + SERVICE_NAME,"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,"spring.cloud.appbroker.services[0].services[0].plan=" + BACKING_PLAN_NAME,"spring.cloud.appbroker.services[0].services[0].rebind-on-update=true"
 })
 class UpdateInstanceWithServicesRebindComponentTest extends WiremockComponentTest {
 
@@ -70,7 +61,7 @@ class UpdateInstanceWithServicesRebindComponentTest extends WiremockComponentTes
 	@Test
 	void updateAppWithServices() {
 		cloudControllerFixture.stubAppExistsWithBackingService(APP_NAME, BACKING_SI_NAME, BACKING_SERVICE_NAME,
-			BACKING_PLAN_NAME);
+	BACKING_PLAN_NAME);
 		cloudControllerFixture.stubUpdateApp(APP_NAME);
 
 		cloudControllerFixture.stubGetBackingServiceInstance(BACKING_SI_NAME, BACKING_SERVICE_NAME, BACKING_PLAN_NAME);
@@ -80,18 +71,18 @@ class UpdateInstanceWithServicesRebindComponentTest extends WiremockComponentTes
 
 		// when a service instance is updated
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.patch(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.patch(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

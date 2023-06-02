@@ -25,7 +25,7 @@ import org.springframework.cloud.servicebroker.model.binding.CreateServiceInstan
 public interface CreateServiceInstanceRouteBindingWorkflow {
 
 	default Mono<Void> create(CreateServiceInstanceBindingRequest request,
-		CreateServiceInstanceRouteBindingResponse response) {
+CreateServiceInstanceRouteBindingResponse response) {
 		return Mono.empty();
 	}
 
@@ -34,8 +34,8 @@ public interface CreateServiceInstanceRouteBindingWorkflow {
 	}
 
 	default Mono<CreateServiceInstanceRouteBindingResponseBuilder> buildResponse(
-		CreateServiceInstanceBindingRequest request,
-		CreateServiceInstanceRouteBindingResponseBuilder responseBuilder) {
+CreateServiceInstanceBindingRequest request,
+CreateServiceInstanceRouteBindingResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

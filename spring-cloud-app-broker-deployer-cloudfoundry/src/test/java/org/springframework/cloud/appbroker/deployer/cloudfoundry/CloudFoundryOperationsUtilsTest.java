@@ -44,29 +44,29 @@ class CloudFoundryOperationsUtilsTest {
 	@Test
 	void getOperationsWithEmptyProperties() {
 		StepVerifier.create(operationsUtils.getOperations(Collections.emptyMap()))
-			.expectNext(operations)
-			.verifyComplete();
+	.expectNext(operations)
+	.verifyComplete();
 	}
 
 	@Test
 	void getOperationsWithProperties() {
 		StepVerifier.create(operationsUtils
-			.getOperations(Collections.singletonMap(DeploymentProperties.TARGET_PROPERTY_KEY, "foo-space1")))
-			.assertNext(ops -> {
-				String space = (String) ReflectionTestUtils.getField(ops, "space");
-				assertThat(space).isEqualTo("foo-space1");
-			})
-			.verifyComplete();
+	.getOperations(Collections.singletonMap(DeploymentProperties.TARGET_PROPERTY_KEY, "foo-space1")))
+	.assertNext(ops -> {
+		String space = (String) ReflectionTestUtils.getField(ops, "space");
+		assertThat(space).isEqualTo("foo-space1");
+	})
+	.verifyComplete();
 	}
 
 	@Test
 	void getOperationsForSpace() {
 		StepVerifier.create(operationsUtils.getOperationsForSpace("foo-space2"))
-			.assertNext(ops -> {
-				String space = (String) ReflectionTestUtils.getField(ops, "space");
-				assertThat(space).isEqualTo("foo-space2");
-			})
-			.verifyComplete();
+	.assertNext(ops -> {
+		String space = (String) ReflectionTestUtils.getField(ops, "space");
+		assertThat(space).isEqualTo("foo-space2");
+	})
+	.verifyComplete();
 	}
 
 }

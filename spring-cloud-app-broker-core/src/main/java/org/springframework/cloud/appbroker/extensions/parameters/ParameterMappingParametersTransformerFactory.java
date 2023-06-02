@@ -24,8 +24,7 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.cloud.appbroker.deployer.BackingService;
 
-public class ParameterMappingParametersTransformerFactory extends
-	ParametersTransformerFactory<BackingService, ParameterMappingParametersTransformerFactory.Config> {
+public class ParameterMappingParametersTransformerFactory extendsParametersTransformerFactory<BackingService, ParameterMappingParametersTransformerFactory.Config> {
 
 	public ParameterMappingParametersTransformerFactory() {
 		super(Config.class);
@@ -37,12 +36,12 @@ public class ParameterMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingService> transform(BackingService backingService,
-		Map<String, Object> parameters,
-		List<String> include) {
+Map<String, Object> parameters,
+List<String> include) {
 		if (parameters != null) {
 			parameters.keySet().stream()
-				.filter(include::contains)
-				.forEach(key -> backingService.addParameter(key, parameters.get(key)));
+		.filter(include::contains)
+		.forEach(key -> backingService.addParameter(key, parameters.get(key)));
 		}
 
 		return Mono.just(backingService);

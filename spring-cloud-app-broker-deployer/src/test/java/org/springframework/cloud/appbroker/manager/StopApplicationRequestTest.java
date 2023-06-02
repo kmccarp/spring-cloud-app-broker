@@ -28,7 +28,7 @@ class StopApplicationRequestTest {
 	@Test
 	void builderWithNoValues() {
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.build();
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isNull();
 		assertThat(request.getProperties()).isEmpty();
@@ -37,9 +37,9 @@ class StopApplicationRequestTest {
 	@Test
 	void builderWithValues() {
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.name("foo")
-			.properties(Collections.singletonMap("foo", "bar"))
-			.build();
+	.name("foo")
+	.properties(Collections.singletonMap("foo", "bar"))
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).containsOnly(entry("foo", "bar"));
@@ -48,9 +48,9 @@ class StopApplicationRequestTest {
 	@Test
 	void builderAcceptsNullProperties() {
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.name("foo")
-			.properties(null)
-			.build();
+	.name("foo")
+	.properties(null)
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).isEmpty();
@@ -59,9 +59,9 @@ class StopApplicationRequestTest {
 	@Test
 	void builderAcceptsEmptyProperties() {
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.name("foo")
-			.properties(Collections.emptyMap())
-			.build();
+	.name("foo")
+	.properties(Collections.emptyMap())
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).isEmpty();

@@ -34,13 +34,7 @@ import static org.springframework.cloud.appbroker.integration.DeleteInstanceComp
 import static org.springframework.cloud.appbroker.integration.DeleteInstanceComponentTest.PLAN_NAME;
 import static org.springframework.cloud.appbroker.integration.DeleteInstanceComponentTest.SERVICE_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=" + SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
-	"spring.cloud.appbroker.services[0].apps[1].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[1].name=" + APP_NAME_2
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=" + SERVICE_NAME,"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,"spring.cloud.appbroker.services[0].apps[1].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[1].name=" + APP_NAME_2
 })
 class DeleteInstanceComponentTest extends WiremockComponentTest {
 
@@ -71,18 +65,18 @@ class DeleteInstanceComponentTest extends WiremockComponentTest {
 
 		// when the service instance is deleted
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.delete(brokerFixture.deleteServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.delete(brokerFixture.deleteServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
@@ -95,18 +89,18 @@ class DeleteInstanceComponentTest extends WiremockComponentTest {
 
 		// when the service instance is deleted
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.delete(brokerFixture.deleteServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.delete(brokerFixture.deleteServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

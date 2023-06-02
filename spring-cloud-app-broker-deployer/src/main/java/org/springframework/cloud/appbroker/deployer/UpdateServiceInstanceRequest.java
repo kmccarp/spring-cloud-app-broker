@@ -32,9 +32,9 @@ public class UpdateServiceInstanceRequest {
 	private final boolean rebindOnUpdate;
 
 	protected UpdateServiceInstanceRequest(String serviceInstanceName,
-		Map<String, Object> parameters,
-		Map<String, String> properties,
-		boolean rebindOnUpdate) {
+Map<String, Object> parameters,
+Map<String, String> properties,
+boolean rebindOnUpdate) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.parameters = parameters;
 		this.properties = properties;

@@ -70,6 +70,7 @@ public class TargetSpec {
 			this.name = name;
 			return this;
 		}
+
 		public TargetSpec build() {
 			return new TargetSpec(name);
 		}

@@ -52,8 +52,8 @@ public class BackingApplications extends ArrayList<BackingApplication> {
 		public BackingApplicationsBuilder backingApplications(List<BackingApplication> backingApplications) {
 			if (!CollectionUtils.isEmpty(backingApplications)) {
 				backingApplications.forEach(backingApplication -> this.backingApplication(BackingApplication.builder()
-					.backingApplication(backingApplication)
-					.build()));
+			.backingApplication(backingApplication)
+			.build()));
 			}
 			return this;
 		}

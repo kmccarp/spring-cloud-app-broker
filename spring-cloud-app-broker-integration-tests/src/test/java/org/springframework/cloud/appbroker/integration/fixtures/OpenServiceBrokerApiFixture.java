@@ -62,8 +62,8 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 
 	public String deleteServiceInstanceUrl() {
 		return "/service_instances/{instance_id}" +
-			"?service_id=" + serviceDefinitionId +
-			"&plan_id=" + planId;
+	"?service_id=" + serviceDefinitionId +
+	"&plan_id=" + planId;
 	}
 
 	public String createBindingUrl() {
@@ -72,59 +72,59 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 
 	public String deleteBindingUrl() {
 		return "/service_instances/{instance_id}/service_bindings/{binding_id}" +
-			"?service_id=" + serviceDefinitionId +
-			"&plan_id=" + planId;
+	"?service_id=" + serviceDefinitionId +
+	"&plan_id=" + planId;
 	}
 
 	public RequestSpecification serviceInstanceRequest() {
 		return serviceBrokerSpecification()
-			.body("{" +
-				"\"service_id\": \"" + serviceDefinitionId + "\"," +
-				"\"plan_id\": \"" + planId + "\"," +
-				"\"organization_guid\": \"" + ORG_ID + "\"," +
-				"\"space_guid\": \"" + SPACE_ID + "\"" +
-				"}\n");
+	.body("{" +
+"\"service_id\": \"" + serviceDefinitionId + "\"," +
+"\"plan_id\": \"" + planId + "\"," +
+"\"organization_guid\": \"" + ORG_ID + "\"," +
+"\"space_guid\": \"" + SPACE_ID + "\"" +
+"}\n");
 	}
 
 	public RequestSpecification serviceInstanceRequest(Map<String, Object> params) {
 		String stringParams = new JSONObject(params).toString();
 		return serviceBrokerSpecification()
-			.body("{" +
-				"\"service_id\": \"" + serviceDefinitionId + "\"," +
-				"\"plan_id\": \"" + planId + "\"," +
-				"\"organization_guid\": \"" + ORG_ID + "\"," +
-				"\"space_guid\": \"" + SPACE_ID + "\"," +
-				"\"parameters\": " + stringParams +
-				"}");
+	.body("{" +
+"\"service_id\": \"" + serviceDefinitionId + "\"," +
+"\"plan_id\": \"" + planId + "\"," +
+"\"organization_guid\": \"" + ORG_ID + "\"," +
+"\"space_guid\": \"" + SPACE_ID + "\"," +
+"\"parameters\": " + stringParams +
+"}");
 	}
 
 	public RequestSpecification serviceAppBindingRequest() {
 		return serviceBrokerSpecification()
-			.body("{" +
-				"\"service_id\": \"" + serviceDefinitionId + "\"," +
-				"\"plan_id\": \"" + planId + "\"," +
-				"\"bind_resource\": {" +
-				"\"app_guid\": \"" + APP_ID + "\"" +
-				"}" +
-				"}");
+	.body("{" +
+"\"service_id\": \"" + serviceDefinitionId + "\"," +
+"\"plan_id\": \"" + planId + "\"," +
+"\"bind_resource\": {" +
+"\"app_guid\": \"" + APP_ID + "\"" +
+"}" +
+"}");
 	}
 
 	public RequestSpecification serviceKeyRequest() {
 		return serviceBrokerSpecification()
-			.body("{" +
-				"\"service_id\": \"" + serviceDefinitionId + "\"," +
-				"\"plan_id\": \"" + planId + "\"," +
-				"\"bind_resource\": {" +
-				"\"credential_client_id\": \"" + SERVICE_KEY_CLIENT_ID + "\"" +
-				"}" +
-				"}");
+	.body("{" +
+"\"service_id\": \"" + serviceDefinitionId + "\"," +
+"\"plan_id\": \"" + planId + "\"," +
+"\"bind_resource\": {" +
+"\"credential_client_id\": \"" + SERVICE_KEY_CLIENT_ID + "\"" +
+"}" +
+"}");
 	}
 
 	private RequestSpecification serviceBrokerSpecification() {
 		return with()
-			.baseUri("http://localhost:" + port + "/v2")
-			.accept(ContentType.JSON)
-			.contentType(ContentType.JSON);
+	.baseUri("http://localhost:" + port + "/v2")
+	.accept(ContentType.JSON)
+	.contentType(ContentType.JSON);
 	}
 
 	public String waitForAsyncOperationComplete(String serviceInstanceId) {
@@ -133,11 +133,11 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 			do {
 				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
 				state = given(serviceInstanceRequest())
-					.when()
-					.get(getLastInstanceOperationUrl(), serviceInstanceId)
-					.then()
-					.statusCode(HttpStatus.OK.value())
-					.extract().body().jsonPath().getString("state");
+			.when()
+			.get(getLastInstanceOperationUrl(), serviceInstanceId)
+			.then()
+			.statusCode(HttpStatus.OK.value())
+			.extract().body().jsonPath().getString("state");
 			} while (state.equals(OperationState.IN_PROGRESS.toString()));
 			return state;
 		}

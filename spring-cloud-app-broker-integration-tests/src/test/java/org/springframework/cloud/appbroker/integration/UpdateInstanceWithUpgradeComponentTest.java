@@ -33,14 +33,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.cloud.appbroker.integration.UpdateInstanceWithUpgradeComponentTest.APP_NAME_1;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
-	"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR=testEnv",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=PropertyMapping",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=upgrade"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR=testEnv","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=PropertyMapping","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=upgrade"
 })
 class UpdateInstanceWithUpgradeComponentTest extends WiremockComponentTest {
 
@@ -61,18 +54,18 @@ class UpdateInstanceWithUpgradeComponentTest extends WiremockComponentTest {
 		HashMap<String, Object> upgradeParameter = new HashMap<>();
 		upgradeParameter.put("upgrade", true);
 		given(brokerFixture.serviceInstanceRequest(upgradeParameter))
-			.when()
-			.patch(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.patch(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

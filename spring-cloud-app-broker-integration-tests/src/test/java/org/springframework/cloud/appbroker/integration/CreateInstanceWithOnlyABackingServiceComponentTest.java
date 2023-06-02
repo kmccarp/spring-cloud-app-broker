@@ -32,12 +32,7 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithServicesComponentTest.BACKING_SERVICE_NAME;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithServicesComponentTest.BACKING_SI_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].services[0].plan=standard"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,"spring.cloud.appbroker.services[0].services[0].plan=standard"
 })
 class CreateInstanceWithOnlyABackingServiceComponentTest extends WiremockComponentTest {
 
@@ -66,18 +61,18 @@ class CreateInstanceWithOnlyABackingServiceComponentTest extends WiremockCompone
 
 		// when a service instance is created
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

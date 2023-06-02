@@ -51,8 +51,8 @@ public class BackingServices extends ArrayList<BackingService> {
 		public BackingServicesBuilder backingServices(BackingServices backingServices) {
 			if (!CollectionUtils.isEmpty(backingServices)) {
 				backingServices.forEach(backingService -> this.backingService(BackingService.builder()
-					.backingService(backingService)
-					.build()));
+			.backingService(backingService)
+			.build()));
 			}
 			return this;
 		}

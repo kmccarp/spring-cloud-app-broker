@@ -28,7 +28,7 @@ class RestartApplicationRequestTest {
 	@Test
 	void builderWithNoValues() {
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.build();
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isNull();
 		assertThat(request.getProperties()).isEmpty();
@@ -37,9 +37,9 @@ class RestartApplicationRequestTest {
 	@Test
 	void builderWithValues() {
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.name("foo")
-			.properties(Collections.singletonMap("foo", "bar"))
-			.build();
+	.name("foo")
+	.properties(Collections.singletonMap("foo", "bar"))
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).containsOnly(entry("foo", "bar"));
@@ -48,9 +48,9 @@ class RestartApplicationRequestTest {
 	@Test
 	void builderAcceptsNullProperties() {
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.name("foo")
-			.properties(null)
-			.build();
+	.name("foo")
+	.properties(null)
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).isEmpty();
@@ -59,9 +59,9 @@ class RestartApplicationRequestTest {
 	@Test
 	void builderAcceptsEmptyProperties() {
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.name("foo")
-			.properties(Collections.emptyMap())
-			.build();
+	.name("foo")
+	.properties(Collections.emptyMap())
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo");
 		assertThat(request.getProperties()).isEmpty();

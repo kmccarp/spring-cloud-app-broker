@@ -60,10 +60,10 @@ public class BackingApplication {
 	 * @param parametersTransformers the parameter transformers
 	 */
 	public BackingApplication(String name, String path,
-		Map<String, String> properties,
-		Map<String, Object> environment,
-		List<ServicesSpec> services,
-		List<ParametersTransformerSpec> parametersTransformers) {
+Map<String, String> properties,
+Map<String, Object> environment,
+List<ServicesSpec> services,
+List<ParametersTransformerSpec> parametersTransformers) {
 		this.name = name;
 		this.path = path;
 		this.properties = properties;
@@ -159,11 +159,11 @@ public class BackingApplication {
 		}
 		BackingApplication that = (BackingApplication) o;
 		return Objects.equals(name, that.name) &&
-			Objects.equals(path, that.path) &&
-			Objects.equals(properties, that.properties) &&
-			Objects.equals(environment, that.environment) &&
-			Objects.equals(services, that.services) &&
-			Objects.equals(parametersTransformers, that.parametersTransformers);
+	Objects.equals(path, that.path) &&
+	Objects.equals(properties, that.properties) &&
+	Objects.equals(environment, that.environment) &&
+	Objects.equals(services, that.services) &&
+	Objects.equals(parametersTransformers, that.parametersTransformers);
 	}
 
 	@Override
@@ -174,13 +174,13 @@ public class BackingApplication {
 	@Override
 	public String toString() {
 		return "BackingApplication{" +
-			"name='" + name + '\'' +
-			", path='" + path + '\'' +
-			", properties=" + properties +
-			", environment=" + sanitizeEnvironment(environment) +
-			", services=" + services +
-			", parametersTransformers=" + parametersTransformers +
-			'}';
+	"name='" + name + '\'' +
+	", path='" + path + '\'' +
+	", properties=" + properties +
+	", environment=" + sanitizeEnvironment(environment) +
+	", services=" + services +
+	", parametersTransformers=" + parametersTransformers +
+	'}';
 	}
 
 	private Map<String, Object> sanitizeEnvironment(Map<String, Object> environment) {
@@ -222,22 +222,22 @@ public class BackingApplication {
 		 */
 		public BackingApplicationBuilder backingApplication(BackingApplication backingApplication) {
 			this.name(backingApplication.getName())
-				.path(backingApplication.getPath())
-				.properties(backingApplication.getProperties())
-				.environment(backingApplication.getEnvironment());
+		.path(backingApplication.getPath())
+		.properties(backingApplication.getProperties())
+		.environment(backingApplication.getEnvironment());
 			if (!CollectionUtils.isEmpty(backingApplication.getServices())) {
 				this.services(backingApplication.getServices().stream()
-					.map(spec -> ServicesSpec.builder()
-						.spec(spec)
-						.build())
-					.collect(Collectors.toList()));
+			.map(spec -> ServicesSpec.builder()
+		.spec(spec)
+		.build())
+			.collect(Collectors.toList()));
 			}
 			if (!CollectionUtils.isEmpty(backingApplication.getParametersTransformers())) {
 				this.parameterTransformers(backingApplication.getParametersTransformers().stream()
-					.map(spec -> ParametersTransformerSpec.builder()
-						.spec(spec)
-						.build())
-					.collect(Collectors.toList()));
+			.map(spec -> ParametersTransformerSpec.builder()
+		.spec(spec)
+		.build())
+			.collect(Collectors.toList()));
 			}
 			return this;
 		}

@@ -58,15 +58,15 @@ class CreateInstanceWithServicesAcceptanceTest extends CloudFoundryAcceptanceTes
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_1_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].services[1].service-instance-name=" + BACKING_SI_2_NAME,
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_1_NAME
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_1_NAME,
+"spring.cloud.appbroker.services[0].apps[0].services[1].service-instance-name=" + BACKING_SI_2_NAME,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_1_NAME
 	})
 	void deployAppsAndCreateServicesOnCreateService() {
 		// given that a service is available in the marketplace
@@ -78,7 +78,7 @@ class CreateInstanceWithServicesAcceptanceTest extends CloudFoundryAcceptanceTes
 		// then a backing application is deployed
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// and the services are bound to it
 		ServiceInstance serviceInstance1 = getBackingServiceInstance(BACKING_SI_1_NAME);

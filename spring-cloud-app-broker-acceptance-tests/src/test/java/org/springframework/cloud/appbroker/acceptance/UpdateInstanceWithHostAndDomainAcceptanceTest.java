@@ -59,13 +59,13 @@ class UpdateInstanceWithHostAndDomainAcceptanceTest extends CloudFoundryAcceptan
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=PropertyMapping",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=host,domain"
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=PropertyMapping",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=host,domain"
 	})
 	void deployAppsOnUpdateService() {
 		// given a service instance is created
@@ -74,7 +74,7 @@ class UpdateInstanceWithHostAndDomainAcceptanceTest extends CloudFoundryAcceptan
 		// and a backing application is deployed
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		String path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
@@ -95,7 +95,7 @@ class UpdateInstanceWithHostAndDomainAcceptanceTest extends CloudFoundryAcceptan
 
 		backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getUrls()).contains("myhost.mydomain.com"));
+	assertThat(app.getUrls()).contains("myhost.mydomain.com"));
 
 		// when the service instance is deleted
 		deleteServiceInstance(SI_NAME);

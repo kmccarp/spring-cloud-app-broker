@@ -26,7 +26,7 @@ import org.springframework.cloud.servicebroker.model.instance.OperationState;
 public interface ServiceInstanceBindingStateRepository {
 
 	default Mono<ServiceInstanceState> saveState(String serviceInstanceId, String bindingId, OperationState state,
-		String description) {
+String description) {
 		return Mono.empty();
 	}
 

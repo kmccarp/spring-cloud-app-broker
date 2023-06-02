@@ -41,9 +41,8 @@ public class CloudFoundryAppManager implements AppManager {
 	@Override
 	public Mono<Void> start(StartApplicationRequest request) {
 		return Mono.justOrEmpty(request)
-			.flatMap(req -> operationsUtils.getOperations(req.getProperties())
-				.flatMap(cfOperations -> Mono.justOrEmpty(req.getName())
-					.flatMap(appName -> cfOperations.applications().start(
+	.flatMap(req -> operationsUtils.getOperations(req.getProperties())
+.flatMap(cfOperations -> Mono.justOrEmpty(req.getName()).flatMap(appName -> cfOperations.applications().start(
 						org.cloudfoundry.operations.applications.StartApplicationRequest.builder()
 							.name(appName)
 							.build())
@@ -65,9 +64,8 @@ public class CloudFoundryAppManager implements AppManager {
 	@Override
 	public Mono<Void> stop(StopApplicationRequest request) {
 		return Mono.justOrEmpty(request)
-			.flatMap(req -> operationsUtils.getOperations(req.getProperties())
-				.flatMap(cfOperations -> Mono.justOrEmpty(req.getName())
-					.flatMap(appName -> cfOperations.applications().stop(
+	.flatMap(req -> operationsUtils.getOperations(req.getProperties())
+.flatMap(cfOperations -> Mono.justOrEmpty(req.getName()).flatMap(appName -> cfOperations.applications().stop(
 						org.cloudfoundry.operations.applications.StopApplicationRequest.builder()
 							.name(appName)
 							.build())
@@ -89,9 +87,8 @@ public class CloudFoundryAppManager implements AppManager {
 	@Override
 	public Mono<Void> restart(RestartApplicationRequest request) {
 		return Mono.justOrEmpty(request)
-			.flatMap(req -> operationsUtils.getOperations(req.getProperties())
-				.flatMap(cfOperations -> Mono.justOrEmpty(req.getName())
-					.flatMap(appName -> cfOperations.applications().restart(
+	.flatMap(req -> operationsUtils.getOperations(req.getProperties())
+.flatMap(cfOperations -> Mono.justOrEmpty(req.getName()).flatMap(appName -> cfOperations.applications().restart(
 						org.cloudfoundry.operations.applications.RestartApplicationRequest.builder()
 							.name(appName)
 							.build())
@@ -113,9 +110,8 @@ public class CloudFoundryAppManager implements AppManager {
 	@Override
 	public Mono<Void> restage(RestageApplicationRequest request) {
 		return Mono.justOrEmpty(request)
-			.flatMap(req -> operationsUtils.getOperations(req.getProperties())
-				.flatMap(cfOperations -> Mono.justOrEmpty(req.getName())
-					.flatMap(appName -> cfOperations.applications().restage(
+	.flatMap(req -> operationsUtils.getOperations(req.getProperties())
+.flatMap(cfOperations -> Mono.justOrEmpty(req.getName()).flatMap(appName -> cfOperations.applications().restage(
 						org.cloudfoundry.operations.applications.RestageApplicationRequest.builder()
 							.name(appName)
 							.build())

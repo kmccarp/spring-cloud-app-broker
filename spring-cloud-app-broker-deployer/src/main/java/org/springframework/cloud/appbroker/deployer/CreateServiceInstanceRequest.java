@@ -34,10 +34,10 @@ public class CreateServiceInstanceRequest {
 	private final Map<String, String> properties;
 
 	protected CreateServiceInstanceRequest(String serviceInstanceName,
-		String name,
-		String plan,
-		Map<String, Object> parameters,
-		Map<String, String> properties) {
+String name,
+String plan,
+Map<String, Object> parameters,
+Map<String, String> properties) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.name = name;
 		this.plan = plan;

@@ -53,8 +53,8 @@ public class WiremockServerFixture {
 	@PostConstruct
 	public void startWiremock() {
 		ccUaaWiremockServer = new WireMockServer(wireMockConfig()
-			.port(cfApiPort)
-			.usingFilesUnderClasspath("recordings"));
+	.port(cfApiPort)
+	.usingFilesUnderClasspath("recordings"));
 		ccUaaWiremockServer.start();
 
 		uaaFixture.stubCommonUaaRequests();
@@ -75,18 +75,18 @@ public class WiremockServerFixture {
 
 	private void verifyStubs(WireMockServer wireMockServer) {
 		Set<UUID> servedStubIds = wireMockServer.getServeEvents().getRequests().stream()
-			.filter(event -> event.getStubMapping() != null)
-			.map(event -> event.getStubMapping().getId())
-			.collect(Collectors.toSet());
+	.filter(event -> event.getStubMapping() != null)
+	.map(event -> event.getStubMapping().getId())
+	.collect(Collectors.toSet());
 
 		List<StubMapping> unusedStubs = wireMockServer.listAllStubMappings().getMappings().stream()
-			.filter(stub -> !servedStubIds.contains(stub.getId()))
-			.filter(this::stubIsRequired)
-			.collect(Collectors.toList());
+	.filter(stub -> !servedStubIds.contains(stub.getId()))
+	.filter(this::stubIsRequired)
+	.collect(Collectors.toList());
 
 		assertThat(unusedStubs.size())
-			.as("%d wiremock stubs were unused. Unused stubs are: %s", unusedStubs.size(), unusedStubs)
-			.isEqualTo(0);
+	.as("%d wiremock stubs were unused. Unused stubs are: %s", unusedStubs.size(), unusedStubs)
+	.isEqualTo(0);
 	}
 
 	private boolean stubIsRequired(StubMapping stub) {

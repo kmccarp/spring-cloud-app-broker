@@ -25,7 +25,7 @@ import org.springframework.cloud.servicebroker.model.instance.CreateServiceInsta
 public interface CreateServiceInstanceWorkflow {
 
 	default Mono<Void> create(CreateServiceInstanceRequest request,
-		CreateServiceInstanceResponse response) {
+CreateServiceInstanceResponse response) {
 		return Mono.empty();
 	}
 
@@ -34,7 +34,7 @@ public interface CreateServiceInstanceWorkflow {
 	}
 
 	default Mono<CreateServiceInstanceResponseBuilder> buildResponse(CreateServiceInstanceRequest request,
-		CreateServiceInstanceResponseBuilder responseBuilder) {
+CreateServiceInstanceResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

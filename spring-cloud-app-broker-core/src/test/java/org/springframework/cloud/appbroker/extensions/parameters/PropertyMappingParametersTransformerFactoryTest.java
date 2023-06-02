@@ -34,14 +34,14 @@ class PropertyMappingParametersTransformerFactoryTest {
 	@BeforeEach
 	void setUp() {
 		transformer = new PropertyMappingParametersTransformerFactory()
-			.createWithConfig(config ->
-				config.setInclude("count,memory"));
+	.createWithConfig(config ->
+config.setInclude("count,memory"));
 	}
 
 	@Test
 	void parametersAreMappedToApplicationProperties() {
 		BackingApplication backingApplication = BackingApplication.builder()
-			.build();
+	.build();
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("count", 2);
@@ -49,9 +49,9 @@ class PropertyMappingParametersTransformerFactoryTest {
 		parameters.put("health-check-type", "none");
 
 		StepVerifier
-			.create(transformer.transform(backingApplication, parameters))
-			.expectNext(backingApplication)
-			.verifyComplete();
+	.create(transformer.transform(backingApplication, parameters))
+	.expectNext(backingApplication)
+	.verifyComplete();
 
 		assertThat(backingApplication.getProperties()).containsEntry("count", "2");
 		assertThat(backingApplication.getProperties()).containsEntry("memory", "2G");
@@ -61,11 +61,11 @@ class PropertyMappingParametersTransformerFactoryTest {
 	@Test
 	void parametersOverrideApplicationProperties() {
 		BackingApplication backingApplication = BackingApplication.builder()
-			.property("count", "1")
-			.property("memory", "1G")
-			.property("health-check-type", "http")
-			.property("health-check-http-endpoint", "/myhealth")
-			.build();
+	.property("count", "1")
+	.property("memory", "1G")
+	.property("health-check-type", "http")
+	.property("health-check-http-endpoint", "/myhealth")
+	.build();
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("count", 2);
@@ -73,9 +73,9 @@ class PropertyMappingParametersTransformerFactoryTest {
 		parameters.put("health-check-type", "none");
 
 		StepVerifier
-			.create(transformer.transform(backingApplication, parameters))
-			.expectNext(backingApplication)
-			.verifyComplete();
+	.create(transformer.transform(backingApplication, parameters))
+	.expectNext(backingApplication)
+	.verifyComplete();
 
 		assertThat(backingApplication.getProperties()).containsEntry("count", "2");
 		assertThat(backingApplication.getProperties()).containsEntry("memory", "2G");

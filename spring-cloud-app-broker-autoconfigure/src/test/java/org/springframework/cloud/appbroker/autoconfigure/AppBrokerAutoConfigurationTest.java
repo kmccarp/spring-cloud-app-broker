@@ -65,160 +65,158 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class AppBrokerAutoConfigurationTest {
 
 	private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-		.withConfiguration(AutoConfigurations.of(
-			CloudFoundryAppDeployerAutoConfiguration.class,
-			AppBrokerAutoConfiguration.class
-		));
+.withConfiguration(AutoConfigurations.of(CloudFoundryAppDeployerAutoConfiguration.class,AppBrokerAutoConfiguration.class
+));
 
 	@Test
 	void servicesAreCreatedWithCloudFoundryConfigured() {
 		configuredContext()
-			.run(context -> {
-				assertBeansCreated(context);
-				assertPropertiesLoaded(context);
+	.run(context -> {
+		assertBeansCreated(context);
+		assertPropertiesLoaded(context);
 
-				assertThat(context)
-					.hasSingleBean(ServiceInstanceBindingService.class)
-					.getBean(ServiceInstanceBindingService.class)
-					.isExactlyInstanceOf(WorkflowServiceInstanceBindingService.class);
-			});
+		assertThat(context)
+	.hasSingleBean(ServiceInstanceBindingService.class)
+	.getBean(ServiceInstanceBindingService.class)
+	.isExactlyInstanceOf(WorkflowServiceInstanceBindingService.class);
+	});
 	}
 
 	@Test
 	void servicesAreNotCreatedWithoutDeployerConfiguration() {
 		this.contextRunner
-			.run((context) -> {
-				assertThat(context).doesNotHaveBean(BackingApplications.class);
-				assertThat(context).doesNotHaveBean(DeployerClient.class);
-			});
+	.run((context) -> {
+		assertThat(context).doesNotHaveBean(BackingApplications.class);
+		assertThat(context).doesNotHaveBean(DeployerClient.class);
+	});
 	}
 
 	@Test
 	void bindingServiceIsNotCreatedIfProvided() {
 		configuredContext()
-			.withUserConfiguration(CustomBindingServiceConfiguration.class)
-			.run(context -> {
-				assertBeansCreated(context);
+	.withUserConfiguration(CustomBindingServiceConfiguration.class)
+	.run(context -> {
+		assertBeansCreated(context);
 
-				assertThat(context)
-					.hasSingleBean(ServiceInstanceBindingService.class)
-					.getBean(ServiceInstanceBindingService.class)
-					.isExactlyInstanceOf(TestServiceInstanceBindingService.class);
-			});
+		assertThat(context)
+	.hasSingleBean(ServiceInstanceBindingService.class)
+	.getBean(ServiceInstanceBindingService.class)
+	.isExactlyInstanceOf(TestServiceInstanceBindingService.class);
+	});
 	}
 
 	@Test
 	void serviceInstanceIsNotCreatedIfProvided() {
 		configuredContext()
-			.withUserConfiguration(CustomServiceConfiguration.class)
-			.run(context -> {
-				assertBeansCreated(context);
+	.withUserConfiguration(CustomServiceConfiguration.class)
+	.run(context -> {
+		assertBeansCreated(context);
 
-				assertThat(context)
-					.hasSingleBean(ServiceInstanceService.class)
-					.getBean(ServiceInstanceService.class)
-					.isExactlyInstanceOf(TestServiceInstanceService.class);
-			});
+		assertThat(context)
+	.hasSingleBean(ServiceInstanceService.class)
+	.getBean(ServiceInstanceService.class)
+	.isExactlyInstanceOf(TestServiceInstanceService.class);
+	});
 	}
 
 	@Test
 	void clientCredentialsNotAllowedWhenUsernameAndPasswordSet() {
 		assertThatThrownBy(() -> this.contextRunner
-			.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
-				"spring.cloud.appbroker.deployer.cloudfoundry.password=secret",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client_secret=secret")
-			.run(Lifecycle::start));
+	.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
+"spring.cloud.appbroker.deployer.cloudfoundry.password=secret",
+"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user",
+"spring.cloud.appbroker.deployer.cloudfoundry.client_secret=secret")
+	.run(Lifecycle::start));
 	}
 
 	@Test
 	void clientIdWithoutSecretNotAllowed() {
 		assertThatThrownBy(() -> this.contextRunner
-			.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user")
-			.run(Lifecycle::start));
+	.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user")
+	.run(Lifecycle::start));
 	}
 
 	@Test
 	void configureCloudFoundryClientWithClientCredentials() {
 		this.contextRunner
-			.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client_secret=secret")
-			.run(context -> {
-				assertThat(context).hasSingleBean(TokenProvider.class);
-				assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
-			});
+	.withPropertyValues("spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.client_id=user",
+"spring.cloud.appbroker.deployer.cloudfoundry.client_secret=secret")
+	.run(context -> {
+		assertThat(context).hasSingleBean(TokenProvider.class);
+		assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
+	});
 	}
 
 	@Test
 	void serviceInstanceStateRepositoryIsNotCreatedIfProvided() {
 		configuredContext()
-			.withUserConfiguration(CustomStateRepositoriesConfiguration.class)
-			.run(context -> {
-				assertBeansCreated(context);
+	.withUserConfiguration(CustomStateRepositoriesConfiguration.class)
+	.run(context -> {
+		assertBeansCreated(context);
 
-				assertThat(context)
-					.hasSingleBean(ServiceInstanceStateRepository.class)
-					.getBean(ServiceInstanceStateRepository.class)
-					.isExactlyInstanceOf(TestServiceInstanceStateRepository.class);
-			});
+		assertThat(context)
+	.hasSingleBean(ServiceInstanceStateRepository.class)
+	.getBean(ServiceInstanceStateRepository.class)
+	.isExactlyInstanceOf(TestServiceInstanceStateRepository.class);
+	});
 	}
 
 	@Test
 	void brokeredServicesIsNotCreatedIfProvided() {
 		configuredContext()
-			.withUserConfiguration(CustomBrokeredServicesConfiguration.class)
-			.run(context -> {
-				assertBeansCreated(context);
+	.withUserConfiguration(CustomBrokeredServicesConfiguration.class)
+	.run(context -> {
+		assertBeansCreated(context);
 
-				assertThat(context)
-					.hasSingleBean(BrokeredServices.class)
-					.getBean(BrokeredServices.class)
-					.isEqualTo(new CustomBrokeredServicesConfiguration().brokeredServices());
-			});
+		assertThat(context)
+	.hasSingleBean(BrokeredServices.class)
+	.getBean(BrokeredServices.class)
+	.isEqualTo(new CustomBrokeredServicesConfiguration().brokeredServices());
+	});
 	}
 
 	@Test
 	void serviceInstanceBindingStateRepositoryIsNotCreatedIfProvided() {
 		configuredContext()
-			.withUserConfiguration(CustomStateRepositoriesConfiguration.class)
-			.run(context -> {
-				assertBeansCreated(context);
+	.withUserConfiguration(CustomStateRepositoriesConfiguration.class)
+	.run(context -> {
+		assertBeansCreated(context);
 
-				assertThat(context)
-					.hasSingleBean(ServiceInstanceBindingStateRepository.class)
-					.getBean(ServiceInstanceBindingStateRepository.class)
-					.isExactlyInstanceOf(TestServiceInstanceBindingStateRepository.class);
-			});
+		assertThat(context)
+	.hasSingleBean(ServiceInstanceBindingStateRepository.class)
+	.getBean(ServiceInstanceBindingStateRepository.class)
+	.isExactlyInstanceOf(TestServiceInstanceBindingStateRepository.class);
+	});
 	}
 
 	private ApplicationContextRunner configuredContext() {
 		return this.contextRunner
-			.withPropertyValues(
-				"spring.cloud.appbroker.services[0].service-name=service1",
-				"spring.cloud.appbroker.services[0].plan-name=service1-plan1",
+	.withPropertyValues(
+"spring.cloud.appbroker.services[0].service-name=service1",
+"spring.cloud.appbroker.services[0].plan-name=service1-plan1",
 
-				"spring.cloud.appbroker.services[0].apps[0].path=classpath:app1.jar",
-				"spring.cloud.appbroker.services[0].apps[0].name=app1",
-				"spring.cloud.appbroker.services[0].apps[0].properties.memory=1G",
+"spring.cloud.appbroker.services[0].apps[0].path=classpath:app1.jar",
+"spring.cloud.appbroker.services[0].apps[0].name=app1",
+"spring.cloud.appbroker.services[0].apps[0].properties.memory=1G",
 
-				"spring.cloud.appbroker.services[0].apps[1].path=classpath:app2.jar",
-				"spring.cloud.appbroker.services[0].apps[1].name=app2",
-				"spring.cloud.appbroker.services[0].apps[1].properties.memory=2G",
-				"spring.cloud.appbroker.services[0].apps[1].properties.instances=2",
+"spring.cloud.appbroker.services[0].apps[1].path=classpath:app2.jar",
+"spring.cloud.appbroker.services[0].apps[1].name=app2",
+"spring.cloud.appbroker.services[0].apps[1].properties.memory=2G",
+"spring.cloud.appbroker.services[0].apps[1].properties.instances=2",
 
-				"spring.cloud.appbroker.services[1].service-name=service2",
-				"spring.cloud.appbroker.services[1].plan-name=service2-plan1",
+"spring.cloud.appbroker.services[1].service-name=service2",
+"spring.cloud.appbroker.services[1].plan-name=service2-plan1",
 
-				"spring.cloud.appbroker.services[1].apps[0].path=classpath:app3.jar",
-				"spring.cloud.appbroker.services[1].apps[0].name=app3",
+"spring.cloud.appbroker.services[1].apps[0].path=classpath:app3.jar",
+"spring.cloud.appbroker.services[1].apps[0].name=app3",
 
-				"spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
-				"spring.cloud.appbroker.deployer.cloudfoundry.password=secret"
-			);
+"spring.cloud.appbroker.deployer.cloudfoundry.api-host=https://api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
+"spring.cloud.appbroker.deployer.cloudfoundry.password=secret"
+	);
 	}
 
 	private void assertBeansCreated(AssertableApplicationContext context) {
@@ -304,11 +302,11 @@ class AppBrokerAutoConfigurationTest {
 		@Bean
 		public BrokeredServices brokeredServices() {
 			return BrokeredServices.builder().service(
-				BrokeredService.builder()
-					.serviceName("single-service")
-					.planName("service1-plan1")
-					.build())
-				.build();
+		BrokeredService.builder()
+	.serviceName("single-service")
+	.planName("service1-plan1")
+	.build())
+		.build();
 		}
 	}
 
@@ -344,8 +342,10 @@ class AppBrokerAutoConfigurationTest {
 
 	}
 
-	private static class TestServiceInstanceStateRepository implements ServiceInstanceStateRepository {}
+	private static class TestServiceInstanceStateRepository implements ServiceInstanceStateRepository {
+	}
 
-	private static class TestServiceInstanceBindingStateRepository implements ServiceInstanceBindingStateRepository {}
+	private static class TestServiceInstanceBindingStateRepository implements ServiceInstanceBindingStateRepository {
+	}
 
 }

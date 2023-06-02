@@ -55,15 +55,15 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetAcceptanceTest extends Cl
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-		"spring.cloud.appbroker.services[0].target.name=ServiceInstanceGuidSuffix"
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].target.name=ServiceInstanceGuidSuffix"
 	})
 	void deployAppsWithServiceInstanceGuidSuffixOnCreateService() {
 		// when a service instance is created with target

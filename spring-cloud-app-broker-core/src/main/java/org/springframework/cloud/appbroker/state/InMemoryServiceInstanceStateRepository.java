@@ -37,35 +37,35 @@ public class InMemoryServiceInstanceStateRepository implements ServiceInstanceSt
 	@Override
 	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, OperationState state, String description) {
 		return Mono.just(new ServiceInstanceState(state, description, new Timestamp(Instant.now().toEpochMilli())))
-			.flatMap(serviceInstanceState -> Mono
-				.fromCallable(() -> this.states.put(serviceInstanceId, serviceInstanceState))
-				.thenReturn(serviceInstanceState));
+	.flatMap(serviceInstanceState -> Mono
+.fromCallable(() -> this.states.put(serviceInstanceId, serviceInstanceState))
+.thenReturn(serviceInstanceState));
 	}
 
 	@Override
 	public Mono<ServiceInstanceState> getState(String serviceInstanceId) {
 		return containsState(serviceInstanceId)
-			.flatMap(contains -> Mono.defer(() -> {
-				if (contains) {
-					return Mono.fromCallable(() -> this.states.get(serviceInstanceId));
-				}
-				else {
-					return Mono.error(new IllegalArgumentException("Unknown service instance ID " + serviceInstanceId));
-				}
-			}));
+	.flatMap(contains -> Mono.defer(() -> {
+		if (contains) {
+			return Mono.fromCallable(() -> this.states.get(serviceInstanceId));
+		}
+		else {
+			return Mono.error(new IllegalArgumentException("Unknown service instance ID " + serviceInstanceId));
+		}
+	}));
 	}
 
 	@Override
 	public Mono<ServiceInstanceState> removeState(String serviceInstanceId) {
 		return containsState(serviceInstanceId)
-			.flatMap(contains -> Mono.defer(() -> {
-				if (contains) {
-					return Mono.fromCallable(() -> this.states.remove(serviceInstanceId));
-				}
-				else {
-					return Mono.error(new IllegalArgumentException("Unknown service instance ID " + serviceInstanceId));
-				}
-			}));
+	.flatMap(contains -> Mono.defer(() -> {
+		if (contains) {
+			return Mono.fromCallable(() -> this.states.remove(serviceInstanceId));
+		}
+		else {
+			return Mono.error(new IllegalArgumentException("Unknown service instance ID " + serviceInstanceId));
+		}
+	}));
 	}
 
 	private Mono<Boolean> containsState(String serviceInstanceId) {

@@ -32,13 +32,13 @@ public class NoOpServiceInstanceBindingService implements ServiceInstanceBinding
 
 	@Override
 	public Mono<CreateServiceInstanceBindingResponse> createServiceInstanceBinding(
-		CreateServiceInstanceBindingRequest request) {
+CreateServiceInstanceBindingRequest request) {
 		return Mono.just(CreateServiceInstanceAppBindingResponse.builder().build());
 	}
 
 	@Override
 	public Mono<DeleteServiceInstanceBindingResponse> deleteServiceInstanceBinding(
-		DeleteServiceInstanceBindingRequest request) {
+DeleteServiceInstanceBindingRequest request) {
 		return Mono.just(DeleteServiceInstanceBindingResponse.builder().build());
 	}
 

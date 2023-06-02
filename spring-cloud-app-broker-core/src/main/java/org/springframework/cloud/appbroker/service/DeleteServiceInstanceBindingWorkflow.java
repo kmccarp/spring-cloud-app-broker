@@ -25,7 +25,7 @@ import org.springframework.cloud.servicebroker.model.binding.DeleteServiceInstan
 public interface DeleteServiceInstanceBindingWorkflow {
 
 	default Mono<Void> delete(DeleteServiceInstanceBindingRequest request,
-		DeleteServiceInstanceBindingResponse response) {
+DeleteServiceInstanceBindingResponse response) {
 		return Mono.empty();
 	}
 
@@ -34,7 +34,7 @@ public interface DeleteServiceInstanceBindingWorkflow {
 	}
 
 	default Mono<DeleteServiceInstanceBindingResponseBuilder> buildResponse(DeleteServiceInstanceBindingRequest request,
-		DeleteServiceInstanceBindingResponseBuilder responseBuilder) {
+DeleteServiceInstanceBindingResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

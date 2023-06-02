@@ -49,20 +49,20 @@ class DefaultBackingSpaceManagementServiceTest {
 		final String spaceName1 = "space1";
 		final String spaceName2 = "space2";
 		doReturn(Mono.just("returned-space-1"))
-			.when(deployerClient).deleteSpace(spaceName1);
+	.when(deployerClient).deleteSpace(spaceName1);
 		doReturn(Mono.just("returned-space-2"))
-			.when(deployerClient).deleteSpace(spaceName2);
+	.when(deployerClient).deleteSpace(spaceName2);
 
 		List<String> expectedValues = new ArrayList<>();
 		expectedValues.add("returned-space-1");
 		expectedValues.add("returned-space-2");
 
 		StepVerifier.create(backingSpaceManagementService.deleteTargetSpaces(asList(spaceName1, spaceName2)))
-			// deployments are run in parallel, so the order of completion is not predictable
-			// ensure that both expected signals are sent in any order
-			.expectNextMatches(expectedValues::remove)
-			.expectNextMatches(expectedValues::remove)
-			.verifyComplete();
+	// deployments are run in parallel, so the order of completion is not predictable
+	// ensure that both expected signals are sent in any order
+	.expectNextMatches(expectedValues::remove)
+	.expectNextMatches(expectedValues::remove)
+	.verifyComplete();
 	}
 
 }

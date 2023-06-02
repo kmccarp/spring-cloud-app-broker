@@ -36,86 +36,86 @@ public class ManagementClient {
 
 	public Mono<Void> start(BackingApplication backingApplication) {
 		return Mono.justOrEmpty(backingApplication)
-			.flatMap(backingApp -> appManager.start(StartApplicationRequest.builder()
-				.name(backingApp.getName())
-				.properties(backingApp.getProperties())
-				.build())
-				.doOnRequest(l -> {
-					LOG.info("Starting application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnSuccess(response -> {
-					LOG.info("Success starting application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error starting application. backingAppName=%s, error=%s",
-						backingApp.getName(), e.getMessage()), e);
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				}));
+	.flatMap(backingApp -> appManager.start(StartApplicationRequest.builder()
+.name(backingApp.getName())
+.properties(backingApp.getProperties())
+.build())
+.doOnRequest(l -> {
+	LOG.info("Starting application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnSuccess(response -> {
+	LOG.info("Success starting application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error starting application. backingAppName=%s, error=%s",
+backingApp.getName(), e.getMessage()), e);
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+}));
 	}
 
 	public Mono<Void> stop(BackingApplication backingApplication) {
 		return Mono.justOrEmpty(backingApplication)
-			.flatMap(backingApp -> appManager.stop(StopApplicationRequest.builder()
-				.name(backingApp.getName())
-				.properties(backingApp.getProperties())
-				.build())
-				.doOnRequest(l -> {
-					LOG.info("Stopping application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnSuccess(response -> {
-					LOG.info("Success stopping application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error stopping application. backingAppName=%s, error=%s",
-						backingApp.getName(), e.getMessage()), e);
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				}));
+	.flatMap(backingApp -> appManager.stop(StopApplicationRequest.builder()
+.name(backingApp.getName())
+.properties(backingApp.getProperties())
+.build())
+.doOnRequest(l -> {
+	LOG.info("Stopping application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnSuccess(response -> {
+	LOG.info("Success stopping application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error stopping application. backingAppName=%s, error=%s",
+backingApp.getName(), e.getMessage()), e);
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+}));
 	}
 
 	public Mono<Void> restart(BackingApplication backingApplication) {
 		return Mono.justOrEmpty(backingApplication)
-			.flatMap(backingApp -> appManager.restart(RestartApplicationRequest.builder()
-				.name(backingApp.getName())
-				.properties(backingApp.getProperties())
-				.build())
-				.doOnRequest(l -> {
-					LOG.info("Restarting application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnSuccess(response -> {
-					LOG.info("Success restarting application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error restarting application. backingAppName=%s, error=%s",
-						backingApp.getName(), e.getMessage()), e);
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				}));
+	.flatMap(backingApp -> appManager.restart(RestartApplicationRequest.builder()
+.name(backingApp.getName())
+.properties(backingApp.getProperties())
+.build())
+.doOnRequest(l -> {
+	LOG.info("Restarting application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnSuccess(response -> {
+	LOG.info("Success restarting application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error restarting application. backingAppName=%s, error=%s",
+backingApp.getName(), e.getMessage()), e);
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+}));
 	}
 
 	public Mono<Void> restage(BackingApplication backingApplication) {
 		return Mono.justOrEmpty(backingApplication)
-			.flatMap(backingApp -> appManager.restage(RestageApplicationRequest.builder()
-				.name(backingApp.getName())
-				.properties(backingApp.getProperties())
-				.build())
-				.doOnRequest(l -> {
-					LOG.info("Restaging application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnSuccess(response -> {
-					LOG.info("Success restaging application. backingAppName={}", backingApp.getName());
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error restaging application. backingAppName=%s, error=%s",
-						backingApp.getName(), e.getMessage()), e);
-					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
-				}));
+	.flatMap(backingApp -> appManager.restage(RestageApplicationRequest.builder()
+.name(backingApp.getName())
+.properties(backingApp.getProperties())
+.build())
+.doOnRequest(l -> {
+	LOG.info("Restaging application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnSuccess(response -> {
+	LOG.info("Success restaging application. backingAppName={}", backingApp.getName());
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error restaging application. backingAppName=%s, error=%s",
+backingApp.getName(), e.getMessage()), e);
+	LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
+}));
 	}
 
 }

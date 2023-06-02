@@ -55,17 +55,17 @@ class CreateInstanceWithParametersAcceptanceTest extends CloudFoundryAcceptanceT
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=config2",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter3",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=memory"
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=config2",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter3",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=memory"
 	})
 	void deployAppsWithParametersOnCreateService() {
 		// when a service instance is created

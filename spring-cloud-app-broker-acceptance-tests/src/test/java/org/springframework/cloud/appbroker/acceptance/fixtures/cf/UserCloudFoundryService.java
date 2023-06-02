@@ -48,28 +48,28 @@ public final class UserCloudFoundryService {
 
 	public UserCloudFoundryService(CloudFoundryOperations cloudFoundryOperations, CloudFoundryProperties cloudFoundryProperties) {
 		DefaultCloudFoundryOperations sourceCloudFoundryOperations =
-			(DefaultCloudFoundryOperations) cloudFoundryOperations;
+	(DefaultCloudFoundryOperations) cloudFoundryOperations;
 
 		this.targetOrg = cloudFoundryProperties.getDefaultOrg() + "-instances";
 		this.targetSpace = cloudFoundryProperties.getDefaultSpace();
 
 		ClientCredentialsGrantTokenProvider tokenProvider = ClientCredentialsGrantTokenProvider.builder()
-			.clientId(USER_CLIENT_ID)
-			.clientSecret(USER_CLIENT_SECRET)
-			.build();
+	.clientId(USER_CLIENT_ID)
+	.clientSecret(USER_CLIENT_SECRET)
+	.build();
 
 		ReactorCloudFoundryClient cloudFoundryClient = ReactorCloudFoundryClient.builder()
-			.from((ReactorCloudFoundryClient) sourceCloudFoundryOperations.getCloudFoundryClient())
-			.tokenProvider(tokenProvider)
-			.build();
+	.from((ReactorCloudFoundryClient) sourceCloudFoundryOperations.getCloudFoundryClient())
+	.tokenProvider(tokenProvider)
+	.build();
 
 		this.cloudFoundryOperations = DefaultCloudFoundryOperations
-			.builder()
-			.from(sourceCloudFoundryOperations)
-			.space(targetSpace)
-			.organization(targetOrg)
-			.cloudFoundryClient(cloudFoundryClient)
-			.build();
+	.builder()
+	.from(sourceCloudFoundryOperations)
+	.space(targetSpace)
+	.organization(targetOrg)
+	.cloudFoundryClient(cloudFoundryClient)
+	.build();
 	}
 
 	public String getOrgName() {
@@ -82,49 +82,48 @@ public final class UserCloudFoundryService {
 
 	public Mono<Void> deleteServiceInstance(String serviceInstanceName) {
 		return getServiceInstance(serviceInstanceName)
-			.flatMap(si -> cloudFoundryOperations.services().deleteInstance(DeleteServiceInstanceRequest.builder()
-				.name(si.getName())
-				.build())
-				.doOnSuccess(v -> LOG.info("Success deleting service instance. serviceInstanceName={}",
-					serviceInstanceName))
-				.doOnError(error -> logError("deleting service instance", serviceInstanceName, error))
-				.onErrorResume(e -> Mono.empty()))
-			.doOnError(error -> logError("getting service instance", serviceInstanceName, error))
-			.onErrorResume(e -> Mono.empty());
+	.flatMap(si -> cloudFoundryOperations.services().deleteInstance(DeleteServiceInstanceRequest.builder()
+.name(si.getName())
+.build())
+.doOnSuccess(v -> LOG.info("Success deleting service instance. serviceInstanceName={}",serviceInstanceName))
+.doOnError(error -> logError("deleting service instance", serviceInstanceName, error))
+.onErrorResume(e -> Mono.empty()))
+	.doOnError(error -> logError("getting service instance", serviceInstanceName, error))
+	.onErrorResume(e -> Mono.empty());
 	}
 
 	public Mono<Void> createServiceInstance(String planName,
-		String serviceName,
-		String serviceInstanceName,
-		Map<String, Object> parameters) {
+String serviceName,
+String serviceInstanceName,
+Map<String, Object> parameters) {
 		return cloudFoundryOperations.services().createInstance(CreateServiceInstanceRequest.builder()
-			.planName(planName)
-			.serviceName(serviceName)
-			.serviceInstanceName(serviceInstanceName)
-			.parameters(parameters)
-			.build())
-			.doOnSuccess(item -> LOG.info("Success creating service instance. serviceInstanceName={}",
-				serviceInstanceName))
-			.doOnError(error -> logError("creating service instance", serviceInstanceName, error));
+	.planName(planName)
+	.serviceName(serviceName)
+	.serviceInstanceName(serviceInstanceName)
+	.parameters(parameters)
+	.build())
+	.doOnSuccess(item -> LOG.info("Success creating service instance. serviceInstanceName={}",
+serviceInstanceName))
+	.doOnError(error -> logError("creating service instance", serviceInstanceName, error));
 	}
 
 	public Mono<Void> updateServiceInstance(String serviceInstanceName, Map<String, Object> parameters) {
 		return cloudFoundryOperations.services()
-			.updateInstance(UpdateServiceInstanceRequest.builder()
-				.serviceInstanceName(serviceInstanceName)
-				.parameters(parameters)
-				.build())
-			.doOnSuccess(item -> LOG.info("Updated service instance " + serviceInstanceName))
-			.doOnError(error -> logError("updating service instance", serviceInstanceName, error));
+	.updateInstance(UpdateServiceInstanceRequest.builder()
+.serviceInstanceName(serviceInstanceName)
+.parameters(parameters)
+.build())
+	.doOnSuccess(item -> LOG.info("Updated service instance " + serviceInstanceName))
+	.doOnError(error -> logError("updating service instance", serviceInstanceName, error));
 	}
 
 	public Mono<ServiceInstance> getServiceInstance(String serviceInstanceName) {
 		return cloudFoundryOperations.services()
-			.getInstance(GetServiceInstanceRequest.builder()
-				.name(serviceInstanceName)
-				.build())
-			.doOnSuccess(item -> LOG.info("Got service instance " + serviceInstanceName))
-			.doOnError(error -> logError("getting service instance", serviceInstanceName, error));
+	.getInstance(GetServiceInstanceRequest.builder()
+.name(serviceInstanceName)
+.build())
+	.doOnSuccess(item -> LOG.info("Got service instance " + serviceInstanceName))
+	.doOnError(error -> logError("getting service instance", serviceInstanceName, error));
 	}
 
 	private static void logError(String operation, String serviceInstanceName, Throwable error) {
@@ -132,7 +131,7 @@ public final class UserCloudFoundryService {
 		if (error instanceof UnknownCloudFoundryException) {
 			UnknownCloudFoundryException unknownCloudFoundryException = (UnknownCloudFoundryException) error;
 			logMessage = String.format("Error %s %s: %s %s", operation, serviceInstanceName,
-				unknownCloudFoundryException.getMessage(), unknownCloudFoundryException.getPayload());
+		unknownCloudFoundryException.getMessage(), unknownCloudFoundryException.getPayload());
 		}
 		else {
 			logMessage = String.format("Error %s %s: %s", operation, serviceInstanceName, error);

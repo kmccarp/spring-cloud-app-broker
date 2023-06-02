@@ -37,7 +37,7 @@ public class BrokeredService {
 	}
 
 	public BrokeredService(String serviceName, String planName, BackingApplications apps, BackingServices services,
-		TargetSpec target) {
+TargetSpec target) {
 		super();
 		this.serviceName = serviceName;
 		this.planName = planName;
@@ -100,10 +100,10 @@ public class BrokeredService {
 		}
 		BrokeredService that = (BrokeredService) o;
 		return Objects.equals(serviceName, that.serviceName) &&
-			Objects.equals(planName, that.planName) &&
-			Objects.equals(apps, that.apps) &&
-			Objects.equals(services, that.services) &&
-			Objects.equals(target, that.target);
+	Objects.equals(planName, that.planName) &&
+	Objects.equals(apps, that.apps) &&
+	Objects.equals(services, that.services) &&
+	Objects.equals(target, that.target);
 	}
 
 	@Override
@@ -114,12 +114,12 @@ public class BrokeredService {
 	@Override
 	public String toString() {
 		return "BrokeredService{" +
-			"serviceName='" + serviceName + '\'' +
-			", planName='" + planName + '\'' +
-			", apps=" + apps +
-			", services=" + services +
-			", target=" + target +
-			'}';
+	"serviceName='" + serviceName + '\'' +
+	", planName='" + planName + '\'' +
+	", apps=" + apps +
+	", services=" + services +
+	", target=" + target +
+	'}';
 	}
 
 	public static class BrokeredServiceBuilder {
@@ -147,8 +147,8 @@ public class BrokeredService {
 		public BrokeredServiceBuilder apps(BackingApplications backingApplications) {
 			if (!CollectionUtils.isEmpty(backingApplications)) {
 				this.backingApplications = BackingApplications.builder()
-					.backingApplications(backingApplications)
-					.build();
+			.backingApplications(backingApplications)
+			.build();
 			}
 			return this;
 		}
@@ -156,8 +156,8 @@ public class BrokeredService {
 		public BrokeredServiceBuilder services(BackingServices backingServices) {
 			if (!CollectionUtils.isEmpty(backingServices)) {
 				this.backingServices = BackingServices.builder()
-					.backingServices(backingServices)
-					.build();
+			.backingServices(backingServices)
+			.build();
 			}
 			return this;
 		}

@@ -33,7 +33,7 @@ public interface DeleteServiceInstanceWorkflow {
 	}
 
 	default Mono<DeleteServiceInstanceResponseBuilder> buildResponse(DeleteServiceInstanceRequest request,
-		DeleteServiceInstanceResponseBuilder responseBuilder) {
+DeleteServiceInstanceResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

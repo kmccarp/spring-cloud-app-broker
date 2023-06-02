@@ -68,30 +68,30 @@ class BackingAppManagementServiceTest {
 	@BeforeEach
 	void setUp() {
 		this.backingApps = BackingApplications.builder()
-			.backingApplication(BackingApplication.builder()
-				.name("testApp1")
-				.properties(Collections.singletonMap("target", "customTarget"))
-				.path("https://myfiles/app1.jar")
-				.build())
-			.backingApplication(BackingApplication.builder()
-				.name("testApp2")
-				.path("https://myfiles/app2.jar")
-				.build())
-			.build();
+	.backingApplication(BackingApplication.builder()
+.name("testApp1")
+.properties(Collections.singletonMap("target", "customTarget"))
+.path("https://myfiles/app1.jar")
+.build())
+	.backingApplication(BackingApplication.builder()
+.name("testApp2")
+.path("https://myfiles/app2.jar")
+.build())
+	.build();
 
 		BrokeredServices brokeredServices = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(backingApps)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(backingApps)
+.build())
+	.build();
 
 		this.backingAppManagementService = new BackingAppManagementService(managementClient, appDeployer,
-			brokeredServices,
-			targetService);
+	brokeredServices,
+	targetService);
 	}
 
 	@Test
@@ -100,19 +100,19 @@ class BackingAppManagementServiceTest {
 		doReturn(Mono.empty()).when(managementClient).stop(backingApps.get(1));
 
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(backingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		StepVerifier.create(backingAppManagementService.stop("foo-service-id"))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(backingApps), any(), eq("foo-service-id"));
@@ -125,31 +125,31 @@ class BackingAppManagementServiceTest {
 		BackingApplications emptyBackingApps = BackingApplications.builder().build();
 
 		BrokeredServices brokeredServicesNoApps = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(emptyBackingApps)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(emptyBackingApps)
+.build())
+	.build();
 
 		this.backingAppManagementService = new BackingAppManagementService(managementClient, appDeployer,
-			brokeredServicesNoApps,
-			targetService);
+	brokeredServicesNoApps,
+	targetService);
 
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(emptyBackingApps));
+	.willReturn(Mono.just(emptyBackingApps));
 
 		StepVerifier.create(backingAppManagementService.stop("foo-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id"));
@@ -160,11 +160,11 @@ class BackingAppManagementServiceTest {
 	@Test
 	void stopApplicationsServiceNotFound() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.build()));
 
 		StepVerifier.create(backingAppManagementService.stop("unknown-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoMoreInteractions(appDeployer, targetService, managementClient);
 	}
@@ -172,22 +172,22 @@ class BackingAppManagementServiceTest {
 	@Test
 	void startApplications() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(backingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		doReturn(Mono.empty()).when(managementClient).start(backingApps.get(0));
 		doReturn(Mono.empty()).when(managementClient).start(backingApps.get(1));
 
 		StepVerifier.create(backingAppManagementService.start("foo-service-id"))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(backingApps), any(), eq("foo-service-id"));
@@ -198,11 +198,11 @@ class BackingAppManagementServiceTest {
 	@Test
 	void startApplicationsServiceNotFound() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.build()));
 
 		StepVerifier.create(backingAppManagementService.start("unknown-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoMoreInteractions(appDeployer, targetService, managementClient);
 	}
@@ -212,31 +212,31 @@ class BackingAppManagementServiceTest {
 		BackingApplications emptyBackingApps = BackingApplications.builder().build();
 
 		BrokeredServices brokeredServicesNoApps = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(emptyBackingApps)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(emptyBackingApps)
+.build())
+	.build();
 
 		this.backingAppManagementService = new BackingAppManagementService(managementClient, appDeployer,
-			brokeredServicesNoApps,
-			targetService);
+	brokeredServicesNoApps,
+	targetService);
 
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(emptyBackingApps));
+	.willReturn(Mono.just(emptyBackingApps));
 
 		StepVerifier.create(backingAppManagementService.start("foo-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id"));
@@ -247,22 +247,22 @@ class BackingAppManagementServiceTest {
 	@Test
 	void restartApplications() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(backingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		doReturn(Mono.empty()).when(managementClient).restart(backingApps.get(0));
 		doReturn(Mono.empty()).when(managementClient).restart(backingApps.get(1));
 
 		StepVerifier.create(backingAppManagementService.restart("foo-service-id"))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(backingApps), any(), eq("foo-service-id"));
@@ -273,11 +273,11 @@ class BackingAppManagementServiceTest {
 	@Test
 	void restartApplicationsServiceNotFound() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.build()));
 
 		StepVerifier.create(backingAppManagementService.restart("unknown-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoMoreInteractions(appDeployer, targetService, managementClient);
 	}
@@ -287,31 +287,31 @@ class BackingAppManagementServiceTest {
 		BackingApplications emptyBackingApps = BackingApplications.builder().build();
 
 		BrokeredServices brokeredServicesNoApps = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(emptyBackingApps)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(emptyBackingApps)
+.build())
+	.build();
 
 		this.backingAppManagementService = new BackingAppManagementService(managementClient, appDeployer,
-			brokeredServicesNoApps,
-			targetService);
+	brokeredServicesNoApps,
+	targetService);
 
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(emptyBackingApps));
+	.willReturn(Mono.just(emptyBackingApps));
 
 		StepVerifier.create(backingAppManagementService.restart("foo-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id"));
@@ -323,41 +323,27 @@ class BackingAppManagementServiceTest {
 	@SuppressWarnings("unchecked")
 	void getDeployedBackingApplications() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(appDeployer.get(any(GetApplicationRequest.class)))
-			.willReturn(Mono.just(GetApplicationResponse.builder()
-					.name("testApp1")
-					.service("service1")
-					.service("service2")
-					.build()),
-				Mono.just(GetApplicationResponse.builder()
-					.name("testApp2")
-					.service("service3")
-					.build()));
+	.willReturn(Mono.just(GetApplicationResponse.builder().name("testApp1").service("service1").service("service2").build()),
+Mono.just(GetApplicationResponse.builder().name("testApp2").service("service3").build()));
 
 		given(targetService.addToBackingApplications(eq(backingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		StepVerifier.create(backingAppManagementService.getDeployedBackingApplications("foo-service-id"))
-			.expectNext(BackingApplications.builder()
-				.backingApplication(BackingApplication.builder()
-					.name("testApp1")
-					.properties(Collections.singletonMap("target", "customTarget"))
-					.services(
+	.expectNext(BackingApplications.builder()
+.backingApplication(BackingApplication.builder().name("testApp1").properties(Collections.singletonMap("target", "customTarget")).services(
 						ServicesSpec.builder().serviceInstanceName("service1").build(),
-						ServicesSpec.builder().serviceInstanceName("service2").build())
-					.build())
-				.backingApplication(BackingApplication.builder()
-					.name("testApp2")
-					.services(ServicesSpec.builder().serviceInstanceName("service3").build())
-					.build())
-				.build())
-			.verifyComplete();
+						ServicesSpec.builder().serviceInstanceName("service2").build()).build())
+.backingApplication(BackingApplication.builder().name("testApp2").services(ServicesSpec.builder().serviceInstanceName("service3").build()).build())
+.build())
+	.verifyComplete();
 
 		then(targetService).should().addToBackingApplications(eq(backingApps), any(), eq("foo-service-id"));
 		then(appDeployer).should().getServiceInstance(argThat(req -> "foo-service-id".equals(req.getServiceInstanceId())));
@@ -371,22 +357,22 @@ class BackingAppManagementServiceTest {
 	@Test
 	void restageApplications() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(backingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		doReturn(Mono.empty()).when(managementClient).restage(backingApps.get(0));
 		doReturn(Mono.empty()).when(managementClient).restage(backingApps.get(1));
 
 		StepVerifier.create(backingAppManagementService.restage("foo-service-id"))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(backingApps), any(), eq("foo-service-id"));
@@ -397,11 +383,11 @@ class BackingAppManagementServiceTest {
 	@Test
 	void restageApplicationsServiceNotFound() {
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.build()));
 
 		StepVerifier.create(backingAppManagementService.restage("unknown-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoMoreInteractions(appDeployer, targetService, managementClient);
 	}
@@ -411,31 +397,31 @@ class BackingAppManagementServiceTest {
 		BackingApplications emptyBackingApps = BackingApplications.builder().build();
 
 		BrokeredServices brokeredServicesNoApps = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(emptyBackingApps)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(emptyBackingApps)
+.build())
+	.build();
 
 		this.backingAppManagementService = new BackingAppManagementService(managementClient, appDeployer,
-			brokeredServicesNoApps,
-			targetService);
+	brokeredServicesNoApps,
+	targetService);
 
 		given(appDeployer.getServiceInstance(any(GetServiceInstanceRequest.class)))
-			.willReturn(Mono.just(GetServiceInstanceResponse.builder()
-				.name("foo-service")
-				.plan("plan1")
-				.service("service1")
-				.build()));
+	.willReturn(Mono.just(GetServiceInstanceResponse.builder()
+.name("foo-service")
+.plan("plan1")
+.service("service1")
+.build()));
 
 		given(targetService.addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id")))
-			.willReturn(Mono.just(emptyBackingApps));
+	.willReturn(Mono.just(emptyBackingApps));
 
 		StepVerifier.create(backingAppManagementService.restage("foo-service-id"))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appDeployer).getServiceInstance(any(GetServiceInstanceRequest.class));
 		verify(targetService).addToBackingApplications(eq(emptyBackingApps), any(), eq("foo-service-id"));

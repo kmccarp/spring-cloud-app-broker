@@ -36,7 +36,7 @@ public class CloudFoundryOperationsUtils {
 	protected Mono<CloudFoundryOperations> getOperations(Map<String, String> properties) {
 		return Mono.defer(() -> {
 			if (!CollectionUtils.isEmpty(properties) && properties.containsKey(
-				DeploymentProperties.TARGET_PROPERTY_KEY)) {
+		DeploymentProperties.TARGET_PROPERTY_KEY)) {
 				return getOperationsForSpace(properties.get(DeploymentProperties.TARGET_PROPERTY_KEY));
 			}
 			return Mono.just(this.operations);
@@ -45,21 +45,21 @@ public class CloudFoundryOperationsUtils {
 
 	protected Mono<CloudFoundryOperations> getOperationsForSpace(String space) {
 		return Mono.just(this.operations)
-			.cast(DefaultCloudFoundryOperations.class)
-			.map(cfOperations -> DefaultCloudFoundryOperations.builder()
-				.from(cfOperations)
-				.space(space)
-				.build());
+	.cast(DefaultCloudFoundryOperations.class)
+	.map(cfOperations -> DefaultCloudFoundryOperations.builder()
+.from(cfOperations)
+.space(space)
+.build());
 	}
 
 	protected Mono<CloudFoundryOperations> getOperationsForOrgAndSpace(String organization, String space) {
 		return Mono.just(this.operations)
-			.cast(DefaultCloudFoundryOperations.class)
-			.map(cfOperations -> DefaultCloudFoundryOperations.builder()
-				.from(cfOperations)
-				.organization(organization)
-				.space(space)
-				.build());
+	.cast(DefaultCloudFoundryOperations.class)
+	.map(cfOperations -> DefaultCloudFoundryOperations.builder()
+.from(cfOperations)
+.organization(organization)
+.space(space)
+.build());
 	}
 
 }

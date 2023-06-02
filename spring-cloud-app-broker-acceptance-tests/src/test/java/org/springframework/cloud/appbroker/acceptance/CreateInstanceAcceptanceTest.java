@@ -55,19 +55,19 @@ class CreateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_CREATE_1,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_CREATE_1,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
 
-		"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR_1=value1",
-		"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR_2=value2",
-		"spring.cloud.appbroker.services[0].apps[0].properties.memory=2G",
-		"spring.cloud.appbroker.services[0].apps[0].properties.count=2",
+"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR_1=value1",
+"spring.cloud.appbroker.services[0].apps[0].environment.ENV_VAR_2=value2",
+"spring.cloud.appbroker.services[0].apps[0].properties.memory=2G",
+"spring.cloud.appbroker.services[0].apps[0].properties.count=2",
 
-		"spring.cloud.appbroker.services[0].apps[1].name=" + APP_CREATE_2,
-		"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH
+"spring.cloud.appbroker.services[0].apps[1].name=" + APP_CREATE_2,
+"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH
 	})
 	void deployAppsOnCreateService() {
 		// when a service instance is created
@@ -83,7 +83,7 @@ class CreateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 		Optional<ApplicationSummary> backingApplication2 = getApplicationSummary(APP_CREATE_2);
 		assertThat(backingApplication2).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// and has the environment variables
 		DocumentContext json = getSpringAppJson(APP_CREATE_1);

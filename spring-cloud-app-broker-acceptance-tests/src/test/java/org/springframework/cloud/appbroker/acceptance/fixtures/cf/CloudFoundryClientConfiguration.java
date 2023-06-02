@@ -53,7 +53,7 @@ public class CloudFoundryClientConfiguration {
 	 * The broker client authorities
 	 */
 	public static final String[] APP_BROKER_CLIENT_AUTHORITIES = {
-		"cloud_controller.read", "cloud_controller.write", "clients.write"
+"cloud_controller.read", "cloud_controller.write", "clients.write"
 	};
 
 	/**
@@ -72,96 +72,96 @@ public class CloudFoundryClientConfiguration {
 	 * The user client authorities
 	 */
 	public static final String[] USER_CLIENT_AUTHORITIES = {
-		"cloud_controller.read", "cloud_controller.write"
+"cloud_controller.read", "cloud_controller.write"
 	};
 
 	@Bean
 	protected CloudFoundryOperations cloudFoundryOperations(CloudFoundryProperties properties,
-		CloudFoundryClient client,
-		DopplerClient dopplerClient,
-		@Qualifier("userCredentials") UaaClient uaaClient) {
+CloudFoundryClient client,
+DopplerClient dopplerClient,
+@Qualifier("userCredentials") UaaClient uaaClient) {
 		return DefaultCloudFoundryOperations.builder()
-			.cloudFoundryClient(client)
-			.dopplerClient(dopplerClient)
-			.uaaClient(uaaClient)
-			.organization(properties.getDefaultOrg())
-			.space(properties.getDefaultSpace())
-			.build();
+	.cloudFoundryClient(client)
+	.dopplerClient(dopplerClient)
+	.uaaClient(uaaClient)
+	.organization(properties.getDefaultOrg())
+	.space(properties.getDefaultSpace())
+	.build();
 	}
 
 	@Bean
 	protected CloudFoundryClient cloudFoundryClient(ConnectionContext connectionContext,
-		@Qualifier("userCredentials") TokenProvider tokenProvider) {
+@Qualifier("userCredentials") TokenProvider tokenProvider) {
 		return ReactorCloudFoundryClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	@Bean
 	protected ConnectionContext connectionContext(CloudFoundryProperties properties) {
 		return DefaultConnectionContext.builder()
-			.apiHost(properties.getApiHost())
-			.port(Optional.ofNullable(properties.getApiPort()))
-			.skipSslValidation(properties.isSkipSslValidation())
-			.secure(properties.isSecure())
-			.build();
+	.apiHost(properties.getApiHost())
+	.port(Optional.ofNullable(properties.getApiPort()))
+	.skipSslValidation(properties.isSkipSslValidation())
+	.secure(properties.isSecure())
+	.build();
 	}
 
 	@Bean
 	protected DopplerClient dopplerClient(ConnectionContext connectionContext,
-		@Qualifier("userCredentials") TokenProvider tokenProvider) {
+@Qualifier("userCredentials") TokenProvider tokenProvider) {
 		return ReactorDopplerClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	@Bean
 	@Qualifier("userCredentials")
 	protected UaaClient userCredentialsUaaClient(ConnectionContext connectionContext,
-		@Qualifier("userCredentials") TokenProvider tokenProvider) {
+@Qualifier("userCredentials") TokenProvider tokenProvider) {
 		return ReactorUaaClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	@Bean
 	@Qualifier("clientCredentials")
 	protected UaaClient clientCredentialsUaaClient(ConnectionContext connectionContext,
-		@Qualifier("clientCredentials") TokenProvider tokenProvider) {
+@Qualifier("clientCredentials") TokenProvider tokenProvider) {
 		return ReactorUaaClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	@Bean
 	@Qualifier("userCredentials")
 	@ConditionalOnProperty({
-		CloudFoundryProperties.PROPERTY_PREFIX + ".username",
-		CloudFoundryProperties.PROPERTY_PREFIX + ".password"
+CloudFoundryProperties.PROPERTY_PREFIX + ".username",
+CloudFoundryProperties.PROPERTY_PREFIX + ".password"
 	})
 	protected PasswordGrantTokenProvider passwordTokenProvider(CloudFoundryProperties properties) {
 		return PasswordGrantTokenProvider.builder()
-			.password(properties.getPassword())
-			.username(properties.getUsername())
-			.build();
+	.password(properties.getPassword())
+	.username(properties.getUsername())
+	.build();
 	}
 
 	@Bean
 	@Qualifier("clientCredentials")
 	@ConditionalOnProperty({
-		CloudFoundryProperties.PROPERTY_PREFIX + ".client-id",
-		CloudFoundryProperties.PROPERTY_PREFIX + ".client-secret"
+CloudFoundryProperties.PROPERTY_PREFIX + ".client-id",
+CloudFoundryProperties.PROPERTY_PREFIX + ".client-secret"
 	})
 	protected ClientCredentialsGrantTokenProvider clientTokenProvider(CloudFoundryProperties properties) {
 		return ClientCredentialsGrantTokenProvider.builder()
-			.clientId(properties.getClientId())
-			.clientSecret(properties.getClientSecret())
-			.identityZoneSubdomain(properties.getIdentityZoneSubdomain())
-			.build();
+	.clientId(properties.getClientId())
+	.clientSecret(properties.getClientSecret())
+	.identityZoneSubdomain(properties.getIdentityZoneSubdomain())
+	.build();
 	}
 
 }

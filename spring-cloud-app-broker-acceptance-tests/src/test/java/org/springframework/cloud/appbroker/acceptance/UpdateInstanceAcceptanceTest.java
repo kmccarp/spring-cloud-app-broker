@@ -60,18 +60,18 @@ class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=config2",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter4=config4",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter3",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping",
-		"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=count"
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=config2",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter4=config4",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter3",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping",
+"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=count"
 	})
 	void deployAppsOnUpdateService() {
 		// given a service instance is created
@@ -80,7 +80,7 @@ class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 		// and a backing application is deployed
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		DocumentContext json = getSpringAppJson(APP_NAME);
 		assertThat(json.read("$.parameter1").toString()).isEqualTo("config1");
@@ -112,7 +112,7 @@ class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 		backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(2));
+	assertThat(app.getRunningInstances()).isEqualTo(2));
 
 		// when the service instance is deleted
 		deleteServiceInstance(SI_NAME);

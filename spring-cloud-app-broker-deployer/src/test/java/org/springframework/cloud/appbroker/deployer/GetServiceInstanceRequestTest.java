@@ -28,7 +28,7 @@ class GetServiceInstanceRequestTest {
 	@Test
 	void builderWithNoValues() {
 		GetServiceInstanceRequest request = GetServiceInstanceRequest.builder()
-			.build();
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isNull();
 		assertThat(request.getServiceInstanceId()).isNull();
@@ -38,10 +38,10 @@ class GetServiceInstanceRequestTest {
 	@Test
 	void builderWithValues() {
 		GetServiceInstanceRequest request = GetServiceInstanceRequest.builder()
-			.name("foo-name")
-			.serviceInstanceId("foo-id")
-			.properties(Collections.singletonMap("foo", "bar"))
-			.build();
+	.name("foo-name")
+	.serviceInstanceId("foo-id")
+	.properties(Collections.singletonMap("foo", "bar"))
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getName()).isEqualTo("foo-name");
 		assertThat(request.getServiceInstanceId()).isEqualTo("foo-id");
@@ -51,8 +51,8 @@ class GetServiceInstanceRequestTest {
 	@Test
 	void builderAcceptsNullProperties() {
 		GetServiceInstanceRequest request = GetServiceInstanceRequest.builder()
-			.properties(null)
-			.build();
+	.properties(null)
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getProperties()).isEmpty();
 	}
@@ -60,8 +60,8 @@ class GetServiceInstanceRequestTest {
 	@Test
 	void builderAcceptsEmptyProperties() {
 		GetServiceInstanceRequest request = GetServiceInstanceRequest.builder()
-			.properties(Collections.emptyMap())
-			.build();
+	.properties(Collections.emptyMap())
+	.build();
 		assertThat(request).isNotNull();
 		assertThat(request.getProperties()).isEmpty();
 	}

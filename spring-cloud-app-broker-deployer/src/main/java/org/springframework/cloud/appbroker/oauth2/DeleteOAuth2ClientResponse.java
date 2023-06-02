@@ -35,8 +35,8 @@ public class DeleteOAuth2ClientResponse {
 	private final List<String> grantTypes;
 
 	protected DeleteOAuth2ClientResponse(String clientId, String clientName,
-		List<String> scopes, List<String> authorities,
-		List<String> grantTypes) {
+List<String> scopes, List<String> authorities,
+List<String> grantTypes) {
 		this.clientId = clientId;
 		this.clientName = clientName;
 		this.scopes = scopes;
@@ -78,10 +78,10 @@ public class DeleteOAuth2ClientResponse {
 		}
 		DeleteOAuth2ClientResponse that = (DeleteOAuth2ClientResponse) o;
 		return Objects.equals(clientId, that.clientId) &&
-			Objects.equals(clientName, that.clientName) &&
-			Objects.equals(scopes, that.scopes) &&
-			Objects.equals(authorities, that.authorities) &&
-			Objects.equals(grantTypes, that.grantTypes);
+	Objects.equals(clientName, that.clientName) &&
+	Objects.equals(scopes, that.scopes) &&
+	Objects.equals(authorities, that.authorities) &&
+	Objects.equals(grantTypes, that.grantTypes);
 	}
 
 	@Override
@@ -92,12 +92,12 @@ public class DeleteOAuth2ClientResponse {
 	@Override
 	public String toString() {
 		return "DeleteOAuth2ClientResponse{" +
-			"clientId='" + clientId + '\'' +
-			", clientName='" + clientName + '\'' +
-			", scopes=" + scopes +
-			", authorities=" + authorities +
-			", grantTypes=" + grantTypes +
-			'}';
+	"clientId='" + clientId + '\'' +
+	", clientName='" + clientName + '\'' +
+	", scopes=" + scopes +
+	", authorities=" + authorities +
+	", grantTypes=" + grantTypes +
+	'}';
 	}
 
 	public static final class DeleteOAuth2ClientResponseBuilder {

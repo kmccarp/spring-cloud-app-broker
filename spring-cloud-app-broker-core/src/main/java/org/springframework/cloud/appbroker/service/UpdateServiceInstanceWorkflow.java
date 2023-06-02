@@ -33,7 +33,7 @@ public interface UpdateServiceInstanceWorkflow {
 	}
 
 	default Mono<UpdateServiceInstanceResponseBuilder> buildResponse(UpdateServiceInstanceRequest request,
-		UpdateServiceInstanceResponseBuilder responseBuilder) {
+UpdateServiceInstanceResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

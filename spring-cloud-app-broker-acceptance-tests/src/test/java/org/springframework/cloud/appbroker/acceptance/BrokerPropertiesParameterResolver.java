@@ -29,14 +29,14 @@ class BrokerPropertiesParameterResolver implements ParameterResolver {
 	@SuppressWarnings("PMD.AvoidUncheckedExceptionsInSignatures")
 	@Override
 	public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
-		throws ParameterResolutionException {
+throws ParameterResolutionException {
 		return parameterContext.getParameter().getType() == BrokerProperties.class;
 	}
 
 	@SuppressWarnings("PMD.AvoidUncheckedExceptionsInSignatures")
 	@Override
 	public BrokerProperties resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
-		throws ParameterResolutionException {
+throws ParameterResolutionException {
 		String[] properties = getValueHolderProperties(extensionContext);
 		return new BrokerProperties(properties);
 	}
@@ -44,8 +44,8 @@ class BrokerPropertiesParameterResolver implements ParameterResolver {
 	private static String[] getValueHolderProperties(ExtensionContext extensionContext) {
 		Optional<Method> testInstance = extensionContext.getTestMethod();
 		return testInstance
-			.map(method -> method.getAnnotation(AppBrokerTestProperties.class).value())
-			.orElseGet(() -> new String[] {});
+	.map(method -> method.getAnnotation(AppBrokerTestProperties.class).value())
+	.orElseGet(() -> new String[]{});
 	}
 
 }

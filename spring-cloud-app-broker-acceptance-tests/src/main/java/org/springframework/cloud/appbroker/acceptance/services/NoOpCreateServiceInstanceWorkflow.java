@@ -51,7 +51,7 @@ public class NoOpCreateServiceInstanceWorkflow implements CreateServiceInstanceW
 
 	@Override
 	public Mono<CreateServiceInstanceResponseBuilder> buildResponse(CreateServiceInstanceRequest request,
-		CreateServiceInstanceResponseBuilder responseBuilder) {
+CreateServiceInstanceResponseBuilder responseBuilder) {
 		if (LOG.isInfoEnabled()) {
 			LOG.info("Got request to create service instance: " + request);
 		}

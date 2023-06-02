@@ -25,11 +25,11 @@ class BackingApplicationTest {
 	@Test
 	void stringRepresentationShouldNotExposeSensitiveInformationFromTheEnvironment() {
 		BackingApplication backingApp = BackingApplication
-			.builder()
-			.name("Test")
-			.environment("privateKey", "secret-private-key")
-			.environment("databasePassword", "password")
-			.build();
+	.builder()
+	.name("Test")
+	.environment("privateKey", "secret-private-key")
+	.environment("databasePassword", "password")
+	.build();
 
 		String backingAppAsString = backingApp.toString();
 

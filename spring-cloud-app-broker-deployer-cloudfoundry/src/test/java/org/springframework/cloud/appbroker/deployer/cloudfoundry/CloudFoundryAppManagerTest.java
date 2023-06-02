@@ -59,7 +59,7 @@ class CloudFoundryAppManagerTest {
 	@Test
 	void startNullApplication() {
 		StepVerifier.create(appManager.start(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -70,14 +70,14 @@ class CloudFoundryAppManagerTest {
 		setupStubs();
 
 		given(operationsApplications.start(any(org.cloudfoundry.operations.applications.StartApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StartApplicationRequest request = StartApplicationRequest.builder()
-			.name("my-foo-app")
-			.build();
+	.name("my-foo-app")
+	.build();
 
 		StepVerifier.create(appManager.start(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).should().start(argThat(req -> "my-foo-app".equals(req.getName())));
 		then(operations).shouldHaveNoMoreInteractions();
@@ -88,10 +88,10 @@ class CloudFoundryAppManagerTest {
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(operations));
 
 		StartApplicationRequest request = StartApplicationRequest.builder()
-			.build();
+	.build();
 
 		StepVerifier.create(appManager.start(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -100,7 +100,7 @@ class CloudFoundryAppManagerTest {
 	@Test
 	void stopNullApplication() {
 		StepVerifier.create(appManager.stop(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -111,14 +111,14 @@ class CloudFoundryAppManagerTest {
 		setupStubs();
 
 		given(operationsApplications.stop(any(org.cloudfoundry.operations.applications.StopApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.name("my-foo-app")
-			.build();
+	.name("my-foo-app")
+	.build();
 
 		StepVerifier.create(appManager.stop(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).should().stop(argThat(req -> "my-foo-app".equals(req.getName())));
 		then(operations).shouldHaveNoMoreInteractions();
@@ -129,10 +129,10 @@ class CloudFoundryAppManagerTest {
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(operations));
 
 		StopApplicationRequest request = StopApplicationRequest.builder()
-			.build();
+	.build();
 
 		StepVerifier.create(appManager.stop(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -141,7 +141,7 @@ class CloudFoundryAppManagerTest {
 	@Test
 	void restartNullApplication() {
 		StepVerifier.create(appManager.restart(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -152,15 +152,15 @@ class CloudFoundryAppManagerTest {
 		setupStubs();
 
 		given(operationsApplications
-			.restart(any(org.cloudfoundry.operations.applications.RestartApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.restart(any(org.cloudfoundry.operations.applications.RestartApplicationRequest.class)))
+	.willReturn(Mono.empty());
 
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.name("my-foo-app")
-			.build();
+	.name("my-foo-app")
+	.build();
 
 		StepVerifier.create(appManager.restart(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).should().restart(argThat(req -> "my-foo-app".equals(req.getName())));
 		then(operations).shouldHaveNoMoreInteractions();
@@ -171,10 +171,10 @@ class CloudFoundryAppManagerTest {
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(operations));
 
 		RestartApplicationRequest request = RestartApplicationRequest.builder()
-			.build();
+	.build();
 
 		StepVerifier.create(appManager.restart(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -183,7 +183,7 @@ class CloudFoundryAppManagerTest {
 	@Test
 	void restageNullApplication() {
 		StepVerifier.create(appManager.restage(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();
@@ -194,15 +194,15 @@ class CloudFoundryAppManagerTest {
 		setupStubs();
 
 		given(operationsApplications
-			.restage(any(org.cloudfoundry.operations.applications.RestageApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.restage(any(org.cloudfoundry.operations.applications.RestageApplicationRequest.class)))
+	.willReturn(Mono.empty());
 
 		RestageApplicationRequest request = RestageApplicationRequest.builder()
-			.name("my-foo-app")
-			.build();
+	.name("my-foo-app")
+	.build();
 
 		StepVerifier.create(appManager.restage(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).should().restage(argThat(req -> "my-foo-app".equals(req.getName())));
 		then(operations).shouldHaveNoMoreInteractions();
@@ -213,10 +213,10 @@ class CloudFoundryAppManagerTest {
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(operations));
 
 		RestageApplicationRequest request = RestageApplicationRequest.builder()
-			.build();
+	.build();
 
 		StepVerifier.create(appManager.restage(request))
-			.verifyComplete();
+	.verifyComplete();
 
 		then(operationsApplications).shouldHaveNoInteractions();
 		then(operations).shouldHaveNoMoreInteractions();

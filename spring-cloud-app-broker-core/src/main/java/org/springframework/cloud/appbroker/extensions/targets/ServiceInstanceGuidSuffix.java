@@ -40,9 +40,9 @@ public class ServiceInstanceGuidSuffix extends TargetFactory<ServiceInstanceGuid
 			modifiedName = name.substring(0, availableLength);
 		}
 		return ArtifactDetails.builder()
-			.name(assembleName(modifiedName, serviceInstanceId))
-			.properties(properties)
-			.build();
+	.name(assembleName(modifiedName, serviceInstanceId))
+	.properties(properties)
+	.build();
 	}
 
 	private int calculateAvailableLength(String serviceInstanceId) {

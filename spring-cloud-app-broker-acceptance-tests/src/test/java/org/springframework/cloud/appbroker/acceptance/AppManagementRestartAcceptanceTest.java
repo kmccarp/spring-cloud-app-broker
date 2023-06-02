@@ -59,33 +59,33 @@ class AppManagementRestartAcceptanceTest extends CloudFoundryAcceptanceTest {
 	@BeforeEach
 	void setUp() {
 		StepVerifier.create(userCloudFoundryService.deleteServiceInstance(SI_NAME))
-			.verifyComplete();
+	.verifyComplete();
 
 		StepVerifier.create(userCloudFoundryService.createServiceInstance(PLAN_NAME, APP_SERVICE_NAME, SI_NAME, null))
-			.verifyComplete();
+	.verifyComplete();
 
 		StepVerifier.create(userCloudFoundryService.getServiceInstance(SI_NAME))
-			.assertNext(serviceInstance -> assertThat(serviceInstance.getStatus()).isEqualTo("succeeded"))
-			.verifyComplete();
+	.assertNext(serviceInstance -> assertThat(serviceInstance.getStatus()).isEqualTo("succeeded"))
+	.verifyComplete();
 	}
 
 	@AfterEach
 	void cleanUp() {
 		StepVerifier.create(userCloudFoundryService.deleteServiceInstance(SI_NAME))
-			.verifyComplete();
+	.verifyComplete();
 
 		StepVerifier.create(getApplications(APP_1, APP_2))
-			.verifyError();
+	.verifyError();
 	}
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_1,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[1].name=" + APP_2,
-		"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_1,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[1].name=" + APP_2,
+"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH
 	})
 	void restartApps() {
 		List<ApplicationDetail> apps = getApplications(APP_1, APP_2).block();
@@ -93,8 +93,8 @@ class AppManagementRestartAcceptanceTest extends CloudFoundryAcceptanceTest {
 		Date originallySince2 = apps.get(1).getInstanceDetails().get(0).getSince();
 
 		StepVerifier.create(manageApps(SI_NAME, APP_SERVICE_NAME, PLAN_NAME, "restart"))
-			.assertNext(result -> assertThat(result).contains("restarting"))
-			.verifyComplete();
+	.assertNext(result -> assertThat(result).contains("restarting"))
+	.verifyComplete();
 
 		List<ApplicationDetail> restagedApps = getApplications(APP_1, APP_2).block();
 		Date since1 = restagedApps.get(0).getInstanceDetails().get(0).getSince();

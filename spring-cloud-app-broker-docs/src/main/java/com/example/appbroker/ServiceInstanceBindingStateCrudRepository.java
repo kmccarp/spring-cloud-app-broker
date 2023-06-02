@@ -9,18 +9,18 @@ import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 interface ServiceInstanceBindingStateCrudRepository extends ReactiveCrudRepository<ServiceInstanceBinding, Long> {
 
 	@Query("select * from service_instance_binding " +
-			"where service_instance_id = :service_instance_id " +
-			"and binding_id = :binding_id")
+"where service_instance_id = :service_instance_id " +
+"and binding_id = :binding_id")
 	Mono<ServiceInstanceBinding> findByServiceInstanceIdAndBindingId(
-			@Param("service_instance_id") String serviceInstanceId,
-			@Param("binding_id") String bindingId);
+@Param("service_instance_id") String serviceInstanceId,
+@Param("binding_id") String bindingId);
 
 
 	@Query("delete from service_instance_binding " +
-			"where service_instance_id = :service_instance_id " +
-			"and binding_id = :binding_id")
+"where service_instance_id = :service_instance_id " +
+"and binding_id = :binding_id")
 	Mono<Void> deleteByServiceInstanceIdAndBindingId(
-			@Param("service_instance_id") String serviceInstanceId,
-			@Param("binding_id") String bindingId);
+@Param("service_instance_id") String serviceInstanceId,
+@Param("binding_id") String bindingId);
 
 }

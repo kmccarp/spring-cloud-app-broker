@@ -58,8 +58,8 @@ public class DeleteOAuth2ClientRequest {
 		}
 		DeleteOAuth2ClientRequest that = (DeleteOAuth2ClientRequest) o;
 		return Objects.equals(clientId, that.clientId) &&
-			Objects.equals(identityZoneSubdomain, that.identityZoneSubdomain) &&
-			Objects.equals(identityZoneId, that.identityZoneId);
+	Objects.equals(identityZoneSubdomain, that.identityZoneSubdomain) &&
+	Objects.equals(identityZoneId, that.identityZoneId);
 	}
 
 	@Override
@@ -70,10 +70,10 @@ public class DeleteOAuth2ClientRequest {
 	@Override
 	public String toString() {
 		return "DeleteOAuth2ClientRequest{" +
-			"clientId='" + clientId + '\'' +
-			", identityZoneSubdomain='" + identityZoneSubdomain + '\'' +
-			", identityZoneId='" + identityZoneId + '\'' +
-			'}';
+	"clientId='" + clientId + '\'' +
+	", identityZoneSubdomain='" + identityZoneSubdomain + '\'' +
+	", identityZoneId='" + identityZoneId + '\'' +
+	'}';
 	}
 
 	public static final class DeleteOAuth2ClientRequestBuilder {

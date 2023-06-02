@@ -128,7 +128,7 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public BackingAppManagementService backingAppManagementService(ManagementClient managementClient,
-		AppDeployer appDeployer, BrokeredServices brokeredServices, TargetService targetService) {
+AppDeployer appDeployer, BrokeredServices brokeredServices, TargetService targetService) {
 		return new BackingAppManagementService(managementClient, appDeployer, brokeredServices, targetService);
 	}
 
@@ -154,7 +154,7 @@ public class AppBrokerAutoConfiguration {
 	public ServiceInstanceStateRepository serviceInstanceStateRepository() {
 		if (LOG.isWarnEnabled()) {
 			LOG.warn("The InMemoryServiceInstanceStateRepository is provided for demonstration and testing purposes " +
-					"only. It is not suitable for production applications!");
+		"only. It is not suitable for production applications!");
 		}
 		return new InMemoryServiceInstanceStateRepository();
 	}
@@ -169,7 +169,7 @@ public class AppBrokerAutoConfiguration {
 	public ServiceInstanceBindingStateRepository serviceInstanceBindingStateRepository() {
 		if (LOG.isWarnEnabled()) {
 			LOG.warn("The InMemoryServiceInstanceBindingStateRepository is provided for demonstration and testing " +
-					"purposes only. It is not suitable for production applications!");
+		"purposes only. It is not suitable for production applications!");
 		}
 		return new InMemoryServiceInstanceBindingStateRepository();
 	}
@@ -212,7 +212,7 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public BackingApplicationsParametersTransformationService backingApplicationsParametersTransformationService(
-		List<ParametersTransformerFactory<BackingApplication, ?>> transformers) {
+List<ParametersTransformerFactory<BackingApplication, ?>> transformers) {
 		return new BackingApplicationsParametersTransformationService(transformers);
 	}
 
@@ -224,7 +224,7 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public BackingServicesParametersTransformationService backingServicesParametersTransformationService(
-		List<ParametersTransformerFactory<BackingService, ?>> transformers) {
+List<ParametersTransformerFactory<BackingService, ?>> transformers) {
 		return new BackingServicesParametersTransformationService(transformers);
 	}
 
@@ -296,17 +296,17 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public CreateServiceInstanceWorkflow appDeploymentCreateServiceInstanceWorkflow(
-		BrokeredServices brokeredServices, BackingAppDeploymentService backingAppDeploymentService,
-		BackingApplicationsParametersTransformationService appsParametersTransformationService,
-		BackingServicesParametersTransformationService servicesParametersTransformationService,
-		TargetService targetService, BackingServicesProvisionService backingServicesProvisionService) {
+BrokeredServices brokeredServices, BackingAppDeploymentService backingAppDeploymentService,
+BackingApplicationsParametersTransformationService appsParametersTransformationService,
+BackingServicesParametersTransformationService servicesParametersTransformationService,
+TargetService targetService, BackingServicesProvisionService backingServicesProvisionService) {
 		return new AppDeploymentCreateServiceInstanceWorkflow(
-			brokeredServices,
-			backingAppDeploymentService,
-			backingServicesProvisionService,
-			appsParametersTransformationService,
-			servicesParametersTransformationService,
-			targetService);
+	brokeredServices,
+	backingAppDeploymentService,
+	backingServicesProvisionService,
+	appsParametersTransformationService,
+	servicesParametersTransformationService,
+	targetService);
 	}
 
 	/**
@@ -323,22 +323,22 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public UpdateServiceInstanceWorkflow appDeploymentUpdateServiceInstanceWorkflow(
-		BrokeredServices brokeredServices,
-		BackingAppDeploymentService backingAppDeploymentService,
-		BackingAppManagementService backingAppManagementService,
-		BackingServicesProvisionService backingServicesProvisionService,
-		BackingApplicationsParametersTransformationService appsParametersTransformationService,
-		BackingServicesParametersTransformationService servicesParametersTransformationService,
-		TargetService targetService) {
+BrokeredServices brokeredServices,
+BackingAppDeploymentService backingAppDeploymentService,
+BackingAppManagementService backingAppManagementService,
+BackingServicesProvisionService backingServicesProvisionService,
+BackingApplicationsParametersTransformationService appsParametersTransformationService,
+BackingServicesParametersTransformationService servicesParametersTransformationService,
+TargetService targetService) {
 
 		return new AppDeploymentUpdateServiceInstanceWorkflow(
-			brokeredServices,
-			backingAppDeploymentService,
-			backingAppManagementService,
-			backingServicesProvisionService,
-			appsParametersTransformationService,
-			servicesParametersTransformationService,
-			targetService);
+	brokeredServices,
+	backingAppDeploymentService,
+	backingAppManagementService,
+	backingServicesProvisionService,
+	appsParametersTransformationService,
+	servicesParametersTransformationService,
+	targetService);
 	}
 
 	/**
@@ -353,19 +353,19 @@ public class AppBrokerAutoConfiguration {
 	 */
 	@Bean
 	public DeleteServiceInstanceWorkflow appDeploymentDeleteServiceInstanceWorkflow(
-		BrokeredServices brokeredServices, BackingAppDeploymentService backingAppDeploymentService,
-		BackingAppManagementService backingAppManagementService,
-		BackingServicesProvisionService backingServicesProvisionService,
-		BackingSpaceManagementService backingSpaceManagementService,
-		TargetService targetService) {
+BrokeredServices brokeredServices, BackingAppDeploymentService backingAppDeploymentService,
+BackingAppManagementService backingAppManagementService,
+BackingServicesProvisionService backingServicesProvisionService,
+BackingSpaceManagementService backingSpaceManagementService,
+TargetService targetService) {
 
 		return new AppDeploymentDeleteServiceInstanceWorkflow(
-			brokeredServices,
-			backingAppDeploymentService,
-			backingAppManagementService,
-			backingServicesProvisionService,
-			backingSpaceManagementService,
-			targetService
+	brokeredServices,
+	backingAppDeploymentService,
+	backingAppManagementService,
+	backingServicesProvisionService,
+	backingSpaceManagementService,
+	targetService
 		);
 	}
 
@@ -381,8 +381,8 @@ public class AppBrokerAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(ServiceInstanceService.class)
 	public WorkflowServiceInstanceService serviceInstanceService(ServiceInstanceStateRepository stateRepository,
-		List<CreateServiceInstanceWorkflow> createWorkflows, List<DeleteServiceInstanceWorkflow> deleteWorkflows,
-		List<UpdateServiceInstanceWorkflow> updateWorkflows) {
+List<CreateServiceInstanceWorkflow> createWorkflows, List<DeleteServiceInstanceWorkflow> deleteWorkflows,
+List<UpdateServiceInstanceWorkflow> updateWorkflows) {
 		return new WorkflowServiceInstanceService(stateRepository, createWorkflows, deleteWorkflows, updateWorkflows);
 	}
 
@@ -398,13 +398,13 @@ public class AppBrokerAutoConfiguration {
 	@Bean
 	@ConditionalOnMissingBean(ServiceInstanceBindingService.class)
 	public WorkflowServiceInstanceBindingService serviceInstanceBindingService(
-		ServiceInstanceBindingStateRepository stateRepository,
-		@Autowired(required = false) List<CreateServiceInstanceAppBindingWorkflow> createServiceInstanceAppBindingWorkflows,
-		@Autowired(required = false) List<CreateServiceInstanceRouteBindingWorkflow> createServiceInstanceRouteBindingWorkflows,
-		@Autowired(required = false) List<DeleteServiceInstanceBindingWorkflow> deleteServiceInstanceBindingWorkflows) {
+ServiceInstanceBindingStateRepository stateRepository,
+@Autowired(required = false) List<CreateServiceInstanceAppBindingWorkflow> createServiceInstanceAppBindingWorkflows,
+@Autowired(required = false) List<CreateServiceInstanceRouteBindingWorkflow> createServiceInstanceRouteBindingWorkflows,
+@Autowired(required = false) List<DeleteServiceInstanceBindingWorkflow> deleteServiceInstanceBindingWorkflows) {
 		return new WorkflowServiceInstanceBindingService(stateRepository,
-			createServiceInstanceAppBindingWorkflows, createServiceInstanceRouteBindingWorkflows,
-			deleteServiceInstanceBindingWorkflows);
+	createServiceInstanceAppBindingWorkflows, createServiceInstanceRouteBindingWorkflows,
+	deleteServiceInstanceBindingWorkflows);
 	}
 
 }

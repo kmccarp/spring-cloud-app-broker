@@ -38,41 +38,40 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 
 	@Override
 	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, String bindingId, OperationState state,
-		String description) {
+String description) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
-			.flatMap(bindingKey -> Mono
-				.just(new ServiceInstanceState(state, description, new Timestamp(Instant.now().toEpochMilli())))
-				.flatMap(
-					serviceInstanceState -> Mono.fromCallable(() -> this.states.put(bindingKey, serviceInstanceState))
+	.flatMap(bindingKey -> Mono
+.just(new ServiceInstanceState(state, description, new Timestamp(Instant.now().toEpochMilli())))
+.flatMap(serviceInstanceState -> Mono.fromCallable(() -> this.states.put(bindingKey, serviceInstanceState))
 						.thenReturn(serviceInstanceState)));
 	}
 
 	@Override
 	public Mono<ServiceInstanceState> getState(String serviceInstanceId, String bindingId) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
-			.flatMap(bindingKey -> containsState(bindingKey)
-				.flatMap(contains -> Mono.defer(() -> {
-					if (contains) {
-						return Mono.fromCallable(() -> this.states.get(bindingKey));
-					}
-					else {
-						return Mono.error(new IllegalArgumentException("Unknown binding " + bindingKey));
-					}
-				})));
+	.flatMap(bindingKey -> containsState(bindingKey)
+.flatMap(contains -> Mono.defer(() -> {
+	if (contains) {
+		return Mono.fromCallable(() -> this.states.get(bindingKey));
+	}
+	else {
+		return Mono.error(new IllegalArgumentException("Unknown binding " + bindingKey));
+	}
+})));
 	}
 
 	@Override
 	public Mono<ServiceInstanceState> removeState(String serviceInstanceId, String bindingId) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
-			.flatMap(bindingKey -> containsState(bindingKey)
-				.flatMap(contains -> Mono.defer(() -> {
-					if (contains) {
-						return Mono.fromCallable(() -> this.states.remove(bindingKey));
-					}
-					else {
-						return Mono.error(new IllegalArgumentException("Unknown binding " + bindingKey));
-					}
-				})));
+	.flatMap(bindingKey -> containsState(bindingKey)
+.flatMap(contains -> Mono.defer(() -> {
+	if (contains) {
+		return Mono.fromCallable(() -> this.states.remove(bindingKey));
+	}
+	else {
+		return Mono.error(new IllegalArgumentException("Unknown binding " + bindingKey));
+	}
+})));
 	}
 
 	private Mono<Boolean> containsState(BindingKey bindingKey) {
@@ -108,7 +107,7 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 			}
 			BindingKey that = (BindingKey) obj;
 			return Objects.equals(this.bindingId, that.bindingId) &&
-				Objects.equals(this.serviceInstanceId, that.serviceInstanceId);
+		Objects.equals(this.serviceInstanceId, that.serviceInstanceId);
 		}
 
 		@Override
@@ -119,9 +118,9 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 		@Override
 		public String toString() {
 			return "BindingKey{" +
-				"serviceInstanceId='" + serviceInstanceId + '\'' +
-				", bindingId='" + bindingId + '\'' +
-				'}';
+		"serviceInstanceId='" + serviceInstanceId + '\'' +
+		", bindingId='" + bindingId + '\'' +
+		'}';
 		}
 
 		@Override

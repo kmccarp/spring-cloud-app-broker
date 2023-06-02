@@ -24,8 +24,7 @@ import reactor.core.publisher.Mono;
 
 import org.springframework.cloud.appbroker.deployer.BackingApplication;
 
-public class PropertyMappingParametersTransformerFactory extends
-	ParametersTransformerFactory<BackingApplication, PropertyMappingParametersTransformerFactory.Config> {
+public class PropertyMappingParametersTransformerFactory extendsParametersTransformerFactory<BackingApplication, PropertyMappingParametersTransformerFactory.Config> {
 
 	public PropertyMappingParametersTransformerFactory() {
 		super(Config.class);
@@ -37,12 +36,12 @@ public class PropertyMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingApplication> transform(BackingApplication backingApplication,
-		Map<String, Object> parameters,
-		List<String> include) {
+Map<String, Object> parameters,
+List<String> include) {
 		if (parameters != null) {
 			parameters.keySet().stream()
-				.filter(include::contains)
-				.forEach(key -> backingApplication.addProperty(key, parameters.get(key).toString()));
+		.filter(include::contains)
+		.forEach(key -> backingApplication.addProperty(key, parameters.get(key).toString()));
 		}
 		return Mono.just(backingApplication);
 	}

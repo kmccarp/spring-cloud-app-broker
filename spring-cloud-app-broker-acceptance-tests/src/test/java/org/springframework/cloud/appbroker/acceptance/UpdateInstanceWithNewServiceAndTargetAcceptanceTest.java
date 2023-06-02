@@ -79,18 +79,18 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 	@Tag("first")
 	@Order(FIRST_TEST)
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + OLD_BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + OLD_BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + OLD_BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + OLD_BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
+"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
 	})
 	void weCreateAService() {
 		// when a service instance is created
@@ -114,18 +114,18 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 	@Order(SECOND_TEST)
 	@Tag("last")
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + NEW_BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + NEW_BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + NEW_BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + NEW_BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
+"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
 	})
 	void weUpdateTheServiceInstanceWithANewBackingService() {
 		// when the service instance is updated with a new service
@@ -140,7 +140,7 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 		// then a backing application is re-deployed
 		Optional<ApplicationSummary> updatedBackingApplication = getApplicationSummary(APP_NAME, spaceName);
 		assertThat(updatedBackingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// and the new backing service is bound to it
 		ServiceInstance newBackingServiceInstance = getBackingServiceInstance(NEW_BACKING_SI_NAME, spaceName);

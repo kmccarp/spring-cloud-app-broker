@@ -21,7 +21,7 @@ class ServiceInstanceBinding {
 	}
 
 	public ServiceInstanceBinding(String bindingId, String serviceInstanceId, String description,
-			OperationState operationState) {
+OperationState operationState) {
 		this.bindingId = bindingId;
 		this.serviceInstanceId = serviceInstanceId;
 		this.description = description;

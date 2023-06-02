@@ -48,18 +48,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithCustomParametersMappingComponentTest.APP_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=CustomMapping"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=CustomMapping"
 })
 @ContextConfiguration(classes = CreateInstanceWithCustomParametersMappingComponentTest.CustomConfig.class)
 class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockComponentTest {
 
 	private static final Logger LOG =
-		LoggerFactory.getLogger(CreateInstanceWithCustomParametersMappingComponentTest.class);
+LoggerFactory.getLogger(CreateInstanceWithCustomParametersMappingComponentTest.class);
 
 	protected static final String APP_NAME = "app-with-request-create-params";
 
@@ -73,10 +68,10 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 	void pushAppWithParametersTransformedUsingCustomTransformer() {
 		cloudControllerFixture.stubAppDoesNotExist(APP_NAME);
 		cloudControllerFixture.stubPushApp(APP_NAME,
-			matchingJsonPath(
-				"$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*otherNestedKey.*:.*otherKey.*:.*keyValue.*/)]"),
-			matchingJsonPath(
-				"$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*otherNestedKey.*:.*otherLabel.*:.*labelValue.*/)]"));
+	matchingJsonPath(
+"$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*otherNestedKey.*:.*otherKey.*:.*keyValue.*/)]"),
+	matchingJsonPath(
+"$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*otherNestedKey.*:.*otherLabel.*:.*labelValue.*/)]"));
 
 		// given a set of parameters
 		Map<String, Object> params = new HashMap<>();
@@ -84,18 +79,18 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 
 		// when a service instance is created
 		given(brokerFixture.serviceInstanceRequest(params))
-			.when()
-			.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
@@ -110,7 +105,7 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 		}
 
 		public final class CustomMappingParametersTransformerFactory
-			extends ParametersTransformerFactory<BackingApplication, Object> {
+	extends ParametersTransformerFactory<BackingApplication, Object> {
 
 			private CustomMappingParametersTransformerFactory() {
 				super();
@@ -122,7 +117,7 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 			}
 
 			private Mono<BackingApplication> transform(BackingApplication backingApplication,
-				Map<String, Object> parameters) {
+		Map<String, Object> parameters) {
 				backingApplication.setEnvironment(createEnvironmentMap(parameters));
 				return Mono.just(backingApplication);
 			}
@@ -132,7 +127,7 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 				ObjectNode customOutputEnvironmentParameters = objectMapper.createObjectNode();
 				try {
 					CustomInputParameters customInputParameters =
-						objectMapper.readValue(parameters.get("firstKey").toString(), CustomInputParameters.class);
+				objectMapper.readValue(parameters.get("firstKey").toString(), CustomInputParameters.class);
 					customOutputEnvironmentParameters.put("otherKey", customInputParameters.getSecondKey());
 					customOutputEnvironmentParameters.put("otherLabel", customInputParameters.getLabel());
 				}

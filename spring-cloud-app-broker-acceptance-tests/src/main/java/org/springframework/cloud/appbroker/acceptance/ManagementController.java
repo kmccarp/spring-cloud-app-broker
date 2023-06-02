@@ -48,12 +48,11 @@ public class ManagementController {
 	 */
 	@GetMapping("/start/{serviceName}/{planName}/{serviceInstanceId}")
 	public Mono<String> startApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
-	) {
+@PathVariable String serviceInstanceId,
+@PathVariable String serviceName,
+@PathVariable String planName) {
 		return service.start(serviceInstanceId, serviceName, planName)
-			.thenReturn("starting " + serviceInstanceId);
+	.thenReturn("starting " + serviceInstanceId);
 	}
 
 	/**
@@ -64,12 +63,11 @@ public class ManagementController {
 	 */
 	@GetMapping("/stop/{serviceName}/{planName}/{serviceInstanceId}")
 	public Mono<String> stopApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
-	) {
+@PathVariable String serviceInstanceId,
+@PathVariable String serviceName,
+@PathVariable String planName) {
 		return service.stop(serviceInstanceId, serviceName, planName)
-			.thenReturn("stopping " + serviceInstanceId);
+	.thenReturn("stopping " + serviceInstanceId);
 	}
 
 	/**
@@ -80,12 +78,11 @@ public class ManagementController {
 	 */
 	@GetMapping("/restart/{serviceName}/{planName}/{serviceInstanceId}")
 	public Mono<String> restartApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
-	) {
+@PathVariable String serviceInstanceId,
+@PathVariable String serviceName,
+@PathVariable String planName) {
 		return service.restart(serviceInstanceId, serviceName, planName)
-			.thenReturn("restarting " + serviceInstanceId);
+	.thenReturn("restarting " + serviceInstanceId);
 	}
 
 	/**
@@ -96,12 +93,11 @@ public class ManagementController {
 	 */
 	@GetMapping("/restage/{serviceName}/{planName}/{serviceInstanceId}")
 	public Mono<String> restageApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
-	) {
+@PathVariable String serviceInstanceId,
+@PathVariable String serviceName,
+@PathVariable String planName) {
 		return service.restage(serviceInstanceId, serviceName, planName)
-			.thenReturn("restaging " + serviceInstanceId);
+	.thenReturn("restaging " + serviceInstanceId);
 	}
 
 }

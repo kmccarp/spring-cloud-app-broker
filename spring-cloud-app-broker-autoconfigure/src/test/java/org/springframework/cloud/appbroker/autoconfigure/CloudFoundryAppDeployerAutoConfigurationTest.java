@@ -41,103 +41,103 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CloudFoundryAppDeployerAutoConfigurationTest {
 
 	private final ApplicationContextRunner contextRunner = new ApplicationContextRunner()
-		.withConfiguration(AutoConfigurations.of(CloudFoundryAppDeployerAutoConfiguration.class));
+.withConfiguration(AutoConfigurations.of(CloudFoundryAppDeployerAutoConfiguration.class));
 
 	@Test
 	void clientIsCreatedWithPasswordGrantConfiguration() {
 		this.contextRunner
-			.withPropertyValues(
-				"spring.cloud.appbroker.deployer.cloudfoundry.api-host=api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.api-port=443",
-				"spring.cloud.appbroker.deployer.cloudfoundry.default-org=example-org",
-				"spring.cloud.appbroker.deployer.cloudfoundry.default-space=example-space",
-				"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
-				"spring.cloud.appbroker.deployer.cloudfoundry.password=secret",
-				"spring.cloud.appbroker.deployer.cloudfoundry.properties.memory=2G",
-				"spring.cloud.appbroker.deployer.cloudfoundry.properties.count=3",
-				"spring.cloud.appbroker.deployer.cloudfoundry.properties.buildpack=example-buildpack",
-				"spring.cloud.appbroker.deployer.cloudfoundry.properties.domain=example.local"
-			)
-			.run((context) -> {
-				assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
-				CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
-				assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
-				assertThat(targetProperties.getApiPort()).isEqualTo(443);
-				assertThat(targetProperties.getDefaultOrg()).isEqualTo("example-org");
-				assertThat(targetProperties.getDefaultSpace()).isEqualTo("example-space");
-				assertThat(targetProperties.getUsername()).isEqualTo("user");
-				assertThat(targetProperties.getPassword()).isEqualTo("secret");
+	.withPropertyValues(
+"spring.cloud.appbroker.deployer.cloudfoundry.api-host=api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.api-port=443",
+"spring.cloud.appbroker.deployer.cloudfoundry.default-org=example-org",
+"spring.cloud.appbroker.deployer.cloudfoundry.default-space=example-space",
+"spring.cloud.appbroker.deployer.cloudfoundry.username=user",
+"spring.cloud.appbroker.deployer.cloudfoundry.password=secret",
+"spring.cloud.appbroker.deployer.cloudfoundry.properties.memory=2G",
+"spring.cloud.appbroker.deployer.cloudfoundry.properties.count=3",
+"spring.cloud.appbroker.deployer.cloudfoundry.properties.buildpack=example-buildpack",
+"spring.cloud.appbroker.deployer.cloudfoundry.properties.domain=example.local"
+	)
+	.run((context) -> {
+		assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
+		CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
+		assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
+		assertThat(targetProperties.getApiPort()).isEqualTo(443);
+		assertThat(targetProperties.getDefaultOrg()).isEqualTo("example-org");
+		assertThat(targetProperties.getDefaultSpace()).isEqualTo("example-space");
+		assertThat(targetProperties.getUsername()).isEqualTo("user");
+		assertThat(targetProperties.getPassword()).isEqualTo("secret");
 
-				assertThat(context).hasSingleBean(CloudFoundryDeploymentProperties.class);
-				CloudFoundryDeploymentProperties deploymentProperties = context
-					.getBean(CloudFoundryDeploymentProperties.class);
-				assertThat(deploymentProperties.getMemory()).isEqualTo("2G");
-				assertThat(deploymentProperties.getCount()).isEqualTo(3);
-				assertThat(deploymentProperties.getBuildpack()).isEqualTo("example-buildpack");
-				assertThat(deploymentProperties.getDomain()).isEqualTo("example.local");
+		assertThat(context).hasSingleBean(CloudFoundryDeploymentProperties.class);
+		CloudFoundryDeploymentProperties deploymentProperties = context
+	.getBean(CloudFoundryDeploymentProperties.class);
+		assertThat(deploymentProperties.getMemory()).isEqualTo("2G");
+		assertThat(deploymentProperties.getCount()).isEqualTo(3);
+		assertThat(deploymentProperties.getBuildpack()).isEqualTo("example-buildpack");
+		assertThat(deploymentProperties.getDomain()).isEqualTo("example.local");
 
-				assertThat(context).hasSingleBean(AppDeployer.class);
-				assertThat(context).hasSingleBean(AppManager.class);
-				assertThat(context).hasSingleBean(OAuth2Client.class);
+		assertThat(context).hasSingleBean(AppDeployer.class);
+		assertThat(context).hasSingleBean(AppManager.class);
+		assertThat(context).hasSingleBean(OAuth2Client.class);
 
-				assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
-				assertThat(context).hasSingleBean(ReactorDopplerClient.class);
-				assertThat(context).hasSingleBean(ReactorUaaClient.class);
-				assertThat(context).hasSingleBean(CloudFoundryOperations.class);
-				assertThat(context).hasSingleBean(CloudFoundryOperationsUtils.class);
-				assertThat(context).hasSingleBean(DefaultConnectionContext.class);
-				assertThat(context).hasSingleBean(PasswordGrantTokenProvider.class);
-			});
+		assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
+		assertThat(context).hasSingleBean(ReactorDopplerClient.class);
+		assertThat(context).hasSingleBean(ReactorUaaClient.class);
+		assertThat(context).hasSingleBean(CloudFoundryOperations.class);
+		assertThat(context).hasSingleBean(CloudFoundryOperationsUtils.class);
+		assertThat(context).hasSingleBean(DefaultConnectionContext.class);
+		assertThat(context).hasSingleBean(PasswordGrantTokenProvider.class);
+	});
 	}
 
 	@Test
 	void clientIsCreatedWithCredentialsGrantConfiguration() {
 		this.contextRunner
-			.withPropertyValues(
-				"spring.cloud.appbroker.deployer.cloudfoundry.api-host=api.example.local",
-				"spring.cloud.appbroker.deployer.cloudfoundry.api-port=443",
-				"spring.cloud.appbroker.deployer.cloudfoundry.default-org=example-org",
-				"spring.cloud.appbroker.deployer.cloudfoundry.default-space=example-space",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client-id=oauth-client",
-				"spring.cloud.appbroker.deployer.cloudfoundry.client-secret=secret"
-			)
-			.run((context) -> {
-				assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
-				CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
-				assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
-				assertThat(targetProperties.getApiPort()).isEqualTo(443);
-				assertThat(targetProperties.getDefaultOrg()).isEqualTo("example-org");
-				assertThat(targetProperties.getDefaultSpace()).isEqualTo("example-space");
-				assertThat(targetProperties.getClientId()).isEqualTo("oauth-client");
-				assertThat(targetProperties.getClientSecret()).isEqualTo("secret");
+	.withPropertyValues(
+"spring.cloud.appbroker.deployer.cloudfoundry.api-host=api.example.local",
+"spring.cloud.appbroker.deployer.cloudfoundry.api-port=443",
+"spring.cloud.appbroker.deployer.cloudfoundry.default-org=example-org",
+"spring.cloud.appbroker.deployer.cloudfoundry.default-space=example-space",
+"spring.cloud.appbroker.deployer.cloudfoundry.client-id=oauth-client",
+"spring.cloud.appbroker.deployer.cloudfoundry.client-secret=secret"
+	)
+	.run((context) -> {
+		assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
+		CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
+		assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
+		assertThat(targetProperties.getApiPort()).isEqualTo(443);
+		assertThat(targetProperties.getDefaultOrg()).isEqualTo("example-org");
+		assertThat(targetProperties.getDefaultSpace()).isEqualTo("example-space");
+		assertThat(targetProperties.getClientId()).isEqualTo("oauth-client");
+		assertThat(targetProperties.getClientSecret()).isEqualTo("secret");
 
-				assertThat(context).hasSingleBean(AppDeployer.class);
-				assertThat(context).hasSingleBean(AppManager.class);
+		assertThat(context).hasSingleBean(AppDeployer.class);
+		assertThat(context).hasSingleBean(AppManager.class);
 
-				assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
-				assertThat(context).hasSingleBean(ReactorDopplerClient.class);
-				assertThat(context).hasSingleBean(ReactorUaaClient.class);
-				assertThat(context).hasSingleBean(CloudFoundryOperations.class);
-				assertThat(context).hasSingleBean(CloudFoundryOperationsUtils.class);
-				assertThat(context).hasSingleBean(DefaultConnectionContext.class);
-				assertThat(context).hasSingleBean(ClientCredentialsGrantTokenProvider.class);
-			});
+		assertThat(context).hasSingleBean(ReactorCloudFoundryClient.class);
+		assertThat(context).hasSingleBean(ReactorDopplerClient.class);
+		assertThat(context).hasSingleBean(ReactorUaaClient.class);
+		assertThat(context).hasSingleBean(CloudFoundryOperations.class);
+		assertThat(context).hasSingleBean(CloudFoundryOperationsUtils.class);
+		assertThat(context).hasSingleBean(DefaultConnectionContext.class);
+		assertThat(context).hasSingleBean(ClientCredentialsGrantTokenProvider.class);
+	});
 	}
 
 	@Test
 	void clientIsNotCreatedWithoutConfiguration() {
 		this.contextRunner
-			.run((context) -> {
-				assertThat(context).doesNotHaveBean(CloudFoundryTargetProperties.class);
-				assertThat(context).doesNotHaveBean(CloudFoundryDeploymentProperties.class);
-				assertThat(context).doesNotHaveBean(ReactorCloudFoundryClient.class);
-				assertThat(context).doesNotHaveBean(ReactorDopplerClient.class);
-				assertThat(context).doesNotHaveBean(ReactorUaaClient.class);
-				assertThat(context).doesNotHaveBean(CloudFoundryOperations.class);
-				assertThat(context).doesNotHaveBean(CloudFoundryOperationsUtils.class);
-				assertThat(context).doesNotHaveBean(ConnectionContext.class);
-				assertThat(context).doesNotHaveBean(TokenProvider.class);
-			});
+	.run((context) -> {
+		assertThat(context).doesNotHaveBean(CloudFoundryTargetProperties.class);
+		assertThat(context).doesNotHaveBean(CloudFoundryDeploymentProperties.class);
+		assertThat(context).doesNotHaveBean(ReactorCloudFoundryClient.class);
+		assertThat(context).doesNotHaveBean(ReactorDopplerClient.class);
+		assertThat(context).doesNotHaveBean(ReactorUaaClient.class);
+		assertThat(context).doesNotHaveBean(CloudFoundryOperations.class);
+		assertThat(context).doesNotHaveBean(CloudFoundryOperationsUtils.class);
+		assertThat(context).doesNotHaveBean(ConnectionContext.class);
+		assertThat(context).doesNotHaveBean(TokenProvider.class);
+	});
 	}
 
 }

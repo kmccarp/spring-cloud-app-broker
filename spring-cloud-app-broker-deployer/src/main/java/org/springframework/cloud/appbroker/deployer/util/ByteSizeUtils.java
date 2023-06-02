@@ -29,7 +29,7 @@ import org.springframework.util.StringUtils;
 public final class ByteSizeUtils {
 
 	private static final Pattern SIZE_PATTERN = Pattern
-		.compile("(?<amount>\\d+)(?<unit>([mg])?)", Pattern.CASE_INSENSITIVE);
+.compile("(?<amount>\\d+)(?<unit>([mg])?)", Pattern.CASE_INSENSITIVE);
 
 	private ByteSizeUtils() {
 	}
@@ -46,7 +46,7 @@ public final class ByteSizeUtils {
 		Matcher matcher = SIZE_PATTERN.matcher(text);
 		if (!matcher.matches()) {
 			throw new IllegalArgumentException(String.format("Could not parse '%s' as a byte size." +
-				" Expected a number with optional 'm' or 'g' suffix", text));
+		" Expected a number with optional 'm' or 'g' suffix", text));
 		}
 		int size = Integer.parseInt(matcher.group("amount"));
 		if ("g".equalsIgnoreCase(matcher.group("unit"))) {

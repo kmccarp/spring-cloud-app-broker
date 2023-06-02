@@ -58,21 +58,21 @@ class CreateInstanceWithSpacePerServiceInstanceTargetAcceptanceTest extends Clou
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME_1,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].apps[1].name=" + APP_NAME_2,
-		"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[1].name=" + APP_NAME_2,
+"spring.cloud.appbroker.services[0].apps[1].path=" + BACKING_APP_PATH,
 
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
 
-		"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
+"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance"
 	})
 	void deployAppsInTargetSpaceOnCreateService() {
 		// when a service instance is created with targets
@@ -92,7 +92,7 @@ class CreateInstanceWithSpacePerServiceInstanceTargetAcceptanceTest extends Clou
 
 		Optional<ApplicationSummary> backingApplication2 = getApplicationSummary(APP_NAME_2, spaceName);
 		assertThat(backingApplication2).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// and the services are bound to it
 		ServiceInstance serviceInstance1 = getBackingServiceInstance(BACKING_SI_NAME, spaceName);

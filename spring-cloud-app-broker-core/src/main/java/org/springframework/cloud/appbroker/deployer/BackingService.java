@@ -45,12 +45,12 @@ public class BackingService {
 	}
 
 	public BackingService(String serviceInstanceName,
-		String name,
-		String plan,
-		Map<String, Object> parameters,
-		Map<String, String> properties,
-		List<ParametersTransformerSpec> parametersTransformers,
-		boolean rebindOnUpdate) {
+String name,
+String plan,
+Map<String, Object> parameters,
+Map<String, String> properties,
+List<ParametersTransformerSpec> parametersTransformers,
+boolean rebindOnUpdate) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.name = name;
 		this.plan = plan;
@@ -138,31 +138,31 @@ public class BackingService {
 		}
 		BackingService that = (BackingService) o;
 		return Objects.equals(serviceInstanceName, that.serviceInstanceName) &&
-			Objects.equals(name, that.name) &&
-			Objects.equals(plan, that.plan) &&
-			Objects.equals(parameters, that.parameters) &&
-			Objects.equals(properties, that.properties) &&
-			Objects.equals(parametersTransformers, that.parametersTransformers) &&
-			rebindOnUpdate == that.rebindOnUpdate;
+	Objects.equals(name, that.name) &&
+	Objects.equals(plan, that.plan) &&
+	Objects.equals(parameters, that.parameters) &&
+	Objects.equals(properties, that.properties) &&
+	Objects.equals(parametersTransformers, that.parametersTransformers) &&
+	rebindOnUpdate == that.rebindOnUpdate;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects
-			.hash(serviceInstanceName, name, plan, parameters, properties, parametersTransformers, rebindOnUpdate);
+	.hash(serviceInstanceName, name, plan, parameters, properties, parametersTransformers, rebindOnUpdate);
 	}
 
 	@Override
 	public String toString() {
 		return "BackingService{" +
-			"serviceInstanceName='" + serviceInstanceName + '\'' +
-			", name='" + name + '\'' +
-			", plan='" + plan + '\'' +
-			", parameters=" + parameters +
-			", properties=" + properties +
-			", parametersTransformers=" + parametersTransformers +
-			", rebindOnUpdate=" + rebindOnUpdate +
-			'}';
+	"serviceInstanceName='" + serviceInstanceName + '\'' +
+	", name='" + name + '\'' +
+	", plan='" + plan + '\'' +
+	", parameters=" + parameters +
+	", properties=" + properties +
+	", parametersTransformers=" + parametersTransformers +
+	", rebindOnUpdate=" + rebindOnUpdate +
+	'}';
 	}
 
 	public static BackingServiceBuilder builder() {
@@ -190,12 +190,12 @@ public class BackingService {
 
 		public BackingServiceBuilder backingService(BackingService backingService) {
 			return this.serviceInstanceName(backingService.getServiceInstanceName())
-				.name(backingService.getName())
-				.plan(backingService.getPlan())
-				.parameters(backingService.getParameters())
-				.properties(backingService.getProperties())
-				.parameterTransformers(backingService.getParametersTransformers())
-				.rebindOnUpdate(backingService.isRebindOnUpdate());
+		.name(backingService.getName())
+		.plan(backingService.getPlan())
+		.parameters(backingService.getParameters())
+		.properties(backingService.getProperties())
+		.parameterTransformers(backingService.getParametersTransformers())
+		.rebindOnUpdate(backingService.isRebindOnUpdate());
 		}
 
 		public BackingServiceBuilder serviceInstanceName(String serviceInstanceName) {
@@ -248,7 +248,7 @@ public class BackingService {
 
 		public BackingService build() {
 			return new BackingService(serviceInstanceName, name, plan, parameters, properties, parameterTransformers,
-				rebindOnUpdate);
+		rebindOnUpdate);
 		}
 
 	}

@@ -176,147 +176,145 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		given(operationsUtils.getOperationsForSpace(anyString())).willReturn(Mono.just(cloudFoundryOperations));
 
 		appDeployer = new CloudFoundryAppDeployer(deploymentProperties,
-			cloudFoundryOperations, cloudFoundryClient, operationsUtils, targetProperties, resourceLoader);
+	cloudFoundryOperations, cloudFoundryClient, operationsUtils, targetProperties, resourceLoader);
 
 		given(operationsApplications.get(any()))
-			.willReturn(Mono.just(createApplicationDetail()));
+	.willReturn(Mono.just(createApplicationDetail()));
 
 		given(applicationsV2.summary(any(SummaryApplicationRequest.class)))
-			.willReturn(Mono.just(SummaryApplicationResponse.builder()
-				.id(APP_ID)
-				.name(APP_NAME)
-				.services(Collections.emptyList())
-				.build()));
+	.willReturn(Mono.just(SummaryApplicationResponse.builder()
+.id(APP_ID)
+.name(APP_NAME)
+.services(Collections.emptyList())
+.build()));
 
 		given(packages.create(any()))
-			.willReturn(Mono.just(CreatePackageResponse.builder()
-				.data(BitsData.builder().build())
-				.state(PackageState.READY)
-				.type(PackageType.BITS)
-				.createdAt("DATETIME")
-				.id("package-id")
-				.build()));
+	.willReturn(Mono.just(CreatePackageResponse.builder()
+.data(BitsData.builder().build())
+.state(PackageState.READY)
+.type(PackageType.BITS)
+.createdAt("DATETIME")
+.id("package-id")
+.build()));
 
 		given(packages.upload(any()))
-			.willReturn(Mono.just(UploadPackageResponse.builder()
-				.data(BitsData.builder().build())
-				.state(PackageState.READY)
-				.type(PackageType.BITS)
-				.createdAt("2019-07-05T10:37:47Z")
-				.createdAt("2019-07-05T10:37:47Z")
-				.id("package-id")
-				.build()));
+	.willReturn(Mono.just(UploadPackageResponse.builder()
+.data(BitsData.builder().build())
+.state(PackageState.READY)
+.type(PackageType.BITS)
+.createdAt("2019-07-05T10:37:47Z")
+.createdAt("2019-07-05T10:37:47Z")
+.id("package-id")
+.build()));
 
 
 		given(packages.get(any()))
-			.willReturn(Mono.just(GetPackageResponse.builder()
-				.data(BitsData.builder().build())
-				.state(PackageState.READY)
-				.type(PackageType.BITS)
-				.createdAt("DATETIME")
-				.id("package-id")
-				.build()));
+	.willReturn(Mono.just(GetPackageResponse.builder()
+.data(BitsData.builder().build())
+.state(PackageState.READY)
+.type(PackageType.BITS)
+.createdAt("DATETIME")
+.id("package-id")
+.build()));
 
 		given(applicationsV3.listPackages(any()))
-			.willReturn(Mono.just(ListApplicationPackagesResponse.builder()
-				.resource(createPackage("2019-07-05T10:37:47Z", "package-id-1"))
-				.resource(createPackage("2019-07-05T12:37:47Z", "package-id-2"))
-				.resource(createPackage("2019-07-06T10:37:47Z", "package-id-3"))
-				.resource(createPackage("2019-07-06T11:37:47Z", "package-id-4"))
-				.build()));
+	.willReturn(Mono.just(ListApplicationPackagesResponse.builder()
+.resource(createPackage("2019-07-05T10:37:47Z", "package-id-1"))
+.resource(createPackage("2019-07-05T12:37:47Z", "package-id-2"))
+.resource(createPackage("2019-07-06T10:37:47Z", "package-id-3"))
+.resource(createPackage("2019-07-06T11:37:47Z", "package-id-4"))
+.build()));
 
 		given(builds.create(any()))
-			.willReturn(Mono.just(CreateBuildResponse.builder()
-				.state(BuildState.STAGING)
-				.createdBy(CreatedBy.builder().id("create-by-id").email("an-email").name("creator").build())
-				.inputPackage(Relationship.builder().id("package-id").build())
-				.lifecycle(createLifecycle())
-				.createdAt("DATETIME")
-				.id("build-id")
-				.build()));
+	.willReturn(Mono.just(CreateBuildResponse.builder()
+.state(BuildState.STAGING)
+.createdBy(CreatedBy.builder().id("create-by-id").email("an-email").name("creator").build())
+.inputPackage(Relationship.builder().id("package-id").build())
+.lifecycle(createLifecycle())
+.createdAt("DATETIME")
+.id("build-id")
+.build()));
 		given(builds.get(any()))
-			.willReturn(Mono.just(GetBuildResponse.builder()
-				.state(BuildState.STAGED)
-				.createdBy(CreatedBy.builder().id("create-by-id").email("an-email").name("creator").build())
-				.inputPackage(Relationship.builder().id("package-id").build())
-				.lifecycle(createLifecycle())
-				.droplet(Droplet.builder().id("droplet-id").build())
-				.createdAt("DATETIME")
-				.id("build-id")
-				.build()));
+	.willReturn(Mono.just(GetBuildResponse.builder()
+.state(BuildState.STAGED)
+.createdBy(CreatedBy.builder().id("create-by-id").email("an-email").name("creator").build())
+.inputPackage(Relationship.builder().id("package-id").build())
+.lifecycle(createLifecycle())
+.droplet(Droplet.builder().id("droplet-id").build())
+.createdAt("DATETIME")
+.id("build-id")
+.build()));
 
 		given(deploymentsV3.create(any()))
-			.willReturn(Mono.just(CreateDeploymentResponse.builder()
-				.state(DeploymentState.DEPLOYED)
-				.createdAt("DATETIME")
-				.id("deployment-id")
-				.build()));
+	.willReturn(Mono.just(CreateDeploymentResponse.builder()
+.state(DeploymentState.DEPLOYED)
+.createdAt("DATETIME")
+.id("deployment-id")
+.build()));
 		given(deploymentsV3.get(any()))
-			.willReturn(Mono.just(GetDeploymentResponse.builder()
-				.state(DeploymentState.DEPLOYED)
-				.status(org.cloudfoundry.client.v3.deployments.Status.builder().value(DeploymentStatusValue.FINALIZED).reason(
-					DeploymentStatusReason.DEPLOYED).build())
-				.createdAt("DATETIME")
-				.id("deployment-id")
-				.build()));
+	.willReturn(Mono.just(GetDeploymentResponse.builder()
+.state(DeploymentState.DEPLOYED)
+.status(org.cloudfoundry.client.v3.deployments.Status.builder().value(DeploymentStatusValue.FINALIZED).reason(DeploymentStatusReason.DEPLOYED).build())
+.createdAt("DATETIME")
+.id("deployment-id")
+.build()));
 	}
 
 	@Test
 	void updateApp() {
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 	}
 
 	@Test
 	void updateAppWhenDeploymentObjectHasNotState() {
 		given(deploymentsV3.get(any()))
-			.willReturn(Mono.just(GetDeploymentResponse.builder()
-				.status(org.cloudfoundry.client.v3.deployments.Status.builder().value(DeploymentStatusValue.FINALIZED).reason(
-					DeploymentStatusReason.DEPLOYED).build())
-				.createdAt("DATETIME")
-				.id("deployment-id")
-				.build()));
+	.willReturn(Mono.just(GetDeploymentResponse.builder()
+.status(org.cloudfoundry.client.v3.deployments.Status.builder().value(DeploymentStatusValue.FINALIZED).reason(DeploymentStatusReason.DEPLOYED).build())
+.createdAt("DATETIME")
+.id("deployment-id")
+.build()));
 
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 	}
 
 	@Test
 	void updateAppWithTarget() {
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		Map<String, String> properties = singletonMap(TARGET_PROPERTY_KEY, "service-instance-id");
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		then(operationsUtils).should().getOperations(properties);
 		then(operationsUtils).shouldHaveNoMoreInteractions();
@@ -325,11 +323,11 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	@Test
 	void updateAppProperties() {
 		ArgumentCaptor<org.cloudfoundry.client.v2.applications.UpdateApplicationRequest> updateApplicationRequestCaptor =
-			ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
+	ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
 
 		given(applicationsV2.update(updateApplicationRequestCaptor.capture()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		Map<String, String> properties = new HashMap<>();
 		properties.put("count", "2");
@@ -337,19 +335,19 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		properties.put("memory", "1G");
 
 		UpdateApplicationRequest request =
-			UpdateApplicationRequest
-				.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.properties(properties)
-				.build();
+	UpdateApplicationRequest
+.builder()
+.name(APP_NAME)
+.path(APP_PATH)
+.properties(properties)
+.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		org.cloudfoundry.client.v2.applications.UpdateApplicationRequest updateApplicationRequest = updateApplicationRequestCaptor
-			.getValue();
+	.getValue();
 		assertThat(updateApplicationRequest.getInstances()).isEqualTo(2);
 		assertThat(updateApplicationRequest.getDiskQuota()).isEqualTo(2048);
 		assertThat(updateApplicationRequest.getMemory()).isEqualTo(1024);
@@ -358,80 +356,76 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	@Test
 	void updateAppEnvironment() {
 		ArgumentCaptor<org.cloudfoundry.client.v2.applications.UpdateApplicationRequest> updateApplicationRequestCaptor =
-			ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
+	ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
 
 		given(applicationsV2.update(updateApplicationRequestCaptor.capture()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		UpdateApplicationRequest request =
-			UpdateApplicationRequest
-				.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.environment("ENV_VAR", "test-env")
-				.build();
+	UpdateApplicationRequest
+.builder()
+.name(APP_NAME)
+.path(APP_PATH)
+.environment("ENV_VAR", "test-env")
+.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		assertThat(updateApplicationRequestCaptor.getValue().getEnvironmentJsons().get("SPRING_APPLICATION_JSON"))
-			.isEqualTo("{\"ENV_VAR\":\"test-env\"}");
+	.isEqualTo("{\"ENV_VAR\":\"test-env\"}");
 	}
 
 	@Test
 	void updateAppWithUpgrade() {
 		ArgumentCaptor<org.cloudfoundry.client.v2.applications.UpdateApplicationRequest> updateApplicationRequestCaptor =
-			ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
+	ArgumentCaptor.forClass(org.cloudfoundry.client.v2.applications.UpdateApplicationRequest.class);
 
 		given(applicationsV2.update(any())).willReturn(Mono.just(UpdateApplicationResponse.builder().build()));
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.property("upgrade", "true")
-			.environment("TEST_KEY", "TEST_VALUE")
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.property("upgrade", "true")
+	.environment("TEST_KEY", "TEST_VALUE")
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		then(applicationsV2).should().summary(any(SummaryApplicationRequest.class));
 		then(applicationsV2).should().update(updateApplicationRequestCaptor.capture());
 		assertThat(updateApplicationRequestCaptor.getValue().getEnvironmentJsons().get("SPRING_APPLICATION_JSON"))
-			.isEqualTo("{\"TEST_KEY\":\"TEST_VALUE\"}");
+	.isEqualTo("{\"TEST_KEY\":\"TEST_VALUE\"}");
 		then(applicationsV2).shouldHaveNoMoreInteractions();
 	}
 
 	@Test
 	void updateAppWithNoNewServices() {
 		given(applicationsV2.summary(any(SummaryApplicationRequest.class)))
-			.willReturn(Mono.just(SummaryApplicationResponse.builder()
-				.id(APP_ID)
-				.name(APP_NAME)
-				.service(ServiceInstance.builder()
-					.name("service-1")
-					.build())
-				.service(ServiceInstance.builder()
-					.name("service-2")
-					.build())
-				.build()));
+	.willReturn(Mono.just(SummaryApplicationResponse.builder()
+.id(APP_ID)
+.name(APP_NAME)
+.service(ServiceInstance.builder().name("service-1").build())
+.service(ServiceInstance.builder().name("service-2").build())
+.build()));
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.service("service-1")
-			.service("service-2")
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.service("service-1")
+	.service("service-2")
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		then(applicationsV2).should().summary(SummaryApplicationRequest.builder().applicationId(APP_ID).build());
 		then(applicationsV2).should().update(argThat(arg -> APP_ID.equals(arg.getApplicationId())));
@@ -442,29 +436,29 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	@Test
 	void updateAppWithNewServices() {
 		given(operationsServices.bind(any(BindServiceInstanceRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.service("service-1")
-			.service("service-2")
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.service("service-1")
+	.service("service-2")
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		then(applicationsV2).should().summary(SummaryApplicationRequest.builder().applicationId(APP_ID).build());
 		then(operationsServices).should()
-			.bind(BindServiceInstanceRequest.builder().serviceInstanceName("service-1").applicationName(APP_NAME)
-				.build());
+	.bind(BindServiceInstanceRequest.builder().serviceInstanceName("service-1").applicationName(APP_NAME)
+.build());
 		then(operationsServices).should()
-			.bind(BindServiceInstanceRequest.builder().serviceInstanceName("service-2").applicationName(APP_NAME)
-				.build());
+	.bind(BindServiceInstanceRequest.builder().serviceInstanceName("service-2").applicationName(APP_NAME)
+.build());
 		then(applicationsV2).should().update(argThat(arg -> APP_ID.equals(arg.getApplicationId())));
 
 		then(operationsServices).shouldHaveNoMoreInteractions();
@@ -480,46 +474,46 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		properties.put("domain", "my.domain.com");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 
 		then(routes).should().create(CreateRouteRequest.builder()
-			.domainId("myDomainComId")
-			.spaceId("space-id")
-			.host("my.host")
-			.build());
+	.domainId("myDomainComId")
+	.spaceId("space-id")
+	.host("my.host")
+	.build());
 		then(applicationsV2).should().associateRoute(AssociateApplicationRouteRequest.builder()
-			.applicationId(APP_ID)
-			.routeId("myDomainComId-route")
-			.build());
+	.applicationId(APP_ID)
+	.routeId("myDomainComId-route")
+	.build());
 	}
 
 	@Test
 	void updateAppWithHostDomainAndDomains() {
 		mockDomainsAndRoutesUpdate();
 		given(domains.list()).willReturn(Flux.fromStream(IntStream.range(1, 4)
-					.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
+	.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
 
 		Map<String, String> properties = new HashMap<>();
 		properties.put("host", "foo");
 		properties.put("domain", "domain1");
 		properties.put("domains", "domain2,domain3");
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(
-			appDeployer.update(request))
-					.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-					.verifyComplete();
+	appDeployer.update(request))
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		ArgumentCaptor<CreateRouteRequest> createRouteRequestArgumentCaptor = ArgumentCaptor.forClass(CreateRouteRequest.class);
 		then(routes).should(times(3)).create(createRouteRequestArgumentCaptor.capture());
@@ -540,19 +534,19 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		mockDomainsAndRoutesUpdate();
 
 		given(domains.list()).willReturn(Flux.fromStream(IntStream.range(1, 4)
-					.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
+	.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
 
 		Map<String, String> properties = singletonMap("routes", "foo.domain1,bar.domain2");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(
-			appDeployer.update(request))
-					.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-					.verifyComplete();
+	appDeployer.update(request))
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		ArgumentCaptor<CreateRouteRequest> createRouteRequestArgumentCaptor = ArgumentCaptor.forClass(CreateRouteRequest.class);
 		then(routes).should(times(2)).create(createRouteRequestArgumentCaptor.capture());
@@ -576,14 +570,14 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		properties.put("domains", "my.domain.internal.com,my.domain.default.com");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		verifyRouteCreatedAndMapped("myDomainComId", "my.host", "space-id", APP_ID);
 		verifyRouteCreatedAndMapped("myDomainInternalId", "my.host", "space-id", APP_ID);
@@ -599,14 +593,14 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		properties.put("domains", "my.domain.internal.com,my.domain.default.com");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		verifyRouteCreatedAndMapped("myDomainInternalId", "my.host", "space-id", APP_ID);
 		verifyRouteCreatedAndMapped("myDomainDefaultId", "my.host", "space-id", APP_ID);
@@ -620,170 +614,167 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		properties.put("host", "my.host");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 		then(routes).should().create(CreateRouteRequest.builder()
-			.domainId("myDomainDefaultId")
-			.spaceId("space-id")
-			.host("my.host")
-			.build());
+	.domainId("myDomainDefaultId")
+	.spaceId("space-id")
+	.host("my.host")
+	.build());
 		then(applicationsV2).should().associateRoute(AssociateApplicationRouteRequest.builder()
-			.applicationId(APP_ID)
-			.routeId("myDomainDefaultId-route")
-			.build());
+	.applicationId(APP_ID)
+	.routeId("myDomainDefaultId-route")
+	.build());
 	}
 
 	@Test
 	void updateAppWithDomainAndNoHost() {
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(
-				UpdateApplicationResponse.builder().build()));
+	.willReturn(Mono.just(
+UpdateApplicationResponse.builder().build()));
 
 		given(domains.list())
-			.willReturn(getDomains());
+	.willReturn(getDomains());
 
 		given(spaces.get(any()))
-			.willReturn(Mono.just(SpaceDetail.builder()
-				.id("space-id")
-				.name("space-name")
-				.organization("org-name")
-				.build()));
+	.willReturn(Mono.just(SpaceDetail.builder()
+.id("space-id")
+.name("space-name")
+.organization("org-name")
+.build()));
 		given(routes.create(any()))
-			.willReturn(Mono.just(CreateRouteResponse.builder()
-				.metadata(Metadata
-					.builder()
-					.id("route-id")
-					.build())
-				.build()));
+	.willReturn(Mono.just(CreateRouteResponse.builder()
+.metadata(Metadata.builder().id("route-id").build())
+.build()));
 		given(applicationsV2.associateRoute(any()))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		Map<String, String> properties = new HashMap<>();
 		properties.put("domain", "my.domain.com");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
-			.name(APP_NAME)
-			.path(APP_PATH)
-			.properties(properties)
-			.build();
+	.name(APP_NAME)
+	.path(APP_PATH)
+	.properties(properties)
+	.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
-			.verifyComplete();
+	.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
+	.verifyComplete();
 
 
 		then(routes).should().create(CreateRouteRequest.builder()
-			.domainId("myDomainComId")
-			.spaceId("space-id")
-			.host(null)
-			.build());
+	.domainId("myDomainComId")
+	.spaceId("space-id")
+	.host(null)
+	.build());
 		then(applicationsV2).should().associateRoute(AssociateApplicationRouteRequest
-			.builder()
-			.applicationId(APP_ID)
-			.routeId("route-id")
-			.build());
+	.builder()
+	.applicationId(APP_ID)
+	.routeId("route-id")
+	.build());
 	}
 
 	@Test
 	void updateAppWithNotExistingDomain() {
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 
 		given(domains.list())
-			.willReturn(getDomains());
+	.willReturn(getDomains());
 
 		given(spaces.get(any()))
-			.willReturn(Mono.just(SpaceDetail.builder()
-				.id("space-id")
-				.name("space-name")
-				.organization("org-name")
-				.build()));
+	.willReturn(Mono.just(SpaceDetail.builder()
+.id("space-id")
+.name("space-name")
+.organization("org-name")
+.build()));
 
 		Map<String, String> properties = new HashMap<>();
 		properties.put("host", "my.host");
 		properties.put("domain", "non.existing.domain.com");
 
 		UpdateApplicationRequest request =
-			UpdateApplicationRequest
-				.builder()
-				.name(APP_NAME)
-				.path(APP_PATH)
-				.properties(properties)
-				.build();
+	UpdateApplicationRequest
+.builder()
+.name(APP_NAME)
+.path(APP_PATH)
+.properties(properties)
+.build();
 
 		StepVerifier.create(appDeployer.update(request))
-			.expectError(RuntimeException.class)
-			.verify();
+	.expectError(RuntimeException.class)
+	.verify();
 
 		then(routes).shouldHaveNoInteractions();
 	}
 
 	private Flux<Domain> getDomains() {
 		return Flux.just(
-			Domain.builder()
-				.id("myDomainInternalId")
-				.name("my.domain.internal.com")
-				.status(Status.SHARED)
-				.type("internal")
-				.build(),
-			Domain.builder()
-				.id("myDomainDefaultId")
-				.name("my.domain.default.com")
-				.status(Status.SHARED)
-				.build(),
-			Domain.builder()
-				.id("myDomainComId")
-				.name("my.domain.com")
-				.status(Status.OWNED)
-				.build()
+	Domain.builder()
+.id("myDomainInternalId")
+.name("my.domain.internal.com")
+.status(Status.SHARED)
+.type("internal")
+.build(),
+	Domain.builder()
+.id("myDomainDefaultId")
+.name("my.domain.default.com")
+.status(Status.SHARED)
+.build(),
+	Domain.builder()
+.id("myDomainComId")
+.name("my.domain.com")
+.status(Status.OWNED)
+.build()
 		);
 	}
 
 	private ApplicationDetail createApplicationDetail() {
 		return ApplicationDetail
-			.builder()
-			.id(APP_ID)
-			.stack("")
-			.diskQuota(512)
-			.instances(1)
-			.memoryLimit(512)
-			.name(APP_NAME)
-			.requestedState("STARTED")
-			.runningInstances(1)
-			.build();
+	.builder()
+	.id(APP_ID)
+	.stack("")
+	.diskQuota(512)
+	.instances(1)
+	.memoryLimit(512)
+	.name(APP_NAME)
+	.requestedState("STARTED")
+	.runningInstances(1)
+	.build();
 	}
 
 	private PackageResource createPackage(String dateTime, String id) {
 		return PackageResource
-			.builder()
-			.data(BitsData.builder().build())
-			.state(PackageState.READY)
-			.type(PackageType.BITS)
-			.createdAt(dateTime)
-			.updatedAt(dateTime)
-			.id(id)
-			.build();
+	.builder()
+	.data(BitsData.builder().build())
+	.state(PackageState.READY)
+	.type(PackageType.BITS)
+	.createdAt(dateTime)
+	.updatedAt(dateTime)
+	.id(id)
+	.build();
 	}
 
 	private void verifyRouteCreatedAndMapped(String domainId, String host, String spaceId, String appId) {
 		then(routes).should().create(CreateRouteRequest.builder()
-			.domainId(domainId)
-			.spaceId(spaceId)
-			.host(host)
-			.build());
+	.domainId(domainId)
+	.spaceId(spaceId)
+	.host(host)
+	.build());
 
 		then(applicationsV2).should().associateRoute(AssociateApplicationRouteRequest.builder()
-			.applicationId(appId)
-			.routeId(getRouteIdForDomain(domainId))
-			.build());
+	.applicationId(appId)
+	.routeId(getRouteIdForDomain(domainId))
+	.build());
 	}
 
 	private String getRouteIdForDomain(String domainId) {
@@ -792,26 +783,22 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 
 	private void mockDomainsAndRoutesUpdate() {
 		given(applicationsV2.update(any()))
-			.willReturn(Mono.just(UpdateApplicationResponse.builder()
-				.build()));
+	.willReturn(Mono.just(UpdateApplicationResponse.builder()
+.build()));
 		given(spaces.get(any())).willReturn(
-			Mono.just(
-				SpaceDetail.builder()
-					.id("space-id")
-					.name("space-name")
-					.organization("org-name")
-					.build()));
+	Mono.just(
+SpaceDetail.builder().id("space-id").name("space-name").organization("org-name").build()));
 		given(domains.list()).willReturn(getDomains());
 		given(routes.create(any())).willAnswer(invocation -> {
 			CreateRouteRequest createRouteRequest = invocation.getArgument(0);
 			return Mono.just(CreateRouteResponse.builder()
-				.metadata(Metadata
-					.builder()
-					.id(getRouteIdForDomain(createRouteRequest.getDomainId()))
-					.build()).build());
+		.metadata(Metadata
+	.builder()
+	.id(getRouteIdForDomain(createRouteRequest.getDomainId()))
+	.build()).build());
 		});
 		given(applicationsV2.associateRoute(any()))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 	}
 
 	private static Lifecycle createLifecycle() {

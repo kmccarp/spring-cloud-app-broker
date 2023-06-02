@@ -73,12 +73,12 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 	@Tag("first")
 	@Order(FIRST_TEST)
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=old-config1",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=old-config2"
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=old-config1",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=old-config2"
 	})
 	void createsServiceInstance() {
 		// when a service instance is created
@@ -87,7 +87,7 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 		// then a backing application is deployed
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// and the environment variables are applied correctly
 		DocumentContext json = getSpringAppJson(APP_NAME);
@@ -102,12 +102,12 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 	@Order(SECOND_TEST)
 	@Tag("last")
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=new-config1",
-		"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=new-config3"
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=new-config1",
+"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=new-config3"
 	})
 	void upgradesTheServiceInstanceWithNewBackingServiceAndEnvironmentVariables() {
 		// when the service instance is updated with a new service
@@ -121,7 +121,7 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 		// then a backing application is re-deployed
 		Optional<ApplicationSummary> updatedBackingApplication = getApplicationSummary(APP_NAME);
 		assertThat(updatedBackingApplication).hasValueSatisfying(app ->
-			assertThat(app.getRunningInstances()).isEqualTo(1));
+	assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		// the backing application is updated with the new parameters
 		DocumentContext json = getSpringAppJson(APP_NAME);

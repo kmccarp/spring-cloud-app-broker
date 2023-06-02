@@ -51,7 +51,7 @@ public final class ConfigurationBeanUtils {
 		}
 		catch (IllegalAccessException | InvocationTargetException e) {
 			throw new IllegalArgumentException("Failed to populate target of type " + targetObject.getClass()
-				+ " with properties " + properties, e);
+		+ " with properties " + properties, e);
 		}
 	}
 

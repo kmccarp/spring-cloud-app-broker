@@ -62,7 +62,7 @@ class HealthListener {
 				try {
 					requests.incrementAndGet();
 					ResponseEntity<String> response = restTemplate
-						.getForEntity(URI.create("http://" + path + "/actuator/health"), String.class);
+				.getForEntity(URI.create("http://" + path + "/actuator/health"), String.class);
 					if (response.getStatusCode() != HttpStatus.OK) {
 						errors.incrementAndGet();
 					}

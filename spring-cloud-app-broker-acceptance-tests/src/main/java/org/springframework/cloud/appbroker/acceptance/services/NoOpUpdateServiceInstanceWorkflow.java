@@ -44,7 +44,7 @@ public class NoOpUpdateServiceInstanceWorkflow implements UpdateServiceInstanceW
 
 	@Override
 	public Mono<UpdateServiceInstanceResponseBuilder> buildResponse(UpdateServiceInstanceRequest request,
-		UpdateServiceInstanceResponseBuilder responseBuilder) {
+UpdateServiceInstanceResponseBuilder responseBuilder) {
 		return Mono.just(responseBuilder);
 	}
 

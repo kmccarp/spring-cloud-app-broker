@@ -36,17 +36,7 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithServicesParametersComponentTest.BACKING_SERVICE_NAME;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithServicesParametersComponentTest.BACKING_SI_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,
-	"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-	"spring.cloud.appbroker.services[0].services[0].plan=standard",
-	"spring.cloud.appbroker.services[0].services[0].parameters-transformers[0].name=ParameterMapping",
-	"spring.cloud.appbroker.services[0].services[0].parameters-transformers[0].args.include=paramA,paramC"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME,"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,"spring.cloud.appbroker.services[0].services[0].plan=standard","spring.cloud.appbroker.services[0].services[0].parameters-transformers[0].name=ParameterMapping","spring.cloud.appbroker.services[0].services[0].parameters-transformers[0].args.include=paramA,paramC"
 })
 class CreateInstanceWithServicesParametersComponentTest extends WiremockComponentTest {
 
@@ -88,18 +78,18 @@ class CreateInstanceWithServicesParametersComponentTest extends WiremockComponen
 		creationParameters.put("paramC", Collections.singletonMap("paramC1", "valueC1"));
 
 		given(brokerFixture.serviceInstanceRequest(creationParameters))
-			.when()
-			.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

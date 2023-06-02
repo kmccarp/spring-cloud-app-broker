@@ -81,52 +81,52 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 	@BeforeEach
 	void setUp() {
 		backingApps = BackingApplications
-			.builder()
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app1")
-				.path("https://myfiles/app1.jar")
-				.build())
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app2")
-				.path("https://myfiles/app2.jar")
-				.build())
-			.build();
+	.builder()
+	.backingApplication(BackingApplication
+.builder()
+.name("app1")
+.path("https://myfiles/app1.jar")
+.build())
+	.backingApplication(BackingApplication
+.builder()
+.name("app2")
+.path("https://myfiles/app2.jar")
+.build())
+	.build();
 
 		backingServices = BackingServices
-			.builder()
-			.backingService(BackingService
-				.builder()
-				.name("my-service")
-				.plan("a-plan")
-				.serviceInstanceName("my-service-instance")
-				.build())
-			.build();
+	.builder()
+	.backingService(BackingService
+.builder()
+.name("my-service")
+.plan("a-plan")
+.serviceInstanceName("my-service-instance")
+.build())
+	.build();
 
 		targetSpec = TargetSpec.builder()
-			.name("TargetSpace")
-			.build();
+	.name("TargetSpace")
+	.build();
 
 		BrokeredServices brokeredServices = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(backingApps)
-				.services(backingServices)
-				.target(targetSpec)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(backingApps)
+.services(backingServices)
+.target(targetSpec)
+.build())
+	.build();
 
 		createServiceInstanceWorkflow = new AppDeploymentCreateServiceInstanceWorkflow(
-			brokeredServices,
-			appDeploymentService,
-			servicesProvisionService,
-			appsParametersTransformationService,
-			servicesParametersTransformationService,
-			targetService);
+	brokeredServices,
+	appDeploymentService,
+	servicesProvisionService,
+	appsParametersTransformationService,
+	servicesParametersTransformationService,
+	targetService);
 	}
 
 	@Test
@@ -138,10 +138,10 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 		setupMocks(request);
 
 		StepVerifier
-			.create(createServiceInstanceWorkflow.create(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.create(createServiceInstanceWorkflow.create(request, response))
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeploymentService).deploy(backingApps, request.getServiceInstanceId());
 		verify(servicesProvisionService).createServiceInstance(backingServices);
@@ -164,19 +164,19 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 		setupMocks(request);
 
 		StepVerifier
-			.create(createServiceInstanceWorkflow.create(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.create(createServiceInstanceWorkflow.create(request, response))
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(appDeploymentService).deploy(backingApps, request.getServiceInstanceId());
 		verify(servicesProvisionService).createServiceInstance(backingServices);
 
 		verify(appsParametersTransformationService)
-			.transformParameters(backingApps, parameters);
+	.transformParameters(backingApps, parameters);
 
 		verify(servicesParametersTransformationService)
-			.transformParameters(backingServices, parameters);
+	.transformParameters(backingServices, parameters);
 
 		verifyNoMoreInteractionsWithServices();
 	}
@@ -187,31 +187,31 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 		CreateServiceInstanceResponse response = CreateServiceInstanceResponse.builder().build();
 
 		StepVerifier
-			.create(createServiceInstanceWorkflow.create(request, response))
-			.verifyComplete();
+	.create(createServiceInstanceWorkflow.create(request, response))
+	.verifyComplete();
 
 		verifyNoMoreInteractionsWithServices();
 	}
 
 	private void setupMocks(CreateServiceInstanceRequest request) {
 		given(this.appDeploymentService.deploy(eq(backingApps), eq(request.getServiceInstanceId())))
-			.willReturn(Flux.just("app1", "app2"));
+	.willReturn(Flux.just("app1", "app2"));
 		given(this.servicesProvisionService.createServiceInstance(eq(backingServices)))
-			.willReturn(Flux.just("my-service-instance"));
+	.willReturn(Flux.just("my-service-instance"));
 
 		given(
-			this.appsParametersTransformationService.transformParameters(eq(backingApps), eq(request.getParameters())))
-			.willReturn(Mono.just(backingApps));
+	this.appsParametersTransformationService.transformParameters(eq(backingApps), eq(request.getParameters())))
+	.willReturn(Mono.just(backingApps));
 		given(this.servicesParametersTransformationService
-			.transformParameters(eq(backingServices), eq(request.getParameters())))
-			.willReturn(Mono.just(backingServices));
+	.transformParameters(eq(backingServices), eq(request.getParameters())))
+	.willReturn(Mono.just(backingServices));
 
 		given(this.targetService
-			.addToBackingApplications(eq(backingApps), eq(targetSpec), eq(request.getServiceInstanceId())))
-			.willReturn(Mono.just(backingApps));
+	.addToBackingApplications(eq(backingApps), eq(targetSpec), eq(request.getServiceInstanceId())))
+	.willReturn(Mono.just(backingApps));
 		given(this.targetService
-			.addToBackingServices(eq(backingServices), eq(targetSpec), eq(request.getServiceInstanceId())))
-			.willReturn(Mono.just(backingServices));
+	.addToBackingServices(eq(backingServices), eq(targetSpec), eq(request.getServiceInstanceId())))
+	.willReturn(Mono.just(backingServices));
 	}
 
 	private void verifyNoMoreInteractionsWithServices() {
@@ -227,27 +227,24 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 	}
 
 	private CreateServiceInstanceRequest buildRequest(String serviceName, String planName,
-		Map<String, Object> parameters) {
+Map<String, Object> parameters) {
 		return CreateServiceInstanceRequest
-			.builder()
-			.serviceInstanceId("service-instance-id")
-			.serviceDefinitionId(serviceName + "-id")
-			.planId(planName + "-id")
-			.serviceDefinition(ServiceDefinition
-				.builder()
-				.id(serviceName + "-id")
-				.name(serviceName)
-				.plans(Plan.builder()
-					.id(planName + "-id")
-					.name(planName)
-					.build())
-				.build())
-			.plan(Plan.builder()
-				.id(planName + "-id")
-				.name(planName)
-				.build())
-			.parameters(parameters == null ? new HashMap<>() : parameters)
-			.build();
+	.builder()
+	.serviceInstanceId("service-instance-id")
+	.serviceDefinitionId(serviceName + "-id")
+	.planId(planName + "-id")
+	.serviceDefinition(ServiceDefinition
+.builder()
+.id(serviceName + "-id")
+.name(serviceName)
+.plans(Plan.builder().id(planName + "-id").name(planName).build())
+.build())
+	.plan(Plan.builder()
+.id(planName + "-id")
+.name(planName)
+.build())
+	.parameters(parameters == null ? new HashMap<>() : parameters)
+	.build();
 	}
 
 }

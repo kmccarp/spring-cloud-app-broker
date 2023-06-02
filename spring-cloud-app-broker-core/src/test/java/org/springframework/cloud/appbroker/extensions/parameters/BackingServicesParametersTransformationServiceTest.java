@@ -34,55 +34,52 @@ class BackingServicesParametersTransformationServiceTest {
 	@Test
 	void transformParametersWithNoBackingServices() {
 		BackingServicesParametersTransformationService service =
-			new BackingServicesParametersTransformationService(Collections.emptyList());
+	new BackingServicesParametersTransformationService(Collections.emptyList());
 
 		BackingServices backingServices = BackingServices.builder()
-			.build();
+	.build();
 
 		StepVerifier
-			.create(service.transformParameters(backingServices, new HashMap<>()))
-			.expectNext(backingServices)
-			.verifyComplete();
+	.create(service.transformParameters(backingServices, new HashMap<>()))
+	.expectNext(backingServices)
+	.verifyComplete();
 	}
 
 	@Test
 	void transformParametersWithNoTransformers() {
 		BackingServicesParametersTransformationService service =
-			new BackingServicesParametersTransformationService(Collections.emptyList());
+	new BackingServicesParametersTransformationService(Collections.emptyList());
 
 		BackingServices backingServices = BackingServices
-			.builder()
-			.backingService(BackingService.builder().build())
-			.build();
+	.builder()
+	.backingService(BackingService.builder().build())
+	.build();
 
 		StepVerifier
-			.create(service.transformParameters(backingServices, new HashMap<>()))
-			.expectNext(backingServices)
-			.verifyComplete();
+	.create(service.transformParameters(backingServices, new HashMap<>()))
+	.expectNext(backingServices)
+	.verifyComplete();
 	}
 
 	@Test
 	void transformParametersWithUnknownTransformer() {
 		BackingServicesParametersTransformationService service =
-			new BackingServicesParametersTransformationService(Collections.emptyList());
+	new BackingServicesParametersTransformationService(Collections.emptyList());
 
 		BackingServices backingServices = BackingServices
-			.builder()
-			.backingService(BackingService.builder()
-				.name("misconfigured-service")
-				.parameterTransformers(ParametersTransformerSpec
-					.builder()
-					.name("unknown-transformer")
-					.build())
-				.build())
-			.build();
+	.builder()
+	.backingService(BackingService.builder()
+.name("misconfigured-service")
+.parameterTransformers(ParametersTransformerSpec.builder().name("unknown-transformer").build())
+.build())
+	.build();
 
 		StepVerifier
-			.create(service.transformParameters(backingServices, new HashMap<>()))
-			.expectErrorSatisfies(e -> assertThat(e)
-				.isInstanceOf(ServiceBrokerException.class)
-				.hasMessageContaining("unknown-transformer"))
-			.verify();
+	.create(service.transformParameters(backingServices, new HashMap<>()))
+	.expectErrorSatisfies(e -> assertThat(e)
+.isInstanceOf(ServiceBrokerException.class)
+.hasMessageContaining("unknown-transformer"))
+	.verify();
 	}
 
 }

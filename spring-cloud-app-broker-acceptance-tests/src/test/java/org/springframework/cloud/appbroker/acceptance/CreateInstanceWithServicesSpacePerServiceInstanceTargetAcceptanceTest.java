@@ -52,22 +52,22 @@ class CreateInstanceWithServicesSpacePerServiceInstanceTargetAcceptanceTest exte
 
 	@Test
 	@AppBrokerTestProperties({
-		"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance",
+"spring.cloud.appbroker.services[0].service-name=" + APP_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].plan-name=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].target.name=SpacePerServiceInstance",
 
-		"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-		"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
-		"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME_1,
-		"spring.cloud.appbroker.services[0].apps[0].services[1].service-instance-name=" + BACKING_SI_NAME_2,
+"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
+"spring.cloud.appbroker.services[0].apps[0].path=" + BACKING_APP_PATH,
+"spring.cloud.appbroker.services[0].apps[0].services[0].service-instance-name=" + BACKING_SI_NAME_1,
+"spring.cloud.appbroker.services[0].apps[0].services[1].service-instance-name=" + BACKING_SI_NAME_2,
 
-		"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME_1,
+"spring.cloud.appbroker.services[0].services[0].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[0].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[0].service-instance-name=" + BACKING_SI_NAME_1,
 
-		"spring.cloud.appbroker.services[0].services[1].name=" + BACKING_SERVICE_NAME,
-		"spring.cloud.appbroker.services[0].services[1].plan=" + PLAN_NAME,
-		"spring.cloud.appbroker.services[0].services[1].service-instance-name=" + BACKING_SI_NAME_2
+"spring.cloud.appbroker.services[0].services[1].name=" + BACKING_SERVICE_NAME,
+"spring.cloud.appbroker.services[0].services[1].plan=" + PLAN_NAME,
+"spring.cloud.appbroker.services[0].services[1].service-instance-name=" + BACKING_SI_NAME_2
 	})
 	void deployAppsInTargetSpaceOnCreateService() {
 		// when a service instance is created with targets

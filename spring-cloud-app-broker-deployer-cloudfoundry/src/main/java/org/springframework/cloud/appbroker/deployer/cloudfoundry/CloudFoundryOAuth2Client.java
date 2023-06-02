@@ -45,56 +45,56 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 	@Override
 	public Mono<CreateOAuth2ClientResponse> createClient(CreateOAuth2ClientRequest request) {
 		return uaaClient.clients()
-			.create(mapCreateRequest(request))
-			.map(this::mapCreateResponse);
+	.create(mapCreateRequest(request))
+	.map(this::mapCreateResponse);
 	}
 
 	@Override
 	public Mono<DeleteOAuth2ClientResponse> deleteClient(DeleteOAuth2ClientRequest request) {
 		return uaaClient.clients()
-			.delete(mapDeleteRequest(request))
-			.map(this::mapDeleteResponse);
+	.delete(mapDeleteRequest(request))
+	.map(this::mapDeleteResponse);
 	}
 
 	private CreateClientRequest mapCreateRequest(CreateOAuth2ClientRequest request) {
 		return CreateClientRequest.builder()
-			.clientId(request.getClientId())
-			.clientSecret(request.getClientSecret())
-			.name(request.getClientName())
-			.scopes(request.getScopes())
-			.authorities(request.getAuthorities())
-			.authorizedGrantTypes(mapStringToGrantType(request.getGrantTypes()))
-			.identityZoneSubdomain(request.getIdentityZoneSubdomain())
-			.identityZoneId(request.getIdentityZoneId())
-			.build();
+	.clientId(request.getClientId())
+	.clientSecret(request.getClientSecret())
+	.name(request.getClientName())
+	.scopes(request.getScopes())
+	.authorities(request.getAuthorities())
+	.authorizedGrantTypes(mapStringToGrantType(request.getGrantTypes()))
+	.identityZoneSubdomain(request.getIdentityZoneSubdomain())
+	.identityZoneId(request.getIdentityZoneId())
+	.build();
 	}
 
 	private CreateOAuth2ClientResponse mapCreateResponse(CreateClientResponse response) {
 		return CreateOAuth2ClientResponse.builder()
-			.clientId(response.getClientId())
-			.clientName(response.getName())
-			.scopes(response.getScopes())
-			.authorities(response.getAuthorities())
-			.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
-			.build();
+	.clientId(response.getClientId())
+	.clientName(response.getName())
+	.scopes(response.getScopes())
+	.authorities(response.getAuthorities())
+	.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
+	.build();
 	}
 
 	private DeleteClientRequest mapDeleteRequest(DeleteOAuth2ClientRequest request) {
 		return DeleteClientRequest.builder()
-			.clientId(request.getClientId())
-			.identityZoneSubdomain(request.getIdentityZoneSubdomain())
-			.identityZoneId(request.getIdentityZoneId())
-			.build();
+	.clientId(request.getClientId())
+	.identityZoneSubdomain(request.getIdentityZoneSubdomain())
+	.identityZoneId(request.getIdentityZoneId())
+	.build();
 	}
 
 	private DeleteOAuth2ClientResponse mapDeleteResponse(DeleteClientResponse response) {
 		return DeleteOAuth2ClientResponse.builder()
-			.clientId(response.getClientId())
-			.clientName(response.getName())
-			.scopes(response.getScopes())
-			.authorities(response.getAuthorities())
-			.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
-			.build();
+	.clientId(response.getClientId())
+	.clientName(response.getName())
+	.scopes(response.getScopes())
+	.authorities(response.getAuthorities())
+	.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
+	.build();
 	}
 
 	private List<GrantType> mapStringToGrantType(List<String> grantTypes) {
@@ -103,8 +103,8 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 		}
 
 		return grantTypes.stream()
-			.map(GrantType::from)
-			.collect(Collectors.toList());
+	.map(GrantType::from)
+	.collect(Collectors.toList());
 	}
 
 	private List<String> mapGrantTypeToString(List<GrantType> grantTypes) {
@@ -113,8 +113,8 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 		}
 
 		return grantTypes.stream()
-			.map(GrantType::getValue)
-			.collect(Collectors.toList());
+	.map(GrantType::getValue)
+	.collect(Collectors.toList());
 	}
 
 }

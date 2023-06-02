@@ -35,18 +35,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.cloud.appbroker.integration.CreateInstanceWithParametersMappingComponentTest.APP_NAME;
 
-@TestPropertySource(properties = {
-	"spring.cloud.appbroker.services[0].service-name=example",
-	"spring.cloud.appbroker.services[0].plan-name=standard",
-	"spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar",
-	"spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,
-	"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1",
-	"spring.cloud.appbroker.services[0].apps[0].environment.parameter2=false",
-	"spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter2",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping",
-	"spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=count,memory"
+@TestPropertySource(properties = {"spring.cloud.appbroker.services[0].service-name=example","spring.cloud.appbroker.services[0].plan-name=standard","spring.cloud.appbroker.services[0].apps[0].path=classpath:demo.jar","spring.cloud.appbroker.services[0].apps[0].name=" + APP_NAME,"spring.cloud.appbroker.services[0].apps[0].environment.parameter1=config1","spring.cloud.appbroker.services[0].apps[0].environment.parameter2=false","spring.cloud.appbroker.services[0].apps[0].environment.parameter3=config3","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].name=EnvironmentMapping","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[0].args.include=parameter1,parameter2","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].name=PropertyMapping","spring.cloud.appbroker.services[0].apps[0].parameters-transformers[1].args.include=count,memory"
 })
 class CreateInstanceWithParametersMappingComponentTest extends WiremockComponentTest {
 
@@ -62,11 +51,11 @@ class CreateInstanceWithParametersMappingComponentTest extends WiremockComponent
 	void pushAppWithParametersTransformedToEnvironmentVariables() {
 		cloudControllerFixture.stubAppDoesNotExist(APP_NAME);
 		cloudControllerFixture.stubPushApp(APP_NAME,
-			matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter1.*:.*value1.*/)]"),
-			matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter2.*:.*true.*/)]"),
-			matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter3.*:.*config3.*/)]"),
-			matchingJsonPath("$.[?(@.instances == '2')]"),
-			matchingJsonPath("$.[?(@.memory == '2048')]"));
+	matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter1.*:.*value1.*/)]"),
+	matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter2.*:.*true.*/)]"),
+	matchingJsonPath("$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*parameter3.*:.*config3.*/)]"),
+	matchingJsonPath("$.[?(@.instances == '2')]"),
+	matchingJsonPath("$.[?(@.memory == '2048')]"));
 
 		// given a set of parameters
 		Map<String, Object> params = new HashMap<>();
@@ -78,18 +67,18 @@ class CreateInstanceWithParametersMappingComponentTest extends WiremockComponent
 
 		// when a service instance is created
 		given(brokerFixture.serviceInstanceRequest(params))
-			.when()
-			.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.ACCEPTED.value());
+	.when()
+	.put(brokerFixture.createServiceInstanceUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.ACCEPTED.value());
 
 		// when the "last_operation" API is polled
 		given(brokerFixture.serviceInstanceRequest())
-			.when()
-			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+	.when()
+	.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
 
 		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
 		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());

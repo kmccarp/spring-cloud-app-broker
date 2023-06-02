@@ -40,36 +40,36 @@ class AppDeploymentInstanceWorkflowTest {
 	@BeforeEach
 	void setUp() {
 		backingApps = BackingApplications.builder()
-			.backingApplication(BackingApplication.builder()
-				.name("app1")
-				.path("https://myfiles/app.jar")
-				.build())
-			.build();
+	.backingApplication(BackingApplication.builder()
+.name("app1")
+.path("https://myfiles/app.jar")
+.build())
+	.build();
 
 		BackingServices backingServices = BackingServices.builder()
-			.backingService(BackingService.builder()
-				.name("service1")
-				.plan("plan1")
-				.build()
-			)
-			.build();
+	.backingService(BackingService.builder()
+.name("service1")
+.plan("plan1")
+.build()
+	)
+	.build();
 
 		BrokeredServices brokeredServices = BrokeredServices.builder()
-			.service(BrokeredService.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(backingApps)
-				.build())
-			.service(BrokeredService.builder()
-				.serviceName("service2_without_backing_app")
-				.planName("plan1")
-				.services(backingServices)
-				.build())
-			.service(BrokeredService.builder()
-				.serviceName("service3_without_backing_app_nor_service")
-				.planName("plan1")
-				.build())
-			.build();
+	.service(BrokeredService.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(backingApps)
+.build())
+	.service(BrokeredService.builder()
+.serviceName("service2_without_backing_app")
+.planName("plan1")
+.services(backingServices)
+.build())
+	.service(BrokeredService.builder()
+.serviceName("service3_without_backing_app_nor_service")
+.planName("plan1")
+.build())
+	.build();
 
 		workflow = new AppDeploymentInstanceWorkflow(brokeredServices);
 	}
@@ -78,87 +78,87 @@ class AppDeploymentInstanceWorkflowTest {
 	void acceptWithMatchingService() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service1", "plan1");
 		StepVerifier
-			.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.expectNextMatches(value -> value)
-			.verifyComplete();
+	.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.expectNextMatches(value -> value)
+	.verifyComplete();
 	}
 
 	@Test
 	void acceptWithMatchingServiceAndNoBackingApplication() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service2_without_backing_app", "plan1");
 		StepVerifier
-			.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.expectNextMatches(value -> value)
-			.verifyComplete();
+	.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.expectNextMatches(value -> value)
+	.verifyComplete();
 	}
 
 	@Test
 	void doNotAcceptWithMatchingServiceWithoutBackingServiceNorBackingApplication() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service3_without_backing_app_nor_service",
-			"plan1");
+	"plan1");
 		StepVerifier
-			.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.expectNextMatches(value -> !value)
-			.verifyComplete();
+	.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.expectNextMatches(value -> !value)
+	.verifyComplete();
 	}
 
 	@Test
 	void doNotAcceptWithUnsupportedService() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("unknown-service", "plan1");
 		StepVerifier
-			.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.expectNextMatches(value -> !value)
-			.verifyComplete();
+	.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.expectNextMatches(value -> !value)
+	.verifyComplete();
 	}
 
 	@Test
 	void doNotAcceptWithUnsupportedPlan() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service1", "unknown-plan");
 		StepVerifier
-			.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.expectNextMatches(value -> !value)
-			.verifyComplete();
+	.create(workflow.accept(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.expectNextMatches(value -> !value)
+	.verifyComplete();
 	}
 
 	@Test
 	void getBackingAppForServiceSucceeds() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service1", "plan1");
 		StepVerifier
-			.create(workflow
-				.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.assertNext(actual -> assertThat(actual)
-				.isEqualTo(backingApps)
-				.isNotSameAs(backingApps))
-			.verifyComplete();
+	.create(workflow
+.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.assertNext(actual -> assertThat(actual)
+.isEqualTo(backingApps)
+.isNotSameAs(backingApps))
+	.verifyComplete();
 	}
 
 	@Test
 	void getBackingAppForServiceWithUnknownServiceIdDoesNothing() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("unknown-service", "plan1");
 		StepVerifier
-			.create(workflow
-				.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.verifyComplete();
+	.create(workflow
+.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.verifyComplete();
 	}
 
 	@Test
 	void getBackingAppForServiceWithUnknownPlanIdDoesNothing() {
 		ServiceDefinition serviceDefinition = buildServiceDefinition("service1", "unknown-plan");
 		StepVerifier
-			.create(workflow
-				.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
-			.verifyComplete();
+	.create(workflow
+.getBackingApplicationsForService(serviceDefinition, serviceDefinition.getPlans().get(0)))
+	.verifyComplete();
 	}
 
 	private ServiceDefinition buildServiceDefinition(String serviceName, String planName) {
 		return ServiceDefinition.builder()
-			.id(serviceName + "-id")
-			.name(serviceName)
-			.plans(Plan.builder()
-				.id(planName + "-id")
-				.name(planName)
-				.build())
-			.build();
+	.id(serviceName + "-id")
+	.name(serviceName)
+	.plans(Plan.builder()
+.id(planName + "-id")
+.name(planName)
+.build())
+	.build();
 	}
 
 }

@@ -38,8 +38,8 @@ public class UpdateApplicationRequest {
 	private final String serviceInstanceId;
 
 	protected UpdateApplicationRequest(String name, String path, Map<String, String> properties,
-		Map<String, Object> environment, List<String> services,
-		String serviceInstanceId) {
+Map<String, Object> environment, List<String> services,
+String serviceInstanceId) {
 		this.name = name;
 		this.path = path;
 		this.properties = properties;

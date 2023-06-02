@@ -33,9 +33,7 @@ import static org.springframework.cloud.appbroker.integration.fixtures.CloudCont
 import static org.springframework.cloud.appbroker.integration.fixtures.CloudControllerStubFixture.serviceGuid;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-	classes = {AppBrokerApplication.class})
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,classes = {AppBrokerApplication.class})
 @ActiveProfiles({"openservicebroker-catalog", "appbroker-cf"})
 class CatalogComponentTest {
 
@@ -52,22 +50,22 @@ class CatalogComponentTest {
 	@Test
 	void shouldRetrieveCatalog() {
 		given()
-			.get(baseUrl + "/v2/catalog")
-			.then()
-			.statusCode(HttpStatus.OK.value())
-			.body("services[0].name", equalTo("example"))
-			.body("services[0].id", equalTo(serviceGuid("example")))
-			.body("services[0].description", equalTo("A simple example"))
-			.body("services[0].bindable", equalTo(true))
-			.body("services[0].metadata.size()", is(0))
-			.body("services[0].plan_updateable", equalTo(null))
-			.body("services[0].instances_retrievable", equalTo(null))
-			.body("services[0].plans[0].id", equalTo(planGuid("standard")))
-			.body("services[0].plans[0].name", equalTo("standard"))
-			.body("services[0].plans[0].metadata", equalTo(null))
-			.body("services[0].plans[0].bindable", equalTo(true))
-			.body("services[0].plans[0].free", equalTo(true))
-			.body("services[0].plans[0].description", equalTo("A simple plan"));
+	.get(baseUrl + "/v2/catalog")
+	.then()
+	.statusCode(HttpStatus.OK.value())
+	.body("services[0].name", equalTo("example"))
+	.body("services[0].id", equalTo(serviceGuid("example")))
+	.body("services[0].description", equalTo("A simple example"))
+	.body("services[0].bindable", equalTo(true))
+	.body("services[0].metadata.size()", is(0))
+	.body("services[0].plan_updateable", equalTo(null))
+	.body("services[0].instances_retrievable", equalTo(null))
+	.body("services[0].plans[0].id", equalTo(planGuid("standard")))
+	.body("services[0].plans[0].name", equalTo("standard"))
+	.body("services[0].plans[0].metadata", equalTo(null))
+	.body("services[0].plans[0].bindable", equalTo(true))
+	.body("services[0].plans[0].free", equalTo(true))
+	.body("services[0].plans[0].description", equalTo("A simple plan"));
 	}
 
 }

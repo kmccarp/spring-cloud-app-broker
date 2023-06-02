@@ -42,8 +42,8 @@ public class WiremockStubFixture {
 
 	protected WiremockStubFixture(int port) {
 		wireMock = WireMock.create()
-			.port(port)
-			.build();
+	.port(port)
+	.build();
 	}
 
 	public ListStubMappingsResult getAllStubs() {
@@ -71,8 +71,8 @@ public class WiremockStubFixture {
 			Resource resource = resourceLoader.getResource(filePath);
 			InputStreamReader reader = new InputStreamReader(resource.getInputStream());
 			return new BufferedReader(reader)
-				.lines()
-				.collect(Collectors.joining("\n"));
+		.lines()
+		.collect(Collectors.joining("\n"));
 		}
 		catch (IOException e) {
 			throw new RuntimeException("Error loading resource from location " + filePath, e);
@@ -81,8 +81,8 @@ public class WiremockStubFixture {
 
 	protected Metadata optionalStubMapping() {
 		return Metadata.metadata()
-			.attr("optional", true)
-			.build();
+	.attr("optional", true)
+	.build();
 	}
 
 	protected final class StringReplacementPair {

@@ -32,14 +32,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(
-	webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-	classes = {AppBrokerApplication.class,
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,classes = {AppBrokerApplication.class,
 		WiremockServerFixture.class,
 		OpenServiceBrokerApiFixture.class,
 		CloudControllerStubFixture.class,
-		UaaStubFixture.class},
-	properties = {
+		UaaStubFixture.class},properties = {
 		"spring.cloud.appbroker.deployer.cloudfoundry.api-host=localhost",
 		"spring.cloud.appbroker.deployer.cloudfoundry.api-port=8080",
 		"spring.cloud.appbroker.deployer.cloudfoundry.username=admin",
@@ -47,8 +44,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 		"spring.cloud.appbroker.deployer.cloudfoundry.default-org=test",
 		"spring.cloud.appbroker.deployer.cloudfoundry.default-space=development",
 		"spring.cloud.appbroker.deployer.cloudfoundry.secure=false",
-		"spring.cloud.appbroker.deployer.cloudfoundry.properties.buildpack=example-buildpack"
-	}
+		"spring.cloud.appbroker.deployer.cloudfoundry.properties.buildpack=example-buildpack"}
 )
 @ActiveProfiles("openservicebroker-catalog")
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)

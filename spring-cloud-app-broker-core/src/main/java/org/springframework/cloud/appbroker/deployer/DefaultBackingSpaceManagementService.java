@@ -38,19 +38,19 @@ public class DefaultBackingSpaceManagementService implements BackingSpaceManagem
 	@Override
 	public Flux<String> deleteTargetSpaces(List<String> targetSpaces) {
 		return Flux.fromIterable(targetSpaces)
-			.parallel()
-			.runOn(Schedulers.parallel())
-			.flatMap(deployerClient::deleteSpace)
-			.sequential()
-			.doOnRequest(l -> {
-				LOG.info("Deleting backing spaces");
-				LOG.debug(BACKINGSPACES_LOG_TEMPLATE, targetSpaces);
-			})
-			.doOnComplete(() -> {
-				LOG.info("Finish deleting backing spaces");
-				LOG.debug(BACKINGSPACES_LOG_TEMPLATE, targetSpaces);
-			})
-			.doOnError(e -> LOG.error(String.format("Error deleting backing spaces. error=%s", e.getMessage()), e));
+	.parallel()
+	.runOn(Schedulers.parallel())
+	.flatMap(deployerClient::deleteSpace)
+	.sequential()
+	.doOnRequest(l -> {
+		LOG.info("Deleting backing spaces");
+		LOG.debug(BACKINGSPACES_LOG_TEMPLATE, targetSpaces);
+	})
+	.doOnComplete(() -> {
+		LOG.info("Finish deleting backing spaces");
+		LOG.debug(BACKINGSPACES_LOG_TEMPLATE, targetSpaces);
+	})
+	.doOnError(e -> LOG.error(String.format("Error deleting backing spaces. error=%s", e.getMessage()), e));
 	}
 
 }

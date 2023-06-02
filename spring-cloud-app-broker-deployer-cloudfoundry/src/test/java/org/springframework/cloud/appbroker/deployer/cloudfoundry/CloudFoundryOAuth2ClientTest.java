@@ -60,89 +60,89 @@ class CloudFoundryOAuth2ClientTest {
 	@Test
 	void createClient() {
 		CreateClientRequest clientsRequest = CreateClientRequest.builder()
-			.clientId("test-client")
-			.clientSecret("test-secret")
-			.name("test-name")
-			.scopes("auth1", "auth2")
-			.authorities("auth1", "auth2")
-			.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
-				GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
-			.identityZoneSubdomain("subdomain")
-			.identityZoneId("zoneId")
-			.build();
+	.clientId("test-client")
+	.clientSecret("test-secret")
+	.name("test-name")
+	.scopes("auth1", "auth2")
+	.authorities("auth1", "auth2")
+	.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
+GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
+	.identityZoneSubdomain("subdomain")
+	.identityZoneId("zoneId")
+	.build();
 
 		CreateClientResponse clientsResponse = CreateClientResponse.builder()
-			.clientId("test-client")
-			.name("test-name")
-			.scopes("auth1", "auth2")
-			.authorities("auth1", "auth2")
-			.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
-				GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
-			.build();
+	.clientId("test-client")
+	.name("test-name")
+	.scopes("auth1", "auth2")
+	.authorities("auth1", "auth2")
+	.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
+GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
+	.build();
 
 		given(clients.create(clientsRequest))
-			.willReturn(Mono.just(clientsResponse));
+	.willReturn(Mono.just(clientsResponse));
 
 		CreateOAuth2ClientRequest request = CreateOAuth2ClientRequest.builder()
-			.clientId("test-client")
-			.clientSecret("test-secret")
-			.clientName("test-name")
-			.scopes("auth1", "auth2")
-			.authorities("auth1", "auth2")
-			.grantTypes("client_credentials", "authorization_code", "password", "implicit", "refresh_token")
-			.identityZoneSubdomain("subdomain")
-			.identityZoneId("zoneId")
-			.build();
+	.clientId("test-client")
+	.clientSecret("test-secret")
+	.clientName("test-name")
+	.scopes("auth1", "auth2")
+	.authorities("auth1", "auth2")
+	.grantTypes("client_credentials", "authorization_code", "password", "implicit", "refresh_token")
+	.identityZoneSubdomain("subdomain")
+	.identityZoneId("zoneId")
+	.build();
 
 		StepVerifier.create(oAuth2Client.createClient(request))
-			.assertNext(response -> assertResponse(response.getClientId(), response.getClientName(),
-				response.getScopes(), response.getAuthorities(),
-				response.getGrantTypes()))
-			.verifyComplete();
+	.assertNext(response -> assertResponse(response.getClientId(), response.getClientName(),
+response.getScopes(), response.getAuthorities(),
+response.getGrantTypes()))
+	.verifyComplete();
 	}
 
 	@Test
 	void deleteClient() {
 		DeleteClientRequest clientsRequest = DeleteClientRequest.builder()
-			.clientId("test-client")
-			.identityZoneSubdomain("subdomain")
-			.identityZoneId("zoneId")
-			.build();
+	.clientId("test-client")
+	.identityZoneSubdomain("subdomain")
+	.identityZoneId("zoneId")
+	.build();
 
 		DeleteClientResponse clientsResponse = DeleteClientResponse.builder()
-			.clientId("test-client")
-			.name("test-name")
-			.scopes("auth1", "auth2")
-			.authorities("auth1", "auth2")
-			.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
-				GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
-			.build();
+	.clientId("test-client")
+	.name("test-name")
+	.scopes("auth1", "auth2")
+	.authorities("auth1", "auth2")
+	.authorizedGrantTypes(GrantType.CLIENT_CREDENTIALS, GrantType.AUTHORIZATION_CODE,
+GrantType.PASSWORD, GrantType.IMPLICIT, GrantType.REFRESH_TOKEN)
+	.build();
 
 		given(clients.delete(clientsRequest))
-			.willReturn(Mono.just(clientsResponse));
+	.willReturn(Mono.just(clientsResponse));
 
 		DeleteOAuth2ClientRequest request = DeleteOAuth2ClientRequest.builder()
-			.clientId("test-client")
-			.identityZoneSubdomain("subdomain")
-			.identityZoneId("zoneId")
-			.build();
+	.clientId("test-client")
+	.identityZoneSubdomain("subdomain")
+	.identityZoneId("zoneId")
+	.build();
 
 		StepVerifier.create(oAuth2Client.deleteClient(request))
-			.assertNext(response -> assertResponse(response.getClientId(), response.getClientName(),
-				response.getScopes(), response.getAuthorities(),
-				response.getGrantTypes()))
-			.verifyComplete();
+	.assertNext(response -> assertResponse(response.getClientId(), response.getClientName(),
+response.getScopes(), response.getAuthorities(),
+response.getGrantTypes()))
+	.verifyComplete();
 	}
 
 	private void assertResponse(String clientId, String name,
-		List<String> scopes, List<String> authorities,
-		List<String> authorizedGrantTypes) {
+List<String> scopes, List<String> authorities,
+List<String> authorizedGrantTypes) {
 		assertThat(clientId).isEqualTo("test-client");
 		assertThat(name).isEqualTo("test-name");
 		assertThat(scopes).contains("auth1", "auth2");
 		assertThat(authorities).contains("auth1", "auth2");
 		assertThat(authorizedGrantTypes).contains(
-			"client_credentials", "authorization_code", "password", "implicit", "refresh_token");
+	"client_credentials", "authorization_code", "password", "implicit", "refresh_token");
 	}
 
 }

@@ -90,78 +90,78 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 	@BeforeEach
 	void setUp() {
 		backingApps = BackingApplications
-			.builder()
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app1")
-				.path("https://myfiles/app1.jar")
-				.build())
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app2")
-				.path("https://myfiles/app2.jar")
-				.build())
-			.build();
+	.builder()
+	.backingApplication(BackingApplication
+.builder()
+.name("app1")
+.path("https://myfiles/app1.jar")
+.build())
+	.backingApplication(BackingApplication
+.builder()
+.name("app2")
+.path("https://myfiles/app2.jar")
+.build())
+	.build();
 
 		this.backingServices = BackingServices
-			.builder()
-			.backingService(BackingService
-				.builder()
-				.name("my-service")
-				.plan("a-plan")
-				.serviceInstanceName("my-service-instance")
-				.build())
-			.build();
+	.builder()
+	.backingService(BackingService
+.builder()
+.name("my-service")
+.plan("a-plan")
+.serviceInstanceName("my-service-instance")
+.build())
+	.build();
 
 		this.backingServices2 = BackingServices
-			.builder()
-			.backingService(BackingService
-				.builder()
-				.name("my-service2")
-				.plan("a-plan2")
-				.serviceInstanceName("my-service-instance2")
-				.properties(getPropertiesWithSpace("my-space2"))
-				.build())
-			.build();
+	.builder()
+	.backingService(BackingService
+.builder()
+.name("my-service2")
+.plan("a-plan2")
+.serviceInstanceName("my-service-instance2")
+.properties(getPropertiesWithSpace("my-space2"))
+.build())
+	.build();
 
 		targetSpec = TargetSpec.builder()
-			.name("TargetSpace")
-			.build();
+	.name("TargetSpace")
+	.build();
 
 		BrokeredServices brokeredServices = BrokeredServices
-			.builder()
-			.service(BrokeredService
-				.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(backingApps)
-				.services(backingServices)
-				.target(targetSpec)
-				.build())
-			.service(BrokeredService.builder()
-				.serviceName("service2")
-				.planName("plan2")
-				.services(backingServices)
-				.target(targetSpec)
-				.build())
-			.service(BrokeredService.builder()
-				.serviceName("service3")
-				.planName("plan3")
-				.apps(backingApps)
-				.services(backingServices2)
-				.target(targetSpec)
-				.build())
-			.build();
+	.builder()
+	.service(BrokeredService
+.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(backingApps)
+.services(backingServices)
+.target(targetSpec)
+.build())
+	.service(BrokeredService.builder()
+.serviceName("service2")
+.planName("plan2")
+.services(backingServices)
+.target(targetSpec)
+.build())
+	.service(BrokeredService.builder()
+.serviceName("service3")
+.planName("plan3")
+.apps(backingApps)
+.services(backingServices2)
+.target(targetSpec)
+.build())
+	.build();
 
 		deleteServiceInstanceWorkflow =
-			new AppDeploymentDeleteServiceInstanceWorkflow(
-				brokeredServices,
-				backingAppDeploymentService,
-				backingAppManagementService,
-				backingServicesProvisionService,
-				backingSpaceManagementService,
-				targetService
-			);
+	new AppDeploymentDeleteServiceInstanceWorkflow(
+brokeredServices,
+backingAppDeploymentService,
+backingAppManagementService,
+backingServicesProvisionService,
+backingSpaceManagementService,
+targetService
+	);
 	}
 
 	@Test
@@ -170,18 +170,18 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		DeleteServiceInstanceResponse response = DeleteServiceInstanceResponse.builder().build();
 
 		given(this.backingAppDeploymentService.undeploy(eq(backingApps)))
-			.willReturn(Flux.just("undeployed1", "undeployed2"));
+	.willReturn(Flux.just("undeployed1", "undeployed2"));
 
 		// configured backing services
 		given(this.targetService.addToBackingServices(eq(backingServices), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingServices));
+	.willReturn(Mono.just(backingServices));
 
 		// services bound to deployed apps
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
 		given(this.targetService.addToBackingApplications(eq(backingApps), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		given(this.backingServicesProvisionService.deleteServiceInstance(argThat(backingServices -> {
 			boolean nameMatch = "my-service-instance".equals(backingServices.get(0).getServiceInstanceName());
@@ -192,8 +192,8 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		given(this.backingSpaceManagementService.deleteTargetSpaces(any())).willReturn(Flux.empty());
 
 		StepVerifier
-			.create(deleteServiceInstanceWorkflow.delete(request, response))
-			.verifyComplete();
+	.create(deleteServiceInstanceWorkflow.delete(request, response))
+	.verifyComplete();
 
 		verify(this.backingServicesProvisionService, Mockito.times(1)).deleteServiceInstance(any());
 		verify(this.backingSpaceManagementService).deleteTargetSpaces(eq(emptyList()));
@@ -211,29 +211,29 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		BackingServices servicesWithTarget = BackingServices.builder().backingServices(backingServices).build();
 		servicesWithTarget.get(0).setProperties(getPropertiesWithSpace(space1));
 		given(this.targetService.addToBackingServices(eq(backingServices), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(servicesWithTarget));
+	.willReturn(Mono.just(servicesWithTarget));
 
 		// configured backing apps
 		BackingApplications appsWithTarget = BackingApplications.builder().backingApplications(backingApps).build();
 		appsWithTarget.get(0).setProperties(getPropertiesWithSpace(space2));
 		given(this.targetService.addToBackingApplications(eq(backingApps), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(appsWithTarget));
+	.willReturn(Mono.just(appsWithTarget));
 
 		// services bound to deployed apps
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
 
 		// delete in action
 		given(this.backingAppDeploymentService.undeploy(eq(appsWithTarget)))
-			.willReturn(Flux.just("undeployed1", "undeployed2"));
+	.willReturn(Flux.just("undeployed1", "undeployed2"));
 		given(this.backingServicesProvisionService.deleteServiceInstance(any()))
-			.willReturn(Flux.just("my-service-instance"));
+	.willReturn(Flux.just("my-service-instance"));
 		given(this.backingSpaceManagementService.deleteTargetSpaces(any())).willReturn(Flux.just("space-name"));
 
 		StepVerifier
-			.create(deleteServiceInstanceWorkflow.delete(request, response))
-			.verifyComplete();
+	.create(deleteServiceInstanceWorkflow.delete(request, response))
+	.verifyComplete();
 
 		verify(this.backingServicesProvisionService, Mockito.times(1)).deleteServiceInstance(any());
 		verify(this.backingSpaceManagementService).deleteTargetSpaces(Arrays.asList(space1, space2));
@@ -246,37 +246,37 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		DeleteServiceInstanceResponse response = DeleteServiceInstanceResponse.builder().build();
 
 		given(this.backingAppDeploymentService.undeploy(eq(backingApps)))
-			.willReturn(Flux.just("undeployed1", "undeployed2"));
+	.willReturn(Flux.just("undeployed1", "undeployed2"));
 
 		// configured backing services
 		given(this.targetService.addToBackingServices(eq(backingServices2), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingServices2));
+	.willReturn(Mono.just(backingServices2));
 
 		// different bound services
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.just(getExistingBackingAppsWithService("different-service-instance")));
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.just(getExistingBackingAppsWithService("different-service-instance")));
 		given(this.targetService.addToBackingApplications(eq(backingApps), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 
 		given(this.backingServicesProvisionService.deleteServiceInstance(argThat(backingServices -> {
 			boolean nameMatch0 = "my-service-instance2".equals(backingServices.get(0).getServiceInstanceName());
 			boolean spaceMatch0 = "my-space2".equals(backingServices.get(0).getProperties()
-				.get(DeploymentProperties.TARGET_PROPERTY_KEY));
+		.get(DeploymentProperties.TARGET_PROPERTY_KEY));
 			boolean nameMatch1 = "different-service-instance".equals(backingServices.get(1).getServiceInstanceName());
 			boolean spaceMatch1 = "TargetSpace".equals(backingServices.get(1).getProperties()
-				.get(DeploymentProperties.TARGET_PROPERTY_KEY));
+		.get(DeploymentProperties.TARGET_PROPERTY_KEY));
 			boolean sizeMatch = backingServices.size() == 2;
 			return sizeMatch && (nameMatch0 && spaceMatch0 || nameMatch1 && spaceMatch1);
 		}))).willReturn(Flux.just("different-service-instance"));
 
 		given(this.backingSpaceManagementService.deleteTargetSpaces(eq(singletonList("my-space2"))))
-			.willReturn(Flux.just("space-name"));
+	.willReturn(Flux.just("space-name"));
 
 		StepVerifier.create(deleteServiceInstanceWorkflow.delete(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(this.backingServicesProvisionService, Mockito.times(1)).deleteServiceInstance(any());
 		verifyNoMoreInteractionsWithServices();
@@ -288,14 +288,14 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		DeleteServiceInstanceResponse response = DeleteServiceInstanceResponse.builder().build();
 
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.empty());
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.empty());
 
 		given(this.backingSpaceManagementService.deleteTargetSpaces(any())).willReturn(Flux.empty());
 
 		StepVerifier
-			.create(deleteServiceInstanceWorkflow.delete(request, response))
-			.verifyComplete();
+	.create(deleteServiceInstanceWorkflow.delete(request, response))
+	.verifyComplete();
 
 		verifyNoMoreInteractionsWithServices();
 	}
@@ -307,12 +307,12 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 
 		// configured backing services
 		given(this.targetService.addToBackingServices(eq(backingServices), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingServices));
+	.willReturn(Mono.just(backingServices));
 
 		// no backing apps
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.empty());
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.empty());
 
 		given(this.backingServicesProvisionService.deleteServiceInstance(argThat(backingServices -> {
 			boolean nameMatch = "my-service-instance".equals(backingServices.get(0).getServiceInstanceName());
@@ -323,9 +323,9 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		given(this.backingSpaceManagementService.deleteTargetSpaces(any())).willReturn(Flux.empty());
 
 		StepVerifier.create(deleteServiceInstanceWorkflow.delete(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(this.backingServicesProvisionService, Mockito.times(1)).deleteServiceInstance(any());
 		verifyNoMoreInteractionsWithServices();
@@ -344,45 +344,36 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 
 	private DeleteServiceInstanceRequest buildRequest(String serviceName, String planName) {
 		return DeleteServiceInstanceRequest
-			.builder()
-			.serviceDefinitionId(serviceName + "-id")
-			.serviceInstanceId("service-instance-id")
-			.planId(planName + "-id")
-			.serviceDefinition(ServiceDefinition.builder()
-				.id(serviceName + "-id")
-				.name(serviceName)
-				.plans(Plan.builder()
-					.id(planName + "-id")
-					.name(planName)
-					.build())
-				.build())
-			.plan(Plan.builder()
-				.id(planName + "-id")
-				.name(planName)
-				.build())
-			.build();
+	.builder()
+	.serviceDefinitionId(serviceName + "-id")
+	.serviceInstanceId("service-instance-id")
+	.planId(planName + "-id")
+	.serviceDefinition(ServiceDefinition.builder()
+.id(serviceName + "-id")
+.name(serviceName)
+.plans(Plan.builder().id(planName + "-id").name(planName).build())
+.build())
+	.plan(Plan.builder()
+.id(planName + "-id")
+.name(planName)
+.build())
+	.build();
 	}
 
 	private BackingApplications getExistingBackingAppsWithService(String serviceInstanceName) {
 		return BackingApplications
-			.builder()
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app1")
-				.services(ServicesSpec
-					.builder()
-					.serviceInstanceName(serviceInstanceName)
-					.build())
-				.build())
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app2")
-				.services(ServicesSpec
-					.builder()
-					.serviceInstanceName(serviceInstanceName)
-					.build())
-				.build())
-			.build();
+	.builder()
+	.backingApplication(BackingApplication
+.builder()
+.name("app1")
+.services(ServicesSpec.builder().serviceInstanceName(serviceInstanceName).build())
+.build())
+	.backingApplication(BackingApplication
+.builder()
+.name("app2")
+.services(ServicesSpec.builder().serviceInstanceName(serviceInstanceName).build())
+.build())
+	.build();
 	}
 
 }

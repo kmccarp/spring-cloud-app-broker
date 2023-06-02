@@ -61,8 +61,8 @@ public class ServicesSpec {
 	@Override
 	public String toString() {
 		return "ServicesSpec{" +
-			"serviceInstanceName='" + serviceInstanceName + '\'' +
-			'}';
+	"serviceInstanceName='" + serviceInstanceName + '\'' +
+	'}';
 	}
 
 	public static final class ServicesSpecBuilder {

@@ -89,49 +89,49 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 	@BeforeEach
 	void setUp() {
 		backingApps = BackingApplications
-			.builder()
-			.backingApplication(BackingApplication.builder()
-				.name("app1")
-				.path("https://myfiles/app1.jar")
-				.build())
-			.backingApplication(BackingApplication.builder()
-				.name("app2")
-				.path("https://myfiles/app2.jar")
-				.build())
-			.build();
+	.builder()
+	.backingApplication(BackingApplication.builder()
+.name("app1")
+.path("https://myfiles/app1.jar")
+.build())
+	.backingApplication(BackingApplication.builder()
+.name("app2")
+.path("https://myfiles/app2.jar")
+.build())
+	.build();
 
 		backingServices = BackingServices
-			.builder()
-			.backingService(BackingService
-				.builder()
-				.name("my-service")
-				.plan("a-plan")
-				.serviceInstanceName("my-service-instance")
-				.build())
-			.build();
+	.builder()
+	.backingService(BackingService
+.builder()
+.name("my-service")
+.plan("a-plan")
+.serviceInstanceName("my-service-instance")
+.build())
+	.build();
 
 		targetSpec = TargetSpec.builder()
-			.name("TargetSpace")
-			.build();
+	.name("TargetSpace")
+	.build();
 
 		BrokeredServices brokeredServices = BrokeredServices.builder()
-			.service(BrokeredService.builder()
-				.serviceName("service1")
-				.planName("plan1")
-				.apps(backingApps)
-				.services(backingServices)
-				.target(targetSpec)
-				.build())
-			.build();
+	.service(BrokeredService.builder()
+.serviceName("service1")
+.planName("plan1")
+.apps(backingApps)
+.services(backingServices)
+.target(targetSpec)
+.build())
+	.build();
 
 		updateServiceInstanceWorkflow = new AppDeploymentUpdateServiceInstanceWorkflow(
-			brokeredServices,
-			appDeploymentService,
-			backingAppManagementService,
-			servicesProvisionService,
-			appsParametersTransformationService,
-			servicesParametersTransformationService,
-			targetService);
+	brokeredServices,
+	appDeploymentService,
+	backingAppManagementService,
+	servicesProvisionService,
+	appsParametersTransformationService,
+	servicesParametersTransformationService,
+	targetService);
 	}
 
 	@Test
@@ -144,10 +144,10 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 		mockNoChangeInBackingServices(request);
 
 		StepVerifier
-			.create(updateServiceInstanceWorkflow.update(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.create(updateServiceInstanceWorkflow.update(request, response))
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		InOrder updateStepOrder = inOrder(appDeploymentService, servicesProvisionService);
 		updateStepOrder.verify(appDeploymentService).prepareForUpdate(backingApps, request.getServiceInstanceId());
@@ -164,17 +164,17 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 	@Test
 	void updateServiceInstanceWithParametersSucceeds() {
 		UpdateServiceInstanceRequest request = buildRequest("service1", "plan1",
-			singletonMap("ENV_VAR_1", "value from parameters"));
+	singletonMap("ENV_VAR_1", "value from parameters"));
 		UpdateServiceInstanceResponse response = UpdateServiceInstanceResponse.builder().build();
 
 		setupMocks(request);
 		mockNoChangeInBackingServices(request);
 
 		StepVerifier
-			.create(updateServiceInstanceWorkflow.update(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.create(updateServiceInstanceWorkflow.update(request, response))
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verifyNoMoreInteractionsWithServices();
 	}
@@ -187,30 +187,30 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 
 		setupMocks(request);
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.just(getExistingBackingAppsWithService("existing-service-instance")));
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.just(getExistingBackingAppsWithService("existing-service-instance")));
 		given(this.servicesProvisionService.createServiceInstance(any()))
-			.willReturn(Flux.just("my-service-instance"));
+	.willReturn(Flux.just("my-service-instance"));
 		given(this.servicesProvisionService.deleteServiceInstance(any()))
-			.willReturn(Flux.just("existing-service-instance"));
+	.willReturn(Flux.just("existing-service-instance"));
 		given(this.servicesProvisionService.updateServiceInstance(eq(Collections.emptyList())))
-			.willReturn(Flux.empty());
+	.willReturn(Flux.empty());
 
 		StepVerifier
-			.create(updateServiceInstanceWorkflow.update(request, response))
-			.expectNext()
-			.expectNext()
-			.verifyComplete();
+	.create(updateServiceInstanceWorkflow.update(request, response))
+	.expectNext()
+	.expectNext()
+	.verifyComplete();
 
 		verify(servicesProvisionService).createServiceInstance(backingServices);
 		verify(servicesProvisionService).deleteServiceInstance(BackingServices
-			.builder()
-			.backingService(BackingService
-				.builder()
-				.properties(singletonMap("target", "customTarget"))
-				.serviceInstanceName("existing-service-instance")
-				.build())
-			.build());
+	.builder()
+	.backingService(BackingService
+.builder()
+.properties(singletonMap("target", "customTarget"))
+.serviceInstanceName("existing-service-instance")
+.build())
+	.build());
 
 		verifyNoMoreInteractionsWithServices();
 	}
@@ -221,43 +221,43 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 		UpdateServiceInstanceResponse response = UpdateServiceInstanceResponse.builder().build();
 
 		StepVerifier
-			.create(updateServiceInstanceWorkflow.update(request, response))
-			.verifyComplete();
+	.create(updateServiceInstanceWorkflow.update(request, response))
+	.verifyComplete();
 
 		verifyNoMoreInteractionsWithServices();
 	}
 
 	private void setupMocks(UpdateServiceInstanceRequest request) {
 		given(this.appDeploymentService.prepareForUpdate(eq(backingApps), eq(request.getServiceInstanceId())))
-			.willReturn(Flux.just("app1", "app2"));
+	.willReturn(Flux.just("app1", "app2"));
 		given(this.appDeploymentService.update(eq(backingApps), eq(request.getServiceInstanceId())))
-			.willReturn(Flux.just("app1", "app2"));
+	.willReturn(Flux.just("app1", "app2"));
 
 		given(
-			this.appsParametersTransformationService.transformParameters(eq(backingApps), eq(request.getParameters())))
-			.willReturn(Mono.just(backingApps));
+	this.appsParametersTransformationService.transformParameters(eq(backingApps), eq(request.getParameters())))
+	.willReturn(Mono.just(backingApps));
 		given(this.servicesParametersTransformationService
-			.transformParameters(eq(backingServices), eq(request.getParameters())))
-			.willReturn(Mono.just(backingServices));
+	.transformParameters(eq(backingServices), eq(request.getParameters())))
+	.willReturn(Mono.just(backingServices));
 
 		given(this.targetService.addToBackingApplications(eq(backingApps), eq(targetSpec), eq("service-instance-id")))
-			.willReturn(Mono.just(backingApps));
+	.willReturn(Mono.just(backingApps));
 		given(this.targetService
-			.addToBackingServices(eq(backingServices), eq(targetSpec), eq(request.getServiceInstanceId())))
-			.willReturn(Mono.just(backingServices));
+	.addToBackingServices(eq(backingServices), eq(targetSpec), eq(request.getServiceInstanceId())))
+	.willReturn(Mono.just(backingServices));
 	}
 
 	private void mockNoChangeInBackingServices(UpdateServiceInstanceRequest request) {
 		given(this.servicesProvisionService.updateServiceInstance(eq(backingServices)))
-			.willReturn(Flux.just("my-service-instance"));
+	.willReturn(Flux.just("my-service-instance"));
 		given(this.servicesProvisionService.createServiceInstance(any()))
-			.willReturn(Flux.empty());
+	.willReturn(Flux.empty());
 		given(this.servicesProvisionService.deleteServiceInstance(any()))
-			.willReturn(Flux.empty());
+	.willReturn(Flux.empty());
 
 		given(this.backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
-			request.getServiceDefinition().getName(), request.getPlan().getName()))
-			.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
+	request.getServiceDefinition().getName(), request.getPlan().getName()))
+	.willReturn(Mono.just(getExistingBackingAppsWithService("my-service-instance")));
 	}
 
 	private void verifyNoMoreInteractionsWithServices() {
@@ -273,26 +273,23 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 	}
 
 	private UpdateServiceInstanceRequest buildRequest(String serviceName, String planName,
-		Map<String, Object> parameters) {
+Map<String, Object> parameters) {
 		return UpdateServiceInstanceRequest
-			.builder()
-			.serviceInstanceId("service-instance-id")
-			.serviceDefinitionId(serviceName + "-id")
-			.planId(planName + "-id")
-			.serviceDefinition(ServiceDefinition.builder()
-				.id(serviceName + "-id")
-				.name(serviceName)
-				.plans(Plan.builder()
-					.id(planName + "-id")
-					.name(planName)
-					.build())
-				.build())
-			.plan(Plan.builder()
-				.id(planName + "-id")
-				.name(planName)
-				.build())
-			.parameters(parameters == null ? new HashMap<>() : parameters)
-			.build();
+	.builder()
+	.serviceInstanceId("service-instance-id")
+	.serviceDefinitionId(serviceName + "-id")
+	.planId(planName + "-id")
+	.serviceDefinition(ServiceDefinition.builder()
+.id(serviceName + "-id")
+.name(serviceName)
+.plans(Plan.builder().id(planName + "-id").name(planName).build())
+.build())
+	.plan(Plan.builder()
+.id(planName + "-id")
+.name(planName)
+.build())
+	.parameters(parameters == null ? new HashMap<>() : parameters)
+	.build();
 	}
 
 	private BackingApplications getExistingBackingAppsWithService(String serviceInstanceName) {
@@ -300,26 +297,20 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 		properties.put("target", "customTarget");
 		properties.put("not-important-property", "not-important-value");
 		return BackingApplications
-			.builder()
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app1")
-				.properties(properties)
-				.services(ServicesSpec
-					.builder()
-					.serviceInstanceName(serviceInstanceName)
-					.build())
-				.build())
-			.backingApplication(BackingApplication
-				.builder()
-				.name("app2")
-				.properties(properties)
-				.services(ServicesSpec
-					.builder()
-					.serviceInstanceName(serviceInstanceName)
-					.build())
-				.build())
-			.build();
+	.builder()
+	.backingApplication(BackingApplication
+.builder()
+.name("app1")
+.properties(properties)
+.services(ServicesSpec.builder().serviceInstanceName(serviceInstanceName).build())
+.build())
+	.backingApplication(BackingApplication
+.builder()
+.name("app2")
+.properties(properties)
+.services(ServicesSpec.builder().serviceInstanceName(serviceInstanceName).build())
+.build())
+	.build();
 	}
 
 }

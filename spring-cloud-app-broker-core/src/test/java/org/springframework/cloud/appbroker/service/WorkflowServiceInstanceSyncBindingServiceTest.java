@@ -54,74 +54,71 @@ class WorkflowServiceInstanceSyncBindingServiceTest {
 	@BeforeEach
 	void setUp() {
 		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
-			.willReturn(Mono.just(
-				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
-					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
-			.willReturn(Mono.just(
-				new ServiceInstanceState(OperationState.SUCCEEDED, "create service instance binding completed",
-					new Timestamp(Instant.now().minusSeconds(30).toEpochMilli()))));
+	.willReturn(Mono.just(
+new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
+	.willReturn(Mono.just(
+new ServiceInstanceState(OperationState.SUCCEEDED, "create service instance binding completed",new Timestamp(Instant.now().minusSeconds(30).toEpochMilli()))));
 
 	}
 
 	@Test
 	void synchronouslyCreateServiceInstanceAppBinding() {
 		CreateServiceInstanceBindingRequest request = CreateServiceInstanceBindingRequest.builder()
-			.serviceInstanceId("foo-service")
-			.bindingId("foo-binding")
-			.bindResource(BindResource.builder()
-				.appGuid("foo-guid")
-				.build())
-			.build();
+	.serviceInstanceId("foo-service")
+	.bindingId("foo-binding")
+	.bindResource(BindResource.builder()
+.appGuid("foo-guid")
+.build())
+	.build();
 
 		TestPublisher<Void> publisher = TestPublisher.create();
 		CreateServiceInstanceAppBindingWorkflow test = new CreateServiceInstanceAppBindingWorkflow() {
 			@Override
 			public Mono<Void> create(CreateServiceInstanceBindingRequest request,
-				CreateServiceInstanceAppBindingResponse response) {
+		CreateServiceInstanceAppBindingResponse response) {
 				return publisher.mono();
 			}
 		};
 
 		this.workflowServiceInstanceBindingService = new WorkflowServiceInstanceBindingService(this.stateRepository,
-			Collections.singletonList(test), Collections.emptyList(), Collections.emptyList());
+	Collections.singletonList(test), Collections.emptyList(), Collections.emptyList());
 
 		StepVerifier.create(this.workflowServiceInstanceBindingService.createServiceInstanceBinding(request))
-			.expectSubscription()
-			.expectNoEvent(Duration.ofSeconds(1))
-			.then(publisher::complete)
-			.expectNextCount(1)
-			.expectComplete()
-			.verify();
+	.expectSubscription()
+	.expectNoEvent(Duration.ofSeconds(1))
+	.then(publisher::complete)
+	.expectNextCount(1)
+	.expectComplete()
+	.verify();
 	}
 
 	@Test
 	void synchronouslyDeleteServiceInstanceAppBinding() {
 		DeleteServiceInstanceBindingRequest request = DeleteServiceInstanceBindingRequest.builder()
-			.serviceInstanceId("test-si")
-			.bindingId("test-binding")
-			.build();
+	.serviceInstanceId("test-si")
+	.bindingId("test-binding")
+	.build();
 
 		TestPublisher<Void> publisher = TestPublisher.create();
 		DeleteServiceInstanceBindingWorkflow test = new DeleteServiceInstanceBindingWorkflow() {
 			@Override
 			public Mono<Void> delete(DeleteServiceInstanceBindingRequest request,
-				DeleteServiceInstanceBindingResponse response) {
+		DeleteServiceInstanceBindingResponse response) {
 				return publisher.mono();
 			}
 		};
 
 		this.workflowServiceInstanceBindingService = new WorkflowServiceInstanceBindingService(this.stateRepository,
-			Collections.emptyList(), Collections.emptyList(), Collections.singletonList(test));
+	Collections.emptyList(), Collections.emptyList(), Collections.singletonList(test));
 
 		StepVerifier.create(this.workflowServiceInstanceBindingService.deleteServiceInstanceBinding(request))
-			.expectSubscription()
-			.expectNoEvent(Duration.ofSeconds(1))
-			.then(publisher::complete)
-			.expectNextCount(1)
-			.expectComplete()
-			.verify();
+	.expectSubscription()
+	.expectNoEvent(Duration.ofSeconds(1))
+	.then(publisher::complete)
+	.expectNextCount(1)
+	.expectComplete()
+	.verify();
 	}
-
 
 
 }

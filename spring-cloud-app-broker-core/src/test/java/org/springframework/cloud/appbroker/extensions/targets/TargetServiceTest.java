@@ -38,7 +38,7 @@ class TargetServiceTest {
 	@BeforeEach
 	void setUp() {
 		targetService = new TargetService(
-			Arrays.asList(new SpacePerServiceInstance(), new ServiceInstanceGuidSuffix()));
+	Arrays.asList(new SpacePerServiceInstance(), new ServiceInstanceGuidSuffix()));
 	}
 
 	@Test
@@ -49,9 +49,9 @@ class TargetServiceTest {
 
 		//when add gets called
 		List<BackingApplication> updatedBackingApplications =
-			targetService
-				.addToBackingApplications(singletonList(backingApplication), targetSpec, "service-id")
-				.block();
+	targetService
+.addToBackingApplications(singletonList(backingApplication), targetSpec, "service-id")
+.block();
 
 		//then a host and space are added
 		BackingApplication updatedBackingApplication = updatedBackingApplications.get(0);
@@ -69,10 +69,9 @@ class TargetServiceTest {
 
 		//when add gets called
 		List<BackingApplication> updatedBackingApplications =
-			targetService
-				.addToBackingApplications(Lists.newArrayList(backingApplication1, backingApplication2), targetSpec,
-					"service-id")
-				.block();
+	targetService
+.addToBackingApplications(Lists.newArrayList(backingApplication1, backingApplication2), targetSpec,"service-id")
+.block();
 
 		//then a host and space are added
 		BackingApplication updatedBackingApplication1 = updatedBackingApplications.get(0);
@@ -94,13 +93,13 @@ class TargetServiceTest {
 		final BackingApplication backingApplication = BackingApplication.builder().name(appName).build();
 
 		StepVerifier.create(targetService.addToBackingApplications(singletonList(backingApplication), targetSpec,
-				serviceInstanceId))
-				.consumeNextWith(backingApplications -> {
-					String name = backingApplications.get(0).getName();
-					assertThat(name.length()).isLessThan(50).isGreaterThan(serviceInstanceId.length());
-					assertThat(name).contains(serviceInstanceId).contains(appName);
-				})
-				.verifyComplete();
+	serviceInstanceId))
+	.consumeNextWith(backingApplications -> {
+		String name = backingApplications.get(0).getName();
+		assertThat(name.length()).isLessThan(50).isGreaterThan(serviceInstanceId.length());
+		assertThat(name).contains(serviceInstanceId).contains(appName);
+	})
+	.verifyComplete();
 	}
 
 	@Test
@@ -111,13 +110,13 @@ class TargetServiceTest {
 		final BackingApplication backingApplication = BackingApplication.builder().name(appName).build();
 
 		StepVerifier.create(targetService.addToBackingApplications(singletonList(backingApplication), targetSpec,
-				serviceInstanceId))
-				.consumeNextWith(backingApplications -> {
-					String name = backingApplications.get(0).getName();
-					assertThat(name.length()).isEqualTo(50);
-					assertThat(name).contains(serviceInstanceId);
-				})
-				.verifyComplete();
+	serviceInstanceId))
+	.consumeNextWith(backingApplications -> {
+		String name = backingApplications.get(0).getName();
+		assertThat(name.length()).isEqualTo(50);
+		assertThat(name).contains(serviceInstanceId);
+	})
+	.verifyComplete();
 	}
 
 }

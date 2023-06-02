@@ -100,11 +100,11 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	 */
 	@Bean
 	public AppDeployer cloudFoundryAppDeployer(CloudFoundryDeploymentProperties deploymentProperties,
-		CloudFoundryOperations cloudFoundryOperations, CloudFoundryClient cloudFoundryClient,
-		CloudFoundryOperationsUtils operationsUtils, CloudFoundryTargetProperties targetProperties,
-		ResourceLoader resourceLoader) {
+CloudFoundryOperations cloudFoundryOperations, CloudFoundryClient cloudFoundryClient,
+CloudFoundryOperationsUtils operationsUtils, CloudFoundryTargetProperties targetProperties,
+ResourceLoader resourceLoader) {
 		return new CloudFoundryAppDeployer(deploymentProperties, cloudFoundryOperations, cloudFoundryClient,
-			operationsUtils, targetProperties, resourceLoader);
+	operationsUtils, targetProperties, resourceLoader);
 	}
 
 	/**
@@ -138,11 +138,11 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	 */
 	@Bean
 	public ReactorCloudFoundryClient cloudFoundryClient(ConnectionContext connectionContext,
-		@TokenQualifier TokenProvider tokenProvider) {
+@TokenQualifier TokenProvider tokenProvider) {
 		return ReactorCloudFoundryClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	/**
@@ -156,14 +156,14 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	 */
 	@Bean
 	public CloudFoundryOperations cloudFoundryOperations(CloudFoundryTargetProperties properties,
-		CloudFoundryClient client, DopplerClient dopplerClient, @UaaClientQualifier UaaClient uaaClient) {
+CloudFoundryClient client, DopplerClient dopplerClient, @UaaClientQualifier UaaClient uaaClient) {
 		return DefaultCloudFoundryOperations.builder()
-			.cloudFoundryClient(client)
-			.dopplerClient(dopplerClient)
-			.uaaClient(uaaClient)
-			.organization(properties.getDefaultOrg())
-			.space(properties.getDefaultSpace())
-			.build();
+	.cloudFoundryClient(client)
+	.dopplerClient(dopplerClient)
+	.uaaClient(uaaClient)
+	.organization(properties.getDefaultOrg())
+	.space(properties.getDefaultSpace())
+	.build();
 	}
 
 	/**
@@ -186,11 +186,11 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@Bean
 	public DefaultConnectionContext connectionContext(CloudFoundryTargetProperties properties) {
 		return DefaultConnectionContext.builder()
-			.apiHost(properties.getApiHost())
-			.port(Optional.ofNullable(properties.getApiPort()))
-			.skipSslValidation(properties.isSkipSslValidation())
-			.secure(properties.isSecure())
-			.build();
+	.apiHost(properties.getApiHost())
+	.port(Optional.ofNullable(properties.getApiPort()))
+	.skipSslValidation(properties.isSkipSslValidation())
+	.secure(properties.isSecure())
+	.build();
 	}
 
 	/**
@@ -202,11 +202,11 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	 */
 	@Bean
 	public ReactorDopplerClient dopplerClient(ConnectionContext connectionContext,
-		@TokenQualifier TokenProvider tokenProvider) {
+@TokenQualifier TokenProvider tokenProvider) {
 		return ReactorDopplerClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	/**
@@ -219,31 +219,31 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@Bean
 	public TokenProvider uaaTokenProvider(CloudFoundryTargetProperties properties) {
 		boolean isClientIdAndSecretSet = Stream.of(properties.getClientId(), properties.getClientSecret())
-			.allMatch(StringUtils::hasText);
+	.allMatch(StringUtils::hasText);
 		boolean isUsernameAndPasswordSet = Stream.of(properties.getUsername(), properties.getPassword())
-			.allMatch(StringUtils::hasText);
+	.allMatch(StringUtils::hasText);
 		if (isClientIdAndSecretSet && isUsernameAndPasswordSet) {
 			throw new IllegalStateException(
-				String.format("(%1$s.client_id / %1$s.client_secret) must not be set when\n" +
-					"(%1$s.username / %1$s.password) are also set", PROPERTY_PREFIX));
+		String.format("(%1$s.client_id / %1$s.client_secret) must not be set when\n" +
+	"(%1$s.username / %1$s.password) are also set", PROPERTY_PREFIX));
 		}
 		else if (isClientIdAndSecretSet) {
 			return ClientCredentialsGrantTokenProvider.builder()
-				.clientId(properties.getClientId())
-				.clientSecret(properties.getClientSecret())
-				.identityZoneSubdomain(properties.getIdentityZoneSubdomain())
-				.build();
+		.clientId(properties.getClientId())
+		.clientSecret(properties.getClientSecret())
+		.identityZoneSubdomain(properties.getIdentityZoneSubdomain())
+		.build();
 		}
 		else if (isUsernameAndPasswordSet) {
 			return PasswordGrantTokenProvider.builder()
-				.password(properties.getPassword())
-				.username(properties.getUsername())
-				.build();
+		.password(properties.getPassword())
+		.username(properties.getUsername())
+		.build();
 		}
 		else {
 			throw new IllegalStateException(
-				String.format("Either (%1$s.client_id and %1$s.client_secret) or\n" +
-					"(%1$s.username and %1$s.password) properties must be set", PROPERTY_PREFIX));
+		String.format("Either (%1$s.client_id and %1$s.client_secret) or\n" +
+	"(%1$s.username and %1$s.password) properties must be set", PROPERTY_PREFIX));
 		}
 	}
 
@@ -257,11 +257,11 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@UaaClientQualifier
 	@Bean
 	public ReactorUaaClient uaaClient(ConnectionContext connectionContext,
-		@TokenQualifier TokenProvider tokenProvider) {
+@TokenQualifier TokenProvider tokenProvider) {
 		return ReactorUaaClient.builder()
-			.connectionContext(connectionContext)
-			.tokenProvider(tokenProvider)
-			.build();
+	.connectionContext(connectionContext)
+	.tokenProvider(tokenProvider)
+	.build();
 	}
 
 	@Qualifier

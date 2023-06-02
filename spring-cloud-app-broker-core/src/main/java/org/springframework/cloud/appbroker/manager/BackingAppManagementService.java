@@ -49,7 +49,7 @@ public class BackingAppManagementService {
 	private final TargetService targetService;
 
 	public BackingAppManagementService(ManagementClient managementClient, AppDeployer appDeployer,
-		BrokeredServices brokeredServices, TargetService targetService) {
+BrokeredServices brokeredServices, TargetService targetService) {
 		this.managementClient = managementClient;
 		this.appDeployer = appDeployer;
 		this.brokeredServices = brokeredServices;
@@ -82,23 +82,23 @@ public class BackingAppManagementService {
 	 */
 	public Mono<Void> stop(String serviceInstanceId, String serviceName, String planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
-			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
-				.parallel()
-				.runOn(Schedulers.parallel())
-				.flatMap(managementClient::stop)
-				.doOnRequest(l -> {
-					LOG.info("Stopping applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnComplete(() -> {
-					LOG.info("Finish stopping applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error stopping applications. error=%s", e.getMessage()), e);
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				}))
-			.then();
+	.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
+.parallel()
+.runOn(Schedulers.parallel())
+.flatMap(managementClient::stop)
+.doOnRequest(l -> {
+	LOG.info("Stopping applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnComplete(() -> {
+	LOG.info("Finish stopping applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error stopping applications. error=%s", e.getMessage()), e);
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+}))
+	.then();
 	}
 
 	/**
@@ -126,23 +126,23 @@ public class BackingAppManagementService {
 	 */
 	public Mono<Void> start(String serviceInstanceId, String serviceName, String planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
-			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
-				.parallel()
-				.runOn(Schedulers.parallel())
-				.flatMap(managementClient::start)
-				.doOnRequest(l -> {
-					LOG.info("Starting applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnComplete(() -> {
-					LOG.info("Finish starting applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error starting applications. error=%s", e.getMessage()), e);
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				}))
-			.then();
+	.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
+.parallel()
+.runOn(Schedulers.parallel())
+.flatMap(managementClient::start)
+.doOnRequest(l -> {
+	LOG.info("Starting applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnComplete(() -> {
+	LOG.info("Finish starting applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error starting applications. error=%s", e.getMessage()), e);
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+}))
+	.then();
 	}
 
 	/**
@@ -170,23 +170,23 @@ public class BackingAppManagementService {
 	 */
 	public Mono<Void> restart(String serviceInstanceId, String serviceName, String planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
-			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
-				.parallel()
-				.runOn(Schedulers.parallel())
-				.flatMap(managementClient::restart)
-				.doOnRequest(l -> {
-					LOG.info("Restarting applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnComplete(() -> {
-					LOG.info("Finish restarting applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error restarting applications. error=%s", e.getMessage()), e);
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				}))
-			.then();
+	.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
+.parallel()
+.runOn(Schedulers.parallel())
+.flatMap(managementClient::restart)
+.doOnRequest(l -> {
+	LOG.info("Restarting applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnComplete(() -> {
+	LOG.info("Finish restarting applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error restarting applications. error=%s", e.getMessage()), e);
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+}))
+	.then();
 	}
 
 	/**
@@ -214,23 +214,23 @@ public class BackingAppManagementService {
 	 */
 	public Mono<Void> restage(String serviceInstanceId, String serviceName, String planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
-			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
-				.parallel()
-				.runOn(Schedulers.parallel())
-				.flatMap(managementClient::restage)
-				.doOnRequest(l -> {
-					LOG.info("Restaging applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnComplete(() -> {
-					LOG.info("Finish restaging applications");
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				})
-				.doOnError(e -> {
-					LOG.error(String.format("Error restaging applications. error=%s", e.getMessage()), e);
-					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
-				}))
-			.then();
+	.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
+.parallel()
+.runOn(Schedulers.parallel())
+.flatMap(managementClient::restage)
+.doOnRequest(l -> {
+	LOG.info("Restaging applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnComplete(() -> {
+	LOG.info("Finish restaging applications");
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+})
+.doOnError(e -> {
+	LOG.error(String.format("Error restaging applications. error=%s", e.getMessage()), e);
+	LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
+}))
+	.then();
 	}
 
 	/**
@@ -258,14 +258,12 @@ public class BackingAppManagementService {
 	 */
 	public Mono<BackingApplications> getDeployedBackingApplications(String serviceInstanceId, String serviceName, String planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
-			.flatMapMany(Flux::fromIterable)
-			.flatMap(app ->
-				appDeployer
-					.get(GetApplicationRequest.builder()
+	.flatMapMany(Flux::fromIterable)
+	.flatMap(app ->
+appDeployer.get(GetApplicationRequest.builder()
 						.name(app.getName())
 						.properties(app.getProperties())
-						.build())
-					.flatMap(response -> Flux.fromIterable(response.getServices())
+						.build()).flatMap(response -> Flux.fromIterable(response.getServices())
 						.map(boundServiceName ->
 							ServicesSpec.builder()
 								.serviceInstanceName(boundServiceName)
@@ -277,50 +275,45 @@ public class BackingAppManagementService {
 							.services(services)
 							.properties(app.getProperties())
 							.environment(response.getEnvironment())
-							.build()))
-					.doOnRequest(l -> {
-						LOG.info("Getting deployed backing application. appName={}", app.getName());
-						LOG.debug("backingApp={}", app);
-					})
-					.doOnError(e -> {
-						LOG.error(String.format("Error getting deployed backing application. appName=%s, error=%s",
+							.build())).doOnRequest(l -> {
+LOG.info("Getting deployed backing application. appName={}", app.getName());
+LOG.debug("backingApp={}", app);}).doOnError(e -> {
+LOG.error(String.format("Error getting deployed backing application. appName=%s, error=%s",
 							app.getName(), e.getMessage()), e);
-						LOG.debug("backingApp={}", app);
-					})
-					.onErrorResume(exception -> Mono.empty()))
-			.collectList()
-			.map(BackingApplications::new)
-			.doOnSuccess(backingApplications -> LOG.debug("backingApplications={}", backingApplications));
+LOG.debug("backingApp={}", app);}).onErrorResume(exception -> Mono.empty()))
+	.collectList()
+	.map(BackingApplications::new)
+	.doOnSuccess(backingApplications -> LOG.debug("backingApplications={}", backingApplications));
 	}
 
 	public Mono<BackingApplications> getBackingApplicationsForService(String serviceInstanceId, String serviceName,
-		String planName) {
+String planName) {
 		return findBrokeredService(serviceName, planName)
-			.flatMap(brokeredService -> updateBackingApps(brokeredService, serviceInstanceId))
-			.map(backingApplications -> BackingApplications.builder().backingApplications(backingApplications).build());
+	.flatMap(brokeredService -> updateBackingApps(brokeredService, serviceInstanceId))
+	.map(backingApplications -> BackingApplications.builder().backingApplications(backingApplications).build());
 	}
 
 	private <T> Mono<T> fetchServiceDetailsAndInvoke(String serviceInstanceId, BackingAppAction<T> action) {
 		return appDeployer
-			.getServiceInstance(GetServiceInstanceRequest.builder().serviceInstanceId(serviceInstanceId).build())
-			.flatMap(serviceInstance -> action.invoke(serviceInstanceId, serviceInstance.getService(),
-				serviceInstance.getPlan()));
+	.getServiceInstance(GetServiceInstanceRequest.builder().serviceInstanceId(serviceInstanceId).build())
+	.flatMap(serviceInstance -> action.invoke(serviceInstanceId, serviceInstance.getService(),
+serviceInstance.getPlan()));
 	}
 
 	private Mono<BrokeredService> findBrokeredService(String serviceName, String planName) {
 		return Flux.fromIterable(brokeredServices)
-			.filter(brokeredService -> brokeredService.getServiceName().equals(serviceName)
-				&& brokeredService.getPlanName().equals(planName))
-			.singleOrEmpty();
+	.filter(brokeredService -> brokeredService.getServiceName().equals(serviceName)
+&& brokeredService.getPlanName().equals(planName))
+	.singleOrEmpty();
 	}
 
 	private Mono<List<BackingApplication>> updateBackingApps(BrokeredService brokeredService,
-		String serviceInstanceId) {
+String serviceInstanceId) {
 		return Mono.just(BackingApplications.builder()
-			.backingApplications(brokeredService.getApps())
-			.build())
-			.flatMap(backingApps -> targetService.addToBackingApplications(backingApps,
-				brokeredService.getTarget(), serviceInstanceId));
+	.backingApplications(brokeredService.getApps())
+	.build())
+	.flatMap(backingApps -> targetService.addToBackingApplications(backingApps,
+brokeredService.getTarget(), serviceInstanceId));
 	}
 
 	@FunctionalInterface

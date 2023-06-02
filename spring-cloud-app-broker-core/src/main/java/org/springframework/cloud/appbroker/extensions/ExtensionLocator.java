@@ -46,12 +46,12 @@ public class ExtensionLocator<T> {
 		}
 		else {
 			throw new ServiceBrokerException("Unknown extension " + name + ". " +
-				"Registered extensions are " + factoriesByName.keySet());
+		"Registered extensions are " + factoriesByName.keySet());
 		}
 	}
 
 	private T getExtensionFromFactory(ExtensionFactory<T, ?> factory,
-		Map<String, Object> args) {
+Map<String, Object> args) {
 		return factory.createWithConfig(args);
 	}
 

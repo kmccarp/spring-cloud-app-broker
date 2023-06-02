@@ -50,28 +50,28 @@ class ManagementClientTest {
 		this.managementClient = new ManagementClient(appManager);
 
 		this.backingApplication = BackingApplication.builder()
-			.name("foo-app")
-			.property("foo", "bar")
-			.build();
+	.name("foo-app")
+	.property("foo", "bar")
+	.build();
 	}
 
 	@Test
 	void startApplication() {
 		given(appManager.start(any(StartApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StepVerifier.create(managementClient.start(backingApplication))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appManager).start(argThat(request -> "foo-app".equals(request.getName()) &&
-			Collections.singletonMap("foo", "bar").equals(request.getProperties())));
+	Collections.singletonMap("foo", "bar").equals(request.getProperties())));
 		verifyNoMoreInteractions(appManager);
 	}
 
 	@Test
 	void startNullApplication() {
 		StepVerifier.create(managementClient.start(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoInteractions(appManager);
 	}
@@ -79,20 +79,20 @@ class ManagementClientTest {
 	@Test
 	void stopApplication() {
 		given(appManager.stop(any(StopApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StepVerifier.create(managementClient.stop(backingApplication))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appManager).stop(argThat(request -> "foo-app".equals(request.getName()) &&
-			Collections.singletonMap("foo", "bar").equals(request.getProperties())));
+	Collections.singletonMap("foo", "bar").equals(request.getProperties())));
 		verifyNoMoreInteractions(appManager);
 	}
 
 	@Test
 	void stopNullApplication() {
 		StepVerifier.create(managementClient.stop(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoInteractions(appManager);
 	}
@@ -100,20 +100,20 @@ class ManagementClientTest {
 	@Test
 	void restartApplication() {
 		given(appManager.restart(any(RestartApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StepVerifier.create(managementClient.restart(backingApplication))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appManager).restart(argThat(request -> "foo-app".equals(request.getName()) &&
-			Collections.singletonMap("foo", "bar").equals(request.getProperties())));
+	Collections.singletonMap("foo", "bar").equals(request.getProperties())));
 		verifyNoMoreInteractions(appManager);
 	}
 
 	@Test
 	void restartNullApplication() {
 		StepVerifier.create(managementClient.restart(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoInteractions(appManager);
 	}
@@ -121,20 +121,20 @@ class ManagementClientTest {
 	@Test
 	void restageApplication() {
 		given(appManager.restage(any(RestageApplicationRequest.class)))
-			.willReturn(Mono.empty());
+	.willReturn(Mono.empty());
 
 		StepVerifier.create(managementClient.restage(backingApplication))
-			.verifyComplete();
+	.verifyComplete();
 
 		verify(appManager).restage(argThat(request -> "foo-app".equals(request.getName()) &&
-			Collections.singletonMap("foo", "bar").equals(request.getProperties())));
+	Collections.singletonMap("foo", "bar").equals(request.getProperties())));
 		verifyNoMoreInteractions(appManager);
 	}
 
 	@Test
 	void restageNullApplication() {
 		StepVerifier.create(managementClient.restage(null))
-			.verifyComplete();
+	.verifyComplete();
 
 		verifyNoInteractions(appManager);
 	}
