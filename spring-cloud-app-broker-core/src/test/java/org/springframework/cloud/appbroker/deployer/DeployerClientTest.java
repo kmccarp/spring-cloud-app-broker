@@ -113,10 +113,9 @@ class DeployerClientTest {
 		void shouldDeployAppWithProperties() {
 			setupAppDeployer();
 
-			Map<String, String> properties = new HashMap<String, String>() {{
-				put("memory", "1G");
-				put("instances", "2");
-			}};
+			Map<String, String> properties = new HashMap<>();
+			properties.put("memory","1G");
+			properties.put("instances","2");
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
 				.path(APP_PATH)
@@ -164,10 +163,9 @@ class DeployerClientTest {
 		void shouldDeployAppWithEnvironmentVariables() {
 			setupAppDeployer();
 
-			Map<String, Object> environment = new HashMap<String, Object>() {{
-				put("ENV_VAR_1", "value1");
-				put("ENV_VAR_2", "value2");
-			}};
+			Map<String, Object> environment = new HashMap<>();
+			environment.put("ENV_VAR_1","value1");
+			environment.put("ENV_VAR_2","value2");
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
 				.path(APP_PATH)
