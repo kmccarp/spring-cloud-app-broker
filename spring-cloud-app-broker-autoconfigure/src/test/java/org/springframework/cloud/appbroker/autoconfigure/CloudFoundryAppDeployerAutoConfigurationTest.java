@@ -59,7 +59,7 @@ class CloudFoundryAppDeployerAutoConfigurationTest {
 				"spring.cloud.appbroker.deployer.cloudfoundry.properties.stack=customstack",
 				"spring.cloud.appbroker.deployer.cloudfoundry.properties.domain=example.local"
 			)
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
 				CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
 				assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
@@ -103,7 +103,7 @@ class CloudFoundryAppDeployerAutoConfigurationTest {
 				"spring.cloud.appbroker.deployer.cloudfoundry.client-id=oauth-client",
 				"spring.cloud.appbroker.deployer.cloudfoundry.client-secret=secret"
 			)
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context).hasSingleBean(CloudFoundryTargetProperties.class);
 				CloudFoundryTargetProperties targetProperties = context.getBean(CloudFoundryTargetProperties.class);
 				assertThat(targetProperties.getApiHost()).isEqualTo("api.example.local");
@@ -129,7 +129,7 @@ class CloudFoundryAppDeployerAutoConfigurationTest {
 	@Test
 	void clientIsNotCreatedWithoutConfiguration() {
 		this.contextRunner
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context).doesNotHaveBean(CloudFoundryTargetProperties.class);
 				assertThat(context).doesNotHaveBean(CloudFoundryDeploymentProperties.class);
 				assertThat(context).doesNotHaveBean(ReactorCloudFoundryClient.class);
