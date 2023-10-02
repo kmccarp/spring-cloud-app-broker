@@ -87,7 +87,7 @@ class AppBrokerAutoConfigurationTest {
 	@Test
 	void servicesAreNotCreatedWithoutDeployerConfiguration() {
 		this.contextRunner
-			.run((context) -> {
+			.run(context -> {
 				assertThat(context).doesNotHaveBean(BackingApplications.class);
 				assertThat(context).doesNotHaveBean(DeployerClient.class);
 			});
