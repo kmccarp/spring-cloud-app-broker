@@ -1077,7 +1077,7 @@ class CloudFoundryAppDeployerTest {
 	}
 
 	private ArgumentMatcher<PushApplicationManifestRequest> matchesManifest(ApplicationManifest expectedManifest) {
-		return new ArgumentMatcher<PushApplicationManifestRequest>() {
+		return new ArgumentMatcher<>() {
 			@Override
 			public boolean matches(PushApplicationManifestRequest request) {
 				if (request.getManifests().size() == EXPECTED_MANIFESTS) {
