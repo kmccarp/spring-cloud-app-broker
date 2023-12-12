@@ -297,7 +297,7 @@ public class CloudFoundryAppDeployer implements AppDeployer, ResourceLoaderAware
 				String buildId = tuple2.getT2();
 				return Mono.zip(Mono.just(appId), waitForBuildStaged(buildId));
 			})
-			.map(tuple2 -> tuple2.mapT2((t2) -> t2.getDroplet().getId()))
+			.map(tuple2 -> tuple2.mapT2(t2 -> t2.getDroplet().getId()))
 			.flatMap(tuple2 -> {
 				String appId = tuple2.getT1();
 				String dropletId = tuple2.getT2();

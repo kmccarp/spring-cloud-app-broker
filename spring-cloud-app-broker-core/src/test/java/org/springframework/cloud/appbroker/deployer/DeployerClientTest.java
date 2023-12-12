@@ -111,12 +111,11 @@ class DeployerClientTest {
 		@Test
 		@SuppressWarnings("serial")
 		void shouldDeployAppWithProperties() {
-			setupAppDeployer();
+            setupAppDeployer();
 
-			Map<String, String> properties = new HashMap<String, String>() {{
-				put("memory", "1G");
-				put("instances", "2");
-			}};
+            Map<String, String> properties = new HashMap<>();
+            properties.put("memory", "1G");
+            properties.put("instances", "2");
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
 				.path(APP_PATH)
@@ -131,7 +130,7 @@ class DeployerClientTest {
 
 			then(appDeployer).should().deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, properties,
 				Collections.emptyMap(), Collections.emptyList())));
-		}
+        }
 
 		@Test
 		@SuppressWarnings("serial")
@@ -162,12 +161,11 @@ class DeployerClientTest {
 		@Test
 		@SuppressWarnings("serial")
 		void shouldDeployAppWithEnvironmentVariables() {
-			setupAppDeployer();
+            setupAppDeployer();
 
-			Map<String, Object> environment = new HashMap<String, Object>() {{
-				put("ENV_VAR_1", "value1");
-				put("ENV_VAR_2", "value2");
-			}};
+            Map<String, Object> environment = new HashMap<>();
+            environment.put("ENV_VAR_1", "value1");
+            environment.put("ENV_VAR_2", "value2");
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
 				.path(APP_PATH)
@@ -183,7 +181,7 @@ class DeployerClientTest {
 			then(appDeployer).should()
 				.deploy(argThat(matchesDeploymentRequest(APP_NAME, APP_PATH, Collections.emptyMap(),
 					environment, Collections.emptyList())));
-		}
+        }
 
 		private void setupAppDeployer() {
 			given(appDeployer.deploy(any()))
