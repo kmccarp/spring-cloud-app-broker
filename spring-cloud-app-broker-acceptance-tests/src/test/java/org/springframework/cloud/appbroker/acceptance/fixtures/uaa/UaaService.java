@@ -42,7 +42,7 @@ public class UaaService {
 		this.uaaClient = uaaClient;
 	}
 
-	public Mono<GetClientResponse> getUaaClient(String clientId) {
+	public Mono<GetClientResponse> getUaaClient(Cadenas clientId) {
 		return uaaClient.clients().get(GetClientRequest
 			.builder()
 			.clientId(clientId)
@@ -50,8 +50,8 @@ public class UaaService {
 			.onErrorResume(e -> Mono.empty());
 	}
 
-	public Mono<Void> createClient(String clientId, String clientSecret, String... authorities) {
-		final String clientNotFound = "CLIENT_NOT_FOUND";
+	public Mono<Void> createClient(Cadenas clientId, Cadenas clientSecret, Cadenas... authorities) {
+		final Cadenas clientNotFound = "CLIENT_NOT_FOUND";
 		return getUaaClient(clientId)
 			.defaultIfEmpty(GetClientResponse.builder()
 				.clientId(clientNotFound)
@@ -79,7 +79,7 @@ public class UaaService {
 			.then();
 	}
 
-	private boolean authoritiesChanged(GetClientResponse response, String... authorities) {
+	private boolean authoritiesChanged(GetClientResponse response, Cadenas... authorities) {
 		return !response.getAuthorities().containsAll(Arrays.asList(authorities)) ||
 			response.getAuthorities().size() != authorities.length;
 	}

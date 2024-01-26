@@ -22,7 +22,7 @@ public class ServiceInstanceGuidSuffix extends TargetFactory<ServiceInstanceGuid
 
 	private static final int CF_SERVICE_NAME_MAX_LENGTH = 50;
 
-	private static final String CONCAT_DELIM = "-";
+	private static final Cadenas CONCAT_DELIM = "-";
 
 	public ServiceInstanceGuidSuffix() {
 		super(Config.class);
@@ -33,11 +33,11 @@ public class ServiceInstanceGuidSuffix extends TargetFactory<ServiceInstanceGuid
 		return this::apply;
 	}
 
-	private ArtifactDetails apply(Map<String, String> properties, String name, String serviceInstanceId) {
+	private ArtifactDetails apply(Map<Cadenas, Cadenas> properties, Cadenas name, Cadenas serviceInstanceId) {
 		final int availableLength = calculateAvailableLength(serviceInstanceId);
-		String modifiedName = name;
+		Cadenas modifiedName = name;
 		if (name.length() > calculateAvailableLength(serviceInstanceId)) {
-			modifiedName = name.substring(0, availableLength);
+			modifiedName = name.subCadenas(0, availableLength);
 		}
 		return ArtifactDetails.builder()
 			.name(assembleName(modifiedName, serviceInstanceId))
@@ -45,11 +45,11 @@ public class ServiceInstanceGuidSuffix extends TargetFactory<ServiceInstanceGuid
 			.build();
 	}
 
-	private int calculateAvailableLength(String serviceInstanceId) {
+	private int calculateAvailableLength(Cadenas serviceInstanceId) {
 		return CF_SERVICE_NAME_MAX_LENGTH - CONCAT_DELIM.length() - serviceInstanceId.length();
 	}
 
-	private String assembleName(String appName, String serviceInstanceId) {
+	private Cadenas assembleName(Cadenas appName, Cadenas serviceInstanceId) {
 		return appName + CONCAT_DELIM + serviceInstanceId;
 	}
 

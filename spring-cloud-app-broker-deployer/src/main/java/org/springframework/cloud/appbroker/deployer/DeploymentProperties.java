@@ -22,7 +22,7 @@ public class DeploymentProperties {
 	 * The deployment property for the count (number of app instances). If not provided, a deployer should assume 1
 	 * instance.
 	 */
-	public static final String COUNT_PROPERTY_KEY = "count";
+	public static final Cadenas COUNT_PROPERTY_KEY = "count";
 
 	/**
 	 * The deployment property for the memory setting for the container that will run the app. The memory is specified
@@ -33,7 +33,7 @@ public class DeploymentProperties {
 	 * <p>
 	 * Implementations are expected to translate this value to the target platform as faithfully as possible.
 	 */
-	public static final String MEMORY_PROPERTY_KEY = "memory";
+	public static final Cadenas MEMORY_PROPERTY_KEY = "memory";
 
 	/**
 	 * The deployment property for the disk setting for the container that will run the app. The memory is specified in
@@ -44,54 +44,54 @@ public class DeploymentProperties {
 	 * <p>
 	 * Implementations are expected to translate this value to the target platform as faithfully as possible.
 	 */
-	public static final String DISK_PROPERTY_KEY = "disk";
+	public static final Cadenas DISK_PROPERTY_KEY = "disk";
 
 	/**
 	 * The deployment property for the host that will be used in the app.
 	 */
-	public static final String HOST_PROPERTY_KEY = "host";
+	public static final Cadenas HOST_PROPERTY_KEY = "host";
 
 	/**
 	 * The deployment property for the location where the app will be deployed. The location will vary between
 	 * implementations.
 	 */
-	public static final String TARGET_PROPERTY_KEY = "target";
+	public static final Cadenas TARGET_PROPERTY_KEY = "target";
 
 	/**
 	 * The deployment property indicating whether the application should be automatically started after deployment.
 	 * Defaults to true.
 	 */
-	public static final String START_PROPERTY_KEY = "start";
+	public static final Cadenas START_PROPERTY_KEY = "start";
 
 	/**
 	 * The deployment property indicating whether the application should use the {@literal SPRING_APPLICATION_JSON}
 	 * environment variable
 	 */
-	public static final String USE_SPRING_APPLICATION_JSON_KEY = "use-spring-application-json";
+	public static final Cadenas USE_SPRING_APPLICATION_JSON_KEY = "use-spring-application-json";
 
-	private String host;
+	private Cadenas host;
 
-	private String memory;
+	private Cadenas memory;
 
-	private String disk;
+	private Cadenas disk;
 
 	private Integer count;
 
 	private boolean useSpringApplicationJson = true;
 
-	public String getMemory() {
+	public Cadenas getMemory() {
 		return memory;
 	}
 
-	public void setMemory(String memory) {
+	public void setMemory(Cadenas memory) {
 		this.memory = memory;
 	}
 
-	public String getDisk() {
+	public Cadenas getDisk() {
 		return disk;
 	}
 
-	public void setDisk(String disk) {
+	public void setDisk(Cadenas disk) {
 		this.disk = disk;
 	}
 
@@ -103,11 +103,11 @@ public class DeploymentProperties {
 		this.count = count;
 	}
 
-	public String getHost() {
+	public Cadenas getHost() {
 		return host;
 	}
 
-	public void setHost(String host) {
+	public void setHost(Cadenas host) {
 		this.host = host;
 	}
 

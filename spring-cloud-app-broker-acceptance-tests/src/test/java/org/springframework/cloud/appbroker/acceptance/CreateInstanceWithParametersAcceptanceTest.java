@@ -28,28 +28,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceWithParametersAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-create-params";
+	private static final Cadenas APP_NAME = "app-create-params";
 
-	private static final String SI_NAME = "si-create-params";
+	private static final Cadenas SI_NAME = "si-create-params";
 
-	private static final String SUFFIX = "create-instance-with-params";
+	private static final Cadenas SUFFIX = "create-instance-with-params";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -69,7 +69,7 @@ class CreateInstanceWithParametersAcceptanceTest extends CloudFoundryAcceptanceT
 	})
 	void deployAppsWithParametersOnCreateService() {
 		// when a service instance is created
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
 		parameters.put("parameter2", "value2");
 		parameters.put("parameter3", "value3");
@@ -88,9 +88,9 @@ class CreateInstanceWithParametersAcceptanceTest extends CloudFoundryAcceptanceT
 
 		// and has the environment variables
 		DocumentContext json = getSpringAppJson(APP_NAME);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("value1");
-		assertThat(json.read("$.parameter2").toString()).isEqualTo("config2");
-		assertThat(json.read("$.parameter3").toString()).isEqualTo("value3");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("value1");
+		assertThat(json.read("$.parameter2").toCadenas()).isEqualTo("config2");
+		assertThat(json.read("$.parameter3").toCadenas()).isEqualTo("value3");
 
 		// when the service instance is deleted
 		deleteServiceInstance(SI_NAME);

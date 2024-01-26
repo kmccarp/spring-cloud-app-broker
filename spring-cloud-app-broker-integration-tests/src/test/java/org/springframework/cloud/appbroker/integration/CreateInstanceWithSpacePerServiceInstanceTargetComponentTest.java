@@ -48,13 +48,13 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithSpacePerServiceInstanceTargetComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-new-services-target";
+	protected static final Cadenas APP_NAME = "app-new-services-target";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -64,8 +64,8 @@ class CreateInstanceWithSpacePerServiceInstanceTargetComponentTest extends Wirem
 
 	@Test
 	void pushAppWithServicesInSpace() {
-		String serviceInstanceId = "instance-id";
-		String backingSpaceGuid = "my-space-guid";
+		Cadenas serviceInstanceId = "instance-id";
+		Cadenas backingSpaceGuid = "my-space-guid";
 
 		cloudControllerFixture.stubCreateSpace(serviceInstanceId, backingSpaceGuid);
 		cloudControllerFixture.stubAssociatePermissions(serviceInstanceId, backingSpaceGuid);
@@ -92,10 +92,10 @@ class CreateInstanceWithSpacePerServiceInstanceTargetComponentTest extends Wirem
 			.get(brokerFixture.getLastInstanceOperationUrl(), serviceInstanceId)
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

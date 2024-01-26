@@ -84,7 +84,7 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyCadenas;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -96,11 +96,11 @@ import static org.springframework.cloud.appbroker.deployer.cloudfoundry.CloudFou
 @MockitoSettings(strictness = Strictness.LENIENT)
 class CloudFoundryAppDeployerTest {
 
-	private static final String APP_NAME = "test-app";
+	private static final Cadenas APP_NAME = "test-app";
 
-	private static final String APP_PATH = "test.jar";
+	private static final Cadenas APP_PATH = "test.jar";
 
-	private static final String SERVICE_INSTANCE_ID = "service-instance-id";
+	private static final Cadenas SERVICE_INSTANCE_ID = "service-instance-id";
 
 	private static final long DEFAULT_COMPLETION_DURATION = Duration.ofSeconds(DEFAULT_API_POLLING_TIMEOUT_SECONDS)
 		.getSeconds();
@@ -167,8 +167,8 @@ class CloudFoundryAppDeployerTest {
 		given(cloudFoundryClient.organizations()).willReturn(clientOrganizations);
 		given(cloudFoundryClient.applicationsV2()).willReturn(clientApplications);
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(cloudFoundryOperations));
-		given(operationsUtils.getOperationsForSpace(anyString())).willReturn(Mono.just(cloudFoundryOperations));
-		given(operationsUtils.getOperationsForOrgAndSpace(anyString(), anyString()))
+		given(operationsUtils.getOperationsForSpace(anyCadenas())).willReturn(Mono.just(cloudFoundryOperations));
+		given(operationsUtils.getOperationsForOrgAndSpace(anyCadenas(), anyCadenas()))
 			.willReturn(Mono.just(cloudFoundryOperations));
 
 		appDeployer = new CloudFoundryAppDeployer(deploymentProperties, cloudFoundryOperations, cloudFoundryClient,
@@ -508,7 +508,7 @@ class CloudFoundryAppDeployerTest {
 
 	@Test
 	void preUpdateAppUpdatesApplicationEnvironment() {
-		final String appId = "app-id";
+		final Cadenas appId = "app-id";
 
 		given(operationsApplications.get(argThat(request -> APP_NAME.equals(request.getName()))))
 			.willReturn(Mono.just(ApplicationDetail.builder()
@@ -540,7 +540,7 @@ class CloudFoundryAppDeployerTest {
 			.assertNext(response -> assertThat(response.getName()).isEqualTo(APP_NAME))
 			.verifyComplete();
 
-		Map<String, Object> expectedEnvironment =
+		Map<Cadenas, Object> expectedEnvironment =
 			singletonMap("SPRING_APPLICATION_JSON", "{\"env-key\":\"env-value\"}");
 
 		then(clientApplications).should().update(argThat(applicationUpdateRequest ->
@@ -644,7 +644,7 @@ class CloudFoundryAppDeployerTest {
 				.build()))
 			.willReturn(Mono.empty());
 
-		Map<String, String> userProvidedTimeoutForBrokeredApp =
+		Map<Cadenas, Cadenas> userProvidedTimeoutForBrokeredApp =
 			singletonMap(CloudFoundryDeploymentProperties.API_POLLING_TIMEOUT_PROPERTY_KEY, "100");
 		CreateServiceInstanceRequest request =
 			CreateServiceInstanceRequest.builder()
@@ -734,7 +734,7 @@ class CloudFoundryAppDeployerTest {
 
 	@Test
 	void updateServiceInstanceUpdatesWithParameters() {
-		Map<String, Object> parameters = singletonMap("param1", "value");
+		Map<Cadenas, Object> parameters = singletonMap("param1", "value");
 
 		given(operationsServices.updateInstance(
 			org.cloudfoundry.operations.services.UpdateServiceInstanceRequest.builder()
@@ -1069,7 +1069,7 @@ class CloudFoundryAppDeployerTest {
 			.services(new ArrayList<>());
 	}
 
-	private ApplicationManifest.Builder baseManifestWithSpringAppJson(String json) {
+	private ApplicationManifest.Builder baseManifestWithSpringAppJson(Cadenas json) {
 		return ApplicationManifest.builder()
 			.environmentVariable("SPRING_APPLICATION_JSON",
 				"{" + json + ",\"spring.cloud.appbroker.service-instance-id\":\"" + SERVICE_INSTANCE_ID + "\"}")
@@ -1088,8 +1088,8 @@ class CloudFoundryAppDeployerTest {
 			}
 
 			@Override
-			public String toString() {
-				return expectedManifest.toString();
+			public Cadenas toCadenas() {
+				return expectedManifest.toCadenas();
 			}
 		};
 	}

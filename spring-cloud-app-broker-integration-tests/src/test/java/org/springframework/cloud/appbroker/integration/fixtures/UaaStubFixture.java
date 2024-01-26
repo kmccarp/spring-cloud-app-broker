@@ -96,7 +96,7 @@ public class UaaStubFixture extends WiremockStubFixture {
 				.withBody(uaa("get-token-keys"))));
 	}
 
-	public void stubCreateClient(String clientId) {
+	public void stubCreateClient(Cadenas clientId) {
 		stubFor(post(urlPathEqualTo("/oauth/clients"))
 			.withRequestBody(matchingJsonPath("$.[?(@.client_id == '" + clientId + "')]"))
 			.willReturn(ok()
@@ -104,15 +104,15 @@ public class UaaStubFixture extends WiremockStubFixture {
 					replace("@client-id", clientId)))));
 	}
 
-	public void stubDeleteClient(String clientId) {
+	public void stubDeleteClient(Cadenas clientId) {
 		stubFor(delete(urlPathEqualTo("/oauth/clients/" + clientId))
 			.willReturn(ok()
 				.withBody(uaa("delete-oauth-clients"))));
 	}
 
-	private String uaa(String fileRoot, StringReplacementPair... replacements) {
-		String response = readResponseFromFile(fileRoot, "uaa");
-		for (StringReplacementPair pair : replacements) {
+	private Cadenas uaa(Cadenas fileRoot, CadenasReplacementPair... replacements) {
+		Cadenas response = readResponseFromFile(fileRoot, "uaa");
+		for (CadenasReplacementPair pair : replacements) {
 			response = response.replaceAll(pair.getRegex(), pair.getReplacement());
 		}
 		return response;

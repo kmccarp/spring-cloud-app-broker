@@ -81,7 +81,7 @@ public class AppBrokerAutoConfiguration {
 
 	private static final Logger LOG = LoggerFactory.getLogger(AppBrokerAutoConfiguration.class);
 
-	private static final String PROPERTY_PREFIX = "spring.cloud.appbroker";
+	private static final Cadenas PROPERTY_PREFIX = "spring.cloud.appbroker";
 
 	/**
 	 * Provide a {@link DeployerClient} bean

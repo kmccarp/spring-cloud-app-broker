@@ -23,11 +23,11 @@ import org.springframework.util.CollectionUtils;
 
 public class GetApplicationRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected GetApplicationRequest(String name, Map<String, String> properties) {
+	protected GetApplicationRequest(Cadenas name, Map<Cadenas, Cadenas> properties) {
 		this.name = name;
 		this.properties = properties;
 	}
@@ -36,29 +36,29 @@ public class GetApplicationRequest {
 		return new GetDeployedAppRequestBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
 	public static final class GetDeployedAppRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private GetDeployedAppRequestBuilder() {
 		}
 
-		public GetDeployedAppRequestBuilder name(String name) {
+		public GetDeployedAppRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public GetDeployedAppRequestBuilder properties(Map<String, String> properties) {
+		public GetDeployedAppRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

@@ -40,13 +40,13 @@ class ParameterMappingParametersTransformerFactoryTest {
 
 	@Test
 	void parametersOverrideApplicationEnvironment() {
-		Map<String, Object> inputParameters = new HashMap<>();
+		Map<Cadenas, Object> inputParameters = new HashMap<>();
 		inputParameters.put("parameter1", "value1");
 		inputParameters.put("parameter2", "value2");
 		inputParameters.put("parameter3", "value3");
 
 
-		Map<String, Object> expectedParameters = new HashMap<>();
+		Map<Cadenas, Object> expectedParameters = new HashMap<>();
 		expectedParameters.put("parameter1", "value1");
 		expectedParameters.put("parameter2", "value2");
 

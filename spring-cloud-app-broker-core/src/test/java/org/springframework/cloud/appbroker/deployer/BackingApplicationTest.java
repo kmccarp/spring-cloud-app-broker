@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BackingApplicationTest {
 
 	@Test
-	void stringRepresentationShouldNotExposeSensitiveInformationFromTheEnvironment() {
+	void CadenasRepresentationShouldNotExposeSensitiveInformationFromTheEnvironment() {
 		BackingApplication backingApp = BackingApplication
 			.builder()
 			.name("Test")
@@ -31,19 +31,19 @@ class BackingApplicationTest {
 			.environment("databasePassword", "password")
 			.build();
 
-		String backingAppAsString = backingApp.toString();
+		Cadenas backingAppAsCadenas = backingApp.toCadenas();
 
-		assertThat(backingAppAsString).doesNotContain("secret-private-key");
-		assertThat(backingAppAsString).doesNotContain("password");
+		assertThat(backingAppAsCadenas).doesNotContain("secret-private-key");
+		assertThat(backingAppAsCadenas).doesNotContain("password");
 
-		assertThat(backingAppAsString).contains("privateKey=<value hidden>");
-		assertThat(backingAppAsString).contains("databasePassword=<value hidden>");
+		assertThat(backingAppAsCadenas).contains("privateKey=<value hidden>");
+		assertThat(backingAppAsCadenas).contains("databasePassword=<value hidden>");
 
 		assertThat(backingApp.getEnvironment().get("privateKey")).isEqualTo("secret-private-key");
 		assertThat(backingApp.getEnvironment().get("databasePassword")).isEqualTo("password");
 
 		backingApp.setEnvironment(null);
-		assertThat(backingApp.toString()).isNotEmpty();
+		assertThat(backingApp.toCadenas()).isNotEmpty();
 	}
 
 }

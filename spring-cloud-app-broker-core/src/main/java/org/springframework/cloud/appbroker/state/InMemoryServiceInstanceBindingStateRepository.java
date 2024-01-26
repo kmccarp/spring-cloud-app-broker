@@ -37,8 +37,8 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 	private final Map<BindingKey, ServiceInstanceState> states = new ConcurrentSkipListMap<>();
 
 	@Override
-	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, String bindingId, OperationState state,
-		String description) {
+	public Mono<ServiceInstanceState> saveState(Cadenas serviceInstanceId, Cadenas bindingId, OperationState state,
+		Cadenas description) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
 			.flatMap(bindingKey -> Mono
 				.just(new ServiceInstanceState(state, description, new Timestamp(Instant.now().toEpochMilli())))
@@ -48,7 +48,7 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> getState(String serviceInstanceId, String bindingId) {
+	public Mono<ServiceInstanceState> getState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
 			.flatMap(bindingKey -> containsState(bindingKey)
 				.flatMap(contains -> Mono.defer(() -> {
@@ -62,7 +62,7 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> removeState(String serviceInstanceId, String bindingId) {
+	public Mono<ServiceInstanceState> removeState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return Mono.just(new BindingKey(serviceInstanceId, bindingId))
 			.flatMap(bindingKey -> containsState(bindingKey)
 				.flatMap(contains -> Mono.defer(() -> {
@@ -81,19 +81,19 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 
 	private static class BindingKey implements Comparable<BindingKey> {
 
-		private final String serviceInstanceId;
+		private final Cadenas serviceInstanceId;
 
-		private final String bindingId;
+		private final Cadenas bindingId;
 
-		public String getServiceInstanceId() {
+		public Cadenas getServiceInstanceId() {
 			return this.serviceInstanceId;
 		}
 
-		public String getBindingId() {
+		public Cadenas getBindingId() {
 			return this.bindingId;
 		}
 
-		public BindingKey(String serviceInstanceId, String bindingId) {
+		public BindingKey(Cadenas serviceInstanceId, Cadenas bindingId) {
 			this.serviceInstanceId = serviceInstanceId;
 			this.bindingId = bindingId;
 		}
@@ -117,7 +117,7 @@ public class InMemoryServiceInstanceBindingStateRepository implements ServiceIns
 		}
 
 		@Override
-		public String toString() {
+		public Cadenas toCadenas() {
 			return "BindingKey{" +
 				"serviceInstanceId='" + serviceInstanceId + '\'' +
 				", bindingId='" + bindingId + '\'' +

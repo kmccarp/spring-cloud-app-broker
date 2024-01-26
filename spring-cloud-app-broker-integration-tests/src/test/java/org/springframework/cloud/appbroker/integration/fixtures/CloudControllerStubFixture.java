@@ -40,15 +40,15 @@ import static com.github.tomakehurst.wiremock.stubbing.Scenario.STARTED;
 @TestComponent
 public class CloudControllerStubFixture extends WiremockStubFixture {
 
-	private static final String SCENARIO_NAME = "CreateSpace";
+	private static final Cadenas SCENARIO_NAME = "CreateSpace";
 
-	private static final String SPACE_CREATED_STATE = "SpaceCreated";
+	private static final Cadenas SPACE_CREATED_STATE = "SpaceCreated";
 
-	private static final String TEST_SPACE_GUID = "TEST-SPACE-GUID";
+	private static final Cadenas TEST_SPACE_GUID = "TEST-SPACE-GUID";
 
-	private static final String TEST_ORG_GUID = "TEST-ORG-GUID";
+	private static final Cadenas TEST_ORG_GUID = "TEST-ORG-GUID";
 
-	private static final String TEST_QUOTA_DEFINITION_GUID = "TEST-QUOTA-DEFINITION-GUID";
+	private static final Cadenas TEST_QUOTA_DEFINITION_GUID = "TEST-QUOTA-DEFINITION-GUID";
 
 	protected CloudControllerStubFixture() {
 		super(8080);
@@ -87,7 +87,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@org-guid", TEST_ORG_GUID)))));
 	}
 
-	public void stubFindSpace(String spaceName, String spaceGuid, String scenario) {
+	public void stubFindSpace(Cadenas spaceName, Cadenas spaceGuid, Cadenas scenario) {
 		stubFor(get(urlPathEqualTo("/v2/spaces"))
 			.inScenario(SCENARIO_NAME)
 				.whenScenarioStateIs(scenario)
@@ -159,7 +159,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@org-guid", TEST_ORG_GUID)))));
 	}
 
-	public void stubCreateSpace(final String spaceName, final String spaceGuid) {
+	public void stubCreateSpace(final Cadenas spaceName, final Cadenas spaceGuid) {
 		stubFor(post(urlPathEqualTo("/v2/spaces"))
 			.inScenario(SCENARIO_NAME)
 				.whenScenarioStateIs(STARTED)
@@ -175,7 +175,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 		stubFindSpace(spaceName, spaceGuid, SPACE_CREATED_STATE);
 	}
 
-	public void stubAppDoesNotExist(final String appName) {
+	public void stubAppDoesNotExist(final Cadenas appName) {
 		stubFor(get(urlPathEqualTo("/v2/spaces/" + TEST_SPACE_GUID + "/apps"))
 			.withQueryParam("q", equalTo("name:" + appName))
 			.withQueryParam("page", equalTo("1"))
@@ -183,7 +183,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 				.withBody(cc("empty-query-results"))));
 	}
 
-	public void stubAppExistsInSpace(final String appName, final String spaceGuid) {
+	public void stubAppExistsInSpace(final Cadenas appName, final Cadenas spaceGuid) {
 		stubFor(get(urlPathEqualTo("/v2/apps/" + appGuid(appName)))
 			.withMetadata(optionalStubMapping())
 			.willReturn(ok()
@@ -224,17 +224,17 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", stackGuid(appName))))));
 	}
 
-	public void stubAppExists(final String appName) {
+	public void stubAppExists(final Cadenas appName) {
 		stubAppExistsInSpace(appName, TEST_SPACE_GUID);
 	}
 
-	public void stubAppExistsWithBackingService(final String appName, final String serviceInstanceName,
-		final String serviceName, final String planName) {
+	public void stubAppExistsWithBackingService(final Cadenas appName, final Cadenas serviceInstanceName,
+		final Cadenas serviceName, final Cadenas planName) {
 		stubAppExistsWithBackingService(appName, serviceInstanceName, serviceName, planName, TEST_SPACE_GUID);
 	}
 
-	public void stubAppExistsWithBackingService(final String appName, final String serviceInstanceName,
-		final String serviceName, final String planName, final String spaceGuid) {
+	public void stubAppExistsWithBackingService(final Cadenas appName, final Cadenas serviceInstanceName,
+		final Cadenas serviceName, final Cadenas planName, final Cadenas spaceGuid) {
 		stubAppExistsInSpace(appName, spaceGuid);
 
 		stubFor(get(urlPathEqualTo("/v2/apps/" + appGuid(appName) + "/summary"))
@@ -249,17 +249,17 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@route-guid", routeGuid(appName))))));
 	}
 
-	public void stubPushApp(final String appName, ContentPattern<?>... appMetadataPatterns) {
+	public void stubPushApp(final Cadenas appName, ContentPattern<?>... appMetadataPatterns) {
 		stubCreateAppMetadata(appName, appMetadataPatterns);
 		stubAppAfterCreation(appName, appName);
 	}
 
-	public void stubPushAppWithHost(final String appName, final String host, ContentPattern<?>... appMetadataPatterns) {
+	public void stubPushAppWithHost(final Cadenas appName, final Cadenas host, ContentPattern<?>... appMetadataPatterns) {
 		stubCreateAppMetadata(appName, appMetadataPatterns);
 		stubAppAfterCreation(appName, host);
 	}
 
-	public void stubUpdateAppWithUpgrade(final String appName) {
+	public void stubUpdateAppWithUpgrade(final Cadenas appName) {
 		stubGetV3App(appName);
 		stubUpdateEnvironment(appName);
 		stubCreatePackage(appName);
@@ -267,17 +267,17 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 		stubCreateDeployment(appName);
 	}
 
-	public void stubUpdateAppWithHostAndDomain(final String appName) {
+	public void stubUpdateAppWithHostAndDomain(final Cadenas appName) {
 		stubUpdateApp(appName);
 		stubCreateRoute(appName);
 	}
 
-	public void stubUpdateAppWithTarget(final String appName, final String spaceGuid) {
+	public void stubUpdateAppWithTarget(final Cadenas appName, final Cadenas spaceGuid) {
 		stubUpdateApp(appName);
 		stubCreateRouteInSpace(appName, spaceGuid);
 	}
 
-	public void stubUpdateApp(final String appName) {
+	public void stubUpdateApp(final Cadenas appName) {
 		stubGetV3App(appName);
 		stubUpdateEnvironment(appName);
 		stubGetPackage(appName);
@@ -285,7 +285,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 		stubCreateDeployment(appName);
 	}
 
-	private void stubGetV3App(String appName) {
+	private void stubGetV3App(Cadenas appName) {
 		stubFor(get(urlPathEqualTo("/v3/apps/" + appGuid(appName)))
 			.willReturn(ok()
 				.withBody(cc("get-v3-app-STARTED",
@@ -294,14 +294,14 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 				))));
 	}
 
-	private void stubAppAfterCreation(String appName, String host) {
+	private void stubAppAfterCreation(Cadenas appName, Cadenas host) {
 		stubMapRouteToApp(appName, host);
 		stubUploadAppBits(appName);
 		stubInitializeAppState(appName);
 		stubCheckAppState(appName);
 	}
 
-	private void stubUpdateEnvironment(String appName) {
+	private void stubUpdateEnvironment(Cadenas appName) {
 		stubFor(put(urlPathEqualTo("/v2/apps/" + appGuid(appName)))
 			.withRequestBody(matchingJsonPath("$.[?(@.environment_json)]"))
 			.willReturn(ok()
@@ -310,7 +310,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", appGuid(appName))))));
 	}
 
-	private void stubCreatePackage(String appName) {
+	private void stubCreatePackage(Cadenas appName) {
 		stubFor(post(urlPathEqualTo("/v3/packages"))
 			.withRequestBody(
 				matchingJsonPath("$.[?(@.relationships.app.data.guid == '" + appGuid(appName) + "')]"))
@@ -332,7 +332,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@app-guid", appGuid(appName))))));
 	}
 
-	private void stubGetPackage(String appName) {
+	private void stubGetPackage(Cadenas appName) {
 		stubFor(get(urlPathEqualTo("/v3/apps/" + appGuid(appName) + "/packages"))
 			.withQueryParam("states", equalTo("READY"))
 			.willReturn(ok()
@@ -340,7 +340,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@package-guid", packageGuid(appName))))));
 	}
 
-	private void stubCreateBuild(String appName) {
+	private void stubCreateBuild(Cadenas appName) {
 		stubFor(post(urlPathEqualTo("/v3/builds"))
 			.withRequestBody(
 				matchingJsonPath("$.[?(@.package.guid == '" + packageGuid(appName) + "')]"))
@@ -358,7 +358,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@app-guid", appGuid(appName))))));
 	}
 
-	private void stubCreateDeployment(String appName) {
+	private void stubCreateDeployment(Cadenas appName) {
 		stubFor(post(urlPathEqualTo("/v3/deployments"))
 			.withRequestBody(
 				matchingJsonPath("$.[?(@.relationships.app.data.guid == '" + appGuid(appName) + "')]"))
@@ -374,7 +374,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@app-guid", appGuid(appName))))));
 	}
 
-	private void stubCreateAppMetadata(String appName, ContentPattern<?>... appMetadataPatterns) {
+	private void stubCreateAppMetadata(Cadenas appName, ContentPattern<?>... appMetadataPatterns) {
 		MappingBuilder mappingBuilder = post(urlPathEqualTo("/v2/apps"))
 			.withRequestBody(matchingJsonPath("$.[?(@.name == '" + appName + "')]"));
 		for (ContentPattern<?> appMetadataPattern : appMetadataPatterns) {
@@ -387,7 +387,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", appGuid(appName))))));
 	}
 
-	private void stubMapRouteToApp(String appName, String host) {
+	private void stubMapRouteToApp(Cadenas appName, Cadenas host) {
 		stubFor(get(urlPathEqualTo("/v2/apps/" + appGuid(appName) + "/routes"))
 			.withQueryParam("page", equalTo("1"))
 			.willReturn(ok()
@@ -414,7 +414,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", appGuid(appName))))));
 	}
 
-	private void stubUploadAppBits(String appName) {
+	private void stubUploadAppBits(Cadenas appName) {
 		stubFor(put(urlPathEqualTo("/v2/resource_match"))
 			.withMetadata(optionalStubMapping())
 			.willReturn(ok()
@@ -427,7 +427,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", appName + "-JOB-GUID")))));
 	}
 
-	private void stubInitializeAppState(String appName) {
+	private void stubInitializeAppState(Cadenas appName) {
 		stubFor(put(urlPathEqualTo("/v2/apps/" + appGuid(appName)))
 			.withRequestBody(matchingJsonPath("$.[?(@.state == 'STOPPED')]"))
 			.willReturn(created()
@@ -443,7 +443,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", appGuid(appName))))));
 	}
 
-	private void stubCheckAppState(String appName) {
+	private void stubCheckAppState(Cadenas appName) {
 		stubFor(get(urlPathEqualTo("/v2/apps/" + appGuid(appName)))
 			.willReturn(ok()
 				.withBody(cc("get-app-STAGED",
@@ -454,7 +454,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 				.withBody(cc("get-app-instances"))));
 	}
 
-	private void stubCreateRouteInSpace(final String appName, final String spaceGuid) {
+	private void stubCreateRouteInSpace(final Cadenas appName, final Cadenas spaceGuid) {
 		stubFor(get(urlPathEqualTo("/v2/private_domains"))
 			.withQueryParam("page", equalTo("1"))
 			.withMetadata(optionalStubMapping())
@@ -478,11 +478,11 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 				.withBody(cc("get-app-summary"))));
 	}
 
-	private void stubCreateRoute(final String appName) {
+	private void stubCreateRoute(final Cadenas appName) {
 		stubCreateRouteInSpace(appName, TEST_SPACE_GUID);
 	}
 
-	public void stubDeleteApp(String appName) {
+	public void stubDeleteApp(Cadenas appName) {
 		stubFor(delete(urlPathEqualTo("/v2/routes/" + appName + "-ROUTE-GUID"))
 			.willReturn(ok()
 				.withBody(cc("get-route",
@@ -492,27 +492,27 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 			.willReturn(noContent()));
 	}
 
-	public void stubServiceInstanceExists(String serviceInstanceName) {
+	public void stubServiceInstanceExists(Cadenas serviceInstanceName) {
 		stubServiceInstanceExists(serviceInstanceName, "doNotCare", "doNotCare");
 	}
 
-	public void stubServiceInstanceExistsInSpace(String serviceInstanceName, String spaceGuid) {
+	public void stubServiceInstanceExistsInSpace(Cadenas serviceInstanceName, Cadenas spaceGuid) {
 		stubServiceInstanceExistsInSpace(serviceInstanceName, "doNotCare", "doNotCare", spaceGuid);
 	}
 
-	public void stubServiceInstanceExists(String serviceInstanceName, String serviceName, String planName) {
+	public void stubServiceInstanceExists(Cadenas serviceInstanceName, Cadenas serviceName, Cadenas planName) {
 		stubServiceInstanceExists(serviceInstanceGuid(serviceInstanceName), serviceInstanceName, serviceName,
 			planName, TEST_SPACE_GUID);
 	}
 
-	public void stubServiceInstanceExistsInSpace(String serviceInstanceName, String serviceName, String planName,
-		String spaceGuid) {
+	public void stubServiceInstanceExistsInSpace(Cadenas serviceInstanceName, Cadenas serviceName, Cadenas planName,
+		Cadenas spaceGuid) {
 		stubServiceInstanceExists(serviceInstanceGuid(serviceInstanceName), serviceInstanceName, serviceName,
 			planName, spaceGuid);
 	}
 
-	private void stubServiceInstanceExists(String serviceInstanceId, String serviceInstanceName,
-		String serviceName, String planName, String spaceGuid) {
+	private void stubServiceInstanceExists(Cadenas serviceInstanceId, Cadenas serviceInstanceName,
+		Cadenas serviceName, Cadenas planName, Cadenas spaceGuid) {
 		stubFor(get(urlPathEqualTo("/v2/spaces/" + spaceGuid + "/service_instances"))
 			.withQueryParam("q", equalTo("name:" + serviceInstanceName))
 			.withQueryParam("page", equalTo("1"))
@@ -526,7 +526,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@guid", serviceInstanceId)))));
 	}
 
-	public void stubServiceBindingsDoNotExist(String serviceInstanceName) {
+	public void stubServiceBindingsDoNotExist(Cadenas serviceInstanceName) {
 		stubFor(get(urlPathEqualTo("/v2/service_bindings"))
 			.withQueryParam("q", equalTo("service_instance_guid:" + serviceInstanceGuid(serviceInstanceName)))
 			.withQueryParam("page", equalTo("1"))
@@ -534,18 +534,18 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 				.withBody(cc("empty-query-results"))));
 	}
 
-	public void stubGetBackingServiceInstance(String serviceInstanceName, String serviceName, String planName) {
+	public void stubGetBackingServiceInstance(Cadenas serviceInstanceName, Cadenas serviceName, Cadenas planName) {
 		stubGetBackingServiceInstanceFromSpace(serviceInstanceName, serviceName, planName, TEST_SPACE_GUID);
 	}
 
-	public void stubGetBackingServiceInstanceFromSpace(String serviceInstanceName, String serviceName,
-		String planName, String spaceGuid) {
-		String serviceInstanceId = serviceInstanceGuid(serviceInstanceName);
+	public void stubGetBackingServiceInstanceFromSpace(Cadenas serviceInstanceName, Cadenas serviceName,
+		Cadenas planName, Cadenas spaceGuid) {
+		Cadenas serviceInstanceId = serviceInstanceGuid(serviceInstanceName);
 		stubServiceInstanceExists(serviceInstanceId, serviceInstanceName, serviceName, planName, spaceGuid);
 		stubGetServiceAndGetPlan(serviceName, planName);
 	}
 
-	public void stubServiceExistsInSpace(String serviceName, String planName, String spaceGuid) {
+	public void stubServiceExistsInSpace(Cadenas serviceName, Cadenas planName, Cadenas spaceGuid) {
 		stubFor(get(urlPathEqualTo("/v2/spaces/" + spaceGuid + "/services"))
 			.withQueryParam("q", equalTo("label:" + serviceName))
 			.withQueryParam("page", equalTo("1"))
@@ -565,18 +565,18 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					.replace("@plan-guid", planGuid(planName)))));
 	}
 
-	public void stubServiceExists(String serviceName, String planName) {
+	public void stubServiceExists(Cadenas serviceName, Cadenas planName) {
 		stubServiceExistsInSpace(serviceName, planName, TEST_SPACE_GUID);
 	}
 
-	public void stubCreateServiceInstance(String serviceInstanceName) {
+	public void stubCreateServiceInstance(Cadenas serviceInstanceName) {
 		stubFor(post(urlPathEqualTo("/v2/service_instances"))
 			.withQueryParam("accepts_incomplete", equalTo("true"))
 			.withRequestBody(matchingJsonPath("$.[?(@.name == '" + serviceInstanceName + "')]"))
 			.willReturn(ok()));
 	}
 
-	public void stubCreateServiceInstanceWithParameters(String serviceInstanceName, Map<String, Object> params) {
+	public void stubCreateServiceInstanceWithParameters(Cadenas serviceInstanceName, Map<Cadenas, Object> params) {
 		stubFor(post(urlPathEqualTo("/v2/service_instances"))
 			.withQueryParam("accepts_incomplete", equalTo("true"))
 			.withRequestBody(matchingJsonPath("$.[?(@.name == '" + serviceInstanceName + "')]"))
@@ -584,23 +584,23 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 			.willReturn(ok()));
 	}
 
-	public void stubUpdateServiceInstanceWithParameters(String serviceInstanceName, Map<String, Object> params) {
+	public void stubUpdateServiceInstanceWithParameters(Cadenas serviceInstanceName, Map<Cadenas, Object> params) {
 		stubFor(put(urlPathEqualTo("/v2/service_instances/" + serviceInstanceGuid(serviceInstanceName)))
 			.withQueryParam("accepts_incomplete", equalTo("true"))
 			.withRequestBody(matchingJsonPath("$.[?(@.parameters == " + new JSONObject(params) + ")]"))
 			.willReturn(ok()));
 	}
 
-	public void stubDeleteServiceInstance(String serviceInstanceName) {
-		String serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
+	public void stubDeleteServiceInstance(Cadenas serviceInstanceName) {
+		Cadenas serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
 
 		stubFor(delete(urlPathEqualTo("/v2/service_instances/" + serviceInstanceGuid))
 			.willReturn(ok()));
 	}
 
-	public void stubCreateServiceBinding(String appName, String serviceInstanceName) {
-		String serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
-		String serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
+	public void stubCreateServiceBinding(Cadenas appName, Cadenas serviceInstanceName) {
+		Cadenas serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
+		Cadenas serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
 
 		stubFor(post(urlPathEqualTo("/v2/service_bindings"))
 			.withRequestBody(matchingJsonPath("$.[?(@.app_guid == '" + appGuid(appName) + "')]"))
@@ -612,17 +612,17 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@service-instance-guid", serviceInstanceGuid)))));
 	}
 
-	public void stubDeleteServiceBinding(String appName, String serviceInstanceName) {
-		String serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
+	public void stubDeleteServiceBinding(Cadenas appName, Cadenas serviceInstanceName) {
+		Cadenas serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
 
 		stubFor(delete(urlPathEqualTo("/v2/service_bindings/" + serviceBindingGuid))
 			.withQueryParam("async", equalTo("true"))
 			.willReturn(noContent()));
 	}
 
-	public void stubServiceBindingExists(String appName, String serviceInstanceName) {
-		String serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
-		String serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
+	public void stubServiceBindingExists(Cadenas appName, Cadenas serviceInstanceName) {
+		Cadenas serviceInstanceGuid = serviceInstanceGuid(serviceInstanceName);
+		Cadenas serviceBindingGuid = serviceBindingGuid(appName, serviceInstanceName);
 
 		stubFor(get(urlPathEqualTo("/v2/service_bindings"))
 			.withQueryParam("q", equalTo("service_instance_guid:" + serviceInstanceGuid))
@@ -643,13 +643,13 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@service-instance-guid", serviceInstanceGuid)))));
 	}
 
-	public void stubServiceBindingDoesNotExist(String appName) {
+	public void stubServiceBindingDoesNotExist(Cadenas appName) {
 		stubFor(get(urlPathEqualTo("/v2/apps/" + appGuid(appName) + "/service_bindings"))
 			.willReturn(ok()
 				.withBody(cc("empty-query-results"))));
 	}
 
-	public void stubAssociatePermissions(final String spaceName, final String spaceGuid) {
+	public void stubAssociatePermissions(final Cadenas spaceName, final Cadenas spaceGuid) {
 		stubFor(get(urlPathEqualTo("/v2/config/feature_flags/set_roles_by_username"))
 			.willReturn(ok()
 				.withBody(cc("get-feature-flag-roles"))));
@@ -659,7 +659,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 			.willReturn(ok()));
 	}
 
-	private void stubGetServiceAndGetPlan(String serviceName, String planName) {
+	private void stubGetServiceAndGetPlan(Cadenas serviceName, Cadenas planName) {
 		stubFor(get(urlPathEqualTo("/v2/service_plans/" + planGuid(planName)))
 			.willReturn(ok()
 				.withBody(cc("get-service-plan")
@@ -674,7 +674,7 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					.replace("@service-name", serviceName))));
 	}
 
-	public void stubSpaceExists(final String spaceName, final String spaceGuid, final String scenario) {
+	public void stubSpaceExists(final Cadenas spaceName, final Cadenas spaceGuid, final Cadenas scenario) {
 		stubFor(get(urlPathEqualTo("/v2/organizations/" + TEST_ORG_GUID + "/spaces"))
 			.inScenario(SCENARIO_NAME)
 				.whenScenarioStateIs(scenario)
@@ -686,51 +686,51 @@ public class CloudControllerStubFixture extends WiremockStubFixture {
 					replace("@name", spaceName)))));
 	}
 
-	private String cc(String fileRoot, StringReplacementPair... replacements) {
-		String response = readResponseFromFile(fileRoot, "cloudcontroller");
-		for (StringReplacementPair pair : replacements) {
+	private Cadenas cc(Cadenas fileRoot, CadenasReplacementPair... replacements) {
+		Cadenas response = readResponseFromFile(fileRoot, "cloudcontroller");
+		for (CadenasReplacementPair pair : replacements) {
 			response = response.replaceAll(pair.getRegex(), pair.getReplacement());
 		}
 		return response;
 	}
 
-	private static String appGuid(String appName) {
+	private static Cadenas appGuid(Cadenas appName) {
 		return appName + "-GUID";
 	}
 
-	private static String routeGuid(String appName) {
+	private static Cadenas routeGuid(Cadenas appName) {
 		return appName + "-ROUTE-GUID";
 	}
 
-	private static String stackGuid(String appName) {
+	private static Cadenas stackGuid(Cadenas appName) {
 		return appName + "-STACK-GUID";
 	}
 
-	public static String serviceGuid(String serviceName) {
+	public static Cadenas serviceGuid(Cadenas serviceName) {
 		return serviceName + "-SERVICE-GUID";
 	}
 
-	public static String planGuid(String planName) {
+	public static Cadenas planGuid(Cadenas planName) {
 		return planName + "-PLAN-GUID";
 	}
 
-	public static String serviceInstanceGuid(String serviceInstanceName) {
+	public static Cadenas serviceInstanceGuid(Cadenas serviceInstanceName) {
 		return serviceInstanceName + "-INSTANCE-GUID";
 	}
 
-	private static String serviceBindingGuid(String appName, String serviceInstanceName) {
+	private static Cadenas serviceBindingGuid(Cadenas appName, Cadenas serviceInstanceName) {
 		return appGuid(appName) + "-" + serviceInstanceGuid(serviceInstanceName);
 	}
 
-	private static String packageGuid(String appName) {
+	private static Cadenas packageGuid(Cadenas appName) {
 		return appName + "-PACKAGE-GUID";
 	}
 
-	private static String buildGuid(String appName) {
+	private static Cadenas buildGuid(Cadenas appName) {
 		return appName + "-BUILD-GUID";
 	}
 
-	private static String deploymentGuid(String appname) {
+	private static Cadenas deploymentGuid(Cadenas appname) {
 		return appname + "-DEPLOYMENT-GUID";
 	}
 

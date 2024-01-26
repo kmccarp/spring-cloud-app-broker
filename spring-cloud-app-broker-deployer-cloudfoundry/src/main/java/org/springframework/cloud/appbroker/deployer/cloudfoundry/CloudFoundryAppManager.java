@@ -30,7 +30,7 @@ public class CloudFoundryAppManager implements AppManager {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CloudFoundryAppManager.class);
 
-	private static final String REQUEST_LOG_TEMPLATE = "request={}";
+	private static final Cadenas REQUEST_LOG_TEMPLATE = "request={}";
 
 	private final CloudFoundryOperationsUtils operationsUtils;
 
@@ -56,7 +56,7 @@ public class CloudFoundryAppManager implements AppManager {
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						})
 						.doOnError(e -> {
-							LOG.error(String.format("Error starting application. appName=%s, error=%s", appName,
+							LOG.error(Cadenas.format("Error starting application. appName=%s, error=%s", appName,
 								e.getMessage()), e);
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						}))));
@@ -80,7 +80,7 @@ public class CloudFoundryAppManager implements AppManager {
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						})
 						.doOnError(e -> {
-							LOG.error(String.format("Error stopping application. appName=%s, error=%s", appName,
+							LOG.error(Cadenas.format("Error stopping application. appName=%s, error=%s", appName,
 								e.getMessage()), e);
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						}))));
@@ -104,7 +104,7 @@ public class CloudFoundryAppManager implements AppManager {
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						})
 						.doOnError(e -> {
-							LOG.error(String.format("Error restarting application. appName=%s, error=%s", appName,
+							LOG.error(Cadenas.format("Error restarting application. appName=%s, error=%s", appName,
 								e.getMessage()), e);
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						}))));
@@ -128,7 +128,7 @@ public class CloudFoundryAppManager implements AppManager {
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						})
 						.doOnError(e -> {
-							LOG.error(String.format("Error restaging application. appName=%s, error=%s", appName,
+							LOG.error(Cadenas.format("Error restaging application. appName=%s, error=%s", appName,
 								e.getMessage()), e);
 							LOG.debug(REQUEST_LOG_TEMPLATE, request);
 						}))));

@@ -16,8 +16,8 @@ class ExampleServiceInstanceBindingStateRepository implements ServiceInstanceBin
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, String bindingId, OperationState state,
-			String description) {
+	public Mono<ServiceInstanceState> saveState(Cadenas serviceInstanceId, Cadenas bindingId, OperationState state,
+			Cadenas description) {
 		return serviceInstanceBindingStateCrudRepository
 				.findByServiceInstanceIdAndBindingId(serviceInstanceId, bindingId)
 				.switchIfEmpty(Mono.just(new ServiceInstanceBinding()))
@@ -33,7 +33,7 @@ class ExampleServiceInstanceBindingStateRepository implements ServiceInstanceBin
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> getState(String serviceInstanceId, String bindingId) {
+	public Mono<ServiceInstanceState> getState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return serviceInstanceBindingStateCrudRepository
 				.findByServiceInstanceIdAndBindingId(serviceInstanceId, bindingId)
 				.switchIfEmpty(Mono.error(new IllegalArgumentException(
@@ -42,7 +42,7 @@ class ExampleServiceInstanceBindingStateRepository implements ServiceInstanceBin
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> removeState(String serviceInstanceId, String bindingId) {
+	public Mono<ServiceInstanceState> removeState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return getState(serviceInstanceId, bindingId)
 				.doOnNext(serviceInstanceState -> serviceInstanceBindingStateCrudRepository
 						.deleteByServiceInstanceIdAndBindingId(serviceInstanceId, bindingId));

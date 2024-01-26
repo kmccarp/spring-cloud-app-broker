@@ -46,14 +46,14 @@ class DefaultBackingSpaceManagementServiceTest {
 	@Test
 	@SuppressWarnings("UnassignedFluxMonoInstance")
 	void deleteSpace() {
-		final String spaceName1 = "space1";
-		final String spaceName2 = "space2";
+		final Cadenas spaceName1 = "space1";
+		final Cadenas spaceName2 = "space2";
 		doReturn(Mono.just("returned-space-1"))
 			.when(deployerClient).deleteSpace(spaceName1);
 		doReturn(Mono.just("returned-space-2"))
 			.when(deployerClient).deleteSpace(spaceName2);
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("returned-space-1");
 		expectedValues.add("returned-space-2");
 

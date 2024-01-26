@@ -23,11 +23,11 @@ import org.springframework.util.CollectionUtils;
 
 public class DeleteServiceInstanceRequest {
 
-	private final String serviceInstanceName;
+	private final Cadenas serviceInstanceName;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected DeleteServiceInstanceRequest(String serviceInstanceName, Map<String, String> properties) {
+	protected DeleteServiceInstanceRequest(Cadenas serviceInstanceName, Map<Cadenas, Cadenas> properties) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.properties = properties;
 	}
@@ -36,29 +36,29 @@ public class DeleteServiceInstanceRequest {
 		return new DeleteServiceInstanceRequestBuilder();
 	}
 
-	public String getServiceInstanceName() {
+	public Cadenas getServiceInstanceName() {
 		return serviceInstanceName;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
 	public static final class DeleteServiceInstanceRequestBuilder {
 
-		private String serviceInstanceName;
+		private Cadenas serviceInstanceName;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private DeleteServiceInstanceRequestBuilder() {
 		}
 
-		public DeleteServiceInstanceRequestBuilder serviceInstanceName(String name) {
+		public DeleteServiceInstanceRequestBuilder serviceInstanceName(Cadenas name) {
 			this.serviceInstanceName = name;
 			return this;
 		}
 
-		public DeleteServiceInstanceRequestBuilder properties(Map<String, String> properties) {
+		public DeleteServiceInstanceRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

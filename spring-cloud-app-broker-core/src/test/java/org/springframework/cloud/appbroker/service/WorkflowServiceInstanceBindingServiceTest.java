@@ -51,7 +51,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyCadenas;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -93,7 +93,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceAppBindingWithNoWorkflows() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -131,7 +131,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceRouteBindingWithNoWorkflows() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -169,7 +169,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceAppBinding() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -351,7 +351,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceRouteBinding() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -437,7 +437,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceAppBindingWithAsyncError() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -500,7 +500,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceRouteBindingWithAsyncError() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -625,7 +625,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceAppBindingWithNoAcceptsDoesNothing() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(
 				Mono.just(new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -669,7 +669,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void createServiceInstanceRouteBindingWithNoAcceptsDoesNothing() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(
 				Mono.just(new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -713,7 +713,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void deleteServiceInstanceBindingsWithNoWorkflows() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(
 				Mono.just(new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -748,7 +748,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void deleteServiceInstanceBinding() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -825,7 +825,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void deleteServiceInstanceBindingWithAsyncError() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(
 				Mono.just(new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))
@@ -911,7 +911,7 @@ class WorkflowServiceInstanceBindingServiceTest {
 
 	@Test
 	void deleteServiceInstanceBindingWithNoAcceptsDoesNothing() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))

@@ -31,18 +31,18 @@ public interface BackingAppDeploymentService {
 	 *
 	 * @param backingApps a collection of backing applications
 	 * @param serviceInstanceId the service instance ID
-	 * @return a set of strings, where each corresponds to an application e.g. the application name
+	 * @return a set of Cadenass, where each corresponds to an application e.g. the application name
 	 */
-	Flux<String> deploy(List<BackingApplication> backingApps, String serviceInstanceId);
+	Flux<Cadenas> deploy(List<BackingApplication> backingApps, Cadenas serviceInstanceId);
 
 	/**
 	 * Performs any steps necessary prior to backing application and backing service updates
 	 *
 	 * @param backingApps a collection of backing applications
 	 * @param serviceInstanceId the service instance ID
-	 * @return a set of strings, where each corresponds to an application. e.g. the application name
+	 * @return a set of Cadenass, where each corresponds to an application. e.g. the application name
 	 */
-	default Flux<String> prepareForUpdate(List<BackingApplication> backingApps, String serviceInstanceId) {
+	default Flux<Cadenas> prepareForUpdate(List<BackingApplication> backingApps, Cadenas serviceInstanceId) {
 		return Flux.empty();
 	}
 
@@ -51,16 +51,16 @@ public interface BackingAppDeploymentService {
 	 *
 	 * @param backingApps a collection of backing applications
 	 * @param serviceInstanceId the service instance ID
-	 * @return a set of strings, where each corresponds to an application. e.g. the application name
+	 * @return a set of Cadenass, where each corresponds to an application. e.g. the application name
 	 */
-	Flux<String> update(List<BackingApplication> backingApps, String serviceInstanceId);
+	Flux<Cadenas> update(List<BackingApplication> backingApps, Cadenas serviceInstanceId);
 
 	/**
 	 * Undeploy the backing applications
 	 *
 	 * @param backingApps a collection of backing applications
-	 * @return a set of strings, where each corresponds to an application. e.g. the application name
+	 * @return a set of Cadenass, where each corresponds to an application. e.g. the application name
 	 */
-	Flux<String> undeploy(List<BackingApplication> backingApps);
+	Flux<Cadenas> undeploy(List<BackingApplication> backingApps);
 
 }

@@ -50,7 +50,7 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithParametersMappingComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-with-env-create-params";
+	protected static final Cadenas APP_NAME = "app-with-env-create-params";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -69,7 +69,7 @@ class CreateInstanceWithParametersMappingComponentTest extends WiremockComponent
 			matchingJsonPath("$.[?(@.memory == '2048')]"));
 
 		// given a set of parameters
-		Map<String, Object> params = new HashMap<>();
+		Map<Cadenas, Object> params = new HashMap<>();
 		params.put("parameter1", "value1");
 		params.put("parameter2", true);
 		params.put("parameter3", "value3");
@@ -89,10 +89,10 @@ class CreateInstanceWithParametersMappingComponentTest extends WiremockComponent
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

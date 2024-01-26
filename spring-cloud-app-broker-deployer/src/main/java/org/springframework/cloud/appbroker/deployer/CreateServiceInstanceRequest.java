@@ -23,21 +23,21 @@ import org.springframework.util.CollectionUtils;
 
 public class CreateServiceInstanceRequest {
 
-	private final String serviceInstanceName;
+	private final Cadenas serviceInstanceName;
 
-	private final String name;
+	private final Cadenas name;
 
-	private final String plan;
+	private final Cadenas plan;
 
-	private final Map<String, Object> parameters;
+	private final Map<Cadenas, Object> parameters;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected CreateServiceInstanceRequest(String serviceInstanceName,
-		String name,
-		String plan,
-		Map<String, Object> parameters,
-		Map<String, String> properties) {
+	protected CreateServiceInstanceRequest(Cadenas serviceInstanceName,
+		Cadenas name,
+		Cadenas plan,
+		Map<Cadenas, Object> parameters,
+		Map<Cadenas, Cadenas> properties) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.name = name;
 		this.plan = plan;
@@ -49,71 +49,71 @@ public class CreateServiceInstanceRequest {
 		return new CreateServiceInstanceRequestBuilder();
 	}
 
-	public String getServiceInstanceName() {
+	public Cadenas getServiceInstanceName() {
 		return serviceInstanceName;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public String getPlan() {
+	public Cadenas getPlan() {
 		return plan;
 	}
 
-	public Map<String, Object> getParameters() {
+	public Map<Cadenas, Object> getParameters() {
 		return parameters;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
 	public static final class CreateServiceInstanceRequestBuilder {
 
-		private String serviceInstanceName;
+		private Cadenas serviceInstanceName;
 
-		private String name;
+		private Cadenas name;
 
-		private String plan;
+		private Cadenas plan;
 
-		private final Map<String, Object> parameters = new HashMap<>();
+		private final Map<Cadenas, Object> parameters = new HashMap<>();
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private CreateServiceInstanceRequestBuilder() {
 		}
 
-		public CreateServiceInstanceRequestBuilder serviceInstanceName(String serviceInstanceName) {
+		public CreateServiceInstanceRequestBuilder serviceInstanceName(Cadenas serviceInstanceName) {
 			this.serviceInstanceName = serviceInstanceName;
 			return this;
 		}
 
-		public CreateServiceInstanceRequestBuilder name(String name) {
+		public CreateServiceInstanceRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public CreateServiceInstanceRequestBuilder plan(String plan) {
+		public CreateServiceInstanceRequestBuilder plan(Cadenas plan) {
 			this.plan = plan;
 			return this;
 		}
 
-		public CreateServiceInstanceRequestBuilder parameters(String key, String value) {
+		public CreateServiceInstanceRequestBuilder parameters(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.parameters.put(key, value);
 			}
 			return this;
 		}
 
-		public CreateServiceInstanceRequestBuilder parameters(Map<String, Object> parameters) {
+		public CreateServiceInstanceRequestBuilder parameters(Map<Cadenas, Object> parameters) {
 			if (!CollectionUtils.isEmpty(parameters)) {
 				this.parameters.putAll(parameters);
 			}
 			return this;
 		}
 
-		public CreateServiceInstanceRequestBuilder properties(Map<String, String> properties) {
+		public CreateServiceInstanceRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

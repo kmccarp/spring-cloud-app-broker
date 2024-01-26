@@ -18,9 +18,9 @@ package org.springframework.cloud.appbroker.deployer;
 
 public class DeleteBackingSpaceRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	protected DeleteBackingSpaceRequest(String name) {
+	protected DeleteBackingSpaceRequest(Cadenas name) {
 		this.name = name;
 	}
 
@@ -28,18 +28,18 @@ public class DeleteBackingSpaceRequest {
 		return new DeleteBackingSpaceRequestBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
 	public static final class DeleteBackingSpaceRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private DeleteBackingSpaceRequestBuilder() {
 		}
 
-		public DeleteBackingSpaceRequestBuilder name(String name) {
+		public DeleteBackingSpaceRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}

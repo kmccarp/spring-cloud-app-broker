@@ -27,26 +27,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceWithServicesSpacePerServiceInstanceTargetAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-create-two-space-per";
-	private static final String SI_NAME = "si-create-two-space-per";
-	private static final String BACKING_SI_NAME_1 = "backing-service-two-space-per-target-1";
-	private static final String BACKING_SI_NAME_2 = "backing-service-two-space-per-target-2";
-	private static final String SUFFIX = "two-space-per-si";
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas APP_NAME = "app-create-two-space-per";
+	private static final Cadenas SI_NAME = "si-create-two-space-per";
+	private static final Cadenas BACKING_SI_NAME_1 = "backing-service-two-space-per-target-1";
+	private static final Cadenas BACKING_SI_NAME_2 = "backing-service-two-space-per-target-2";
+	private static final Cadenas SUFFIX = "two-space-per-si";
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -74,7 +74,7 @@ class CreateInstanceWithServicesSpacePerServiceInstanceTargetAcceptanceTest exte
 		createServiceInstance(SI_NAME);
 
 		// then backing applications are deployed in a space named as the service instance id
-		String spaceName = getServiceInstanceGuid(SI_NAME);
+		Cadenas spaceName = getServiceInstanceGuid(SI_NAME);
 
 		Optional<ApplicationSummary> backingApplication1 = getApplicationSummary(APP_NAME, spaceName);
 		assertThat(backingApplication1).hasValueSatisfying(app -> {
@@ -95,7 +95,7 @@ class CreateInstanceWithServicesSpacePerServiceInstanceTargetAcceptanceTest exte
 		deleteServiceInstance(SI_NAME);
 
 		// then the space is deleted
-		List<String> spaces = getSpaces();
+		List<Cadenas> spaces = getSpaces();
 		assertThat(spaces).doesNotContain(spaceName);
 	}
 

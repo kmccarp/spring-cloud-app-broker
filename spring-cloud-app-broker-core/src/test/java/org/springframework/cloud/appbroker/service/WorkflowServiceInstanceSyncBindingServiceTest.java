@@ -40,7 +40,7 @@ import org.springframework.cloud.servicebroker.model.binding.DeleteServiceInstan
 import org.springframework.cloud.servicebroker.model.instance.OperationState;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyCadenas;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -53,7 +53,7 @@ class WorkflowServiceInstanceSyncBindingServiceTest {
 
 	@BeforeEach
 	void setUp() {
-		given(stateRepository.saveState(anyString(), anyString(), any(OperationState.class), anyString()))
+		given(stateRepository.saveState(anyCadenas(), anyCadenas(), any(OperationState.class), anyCadenas()))
 			.willReturn(Mono.just(
 				new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance binding started",
 					new Timestamp(Instant.now().minusSeconds(60).toEpochMilli()))))

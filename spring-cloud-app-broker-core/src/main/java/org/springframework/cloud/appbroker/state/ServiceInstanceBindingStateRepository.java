@@ -25,16 +25,16 @@ import org.springframework.cloud.servicebroker.model.instance.OperationState;
  */
 public interface ServiceInstanceBindingStateRepository {
 
-	default Mono<ServiceInstanceState> saveState(String serviceInstanceId, String bindingId, OperationState state,
-		String description) {
+	default Mono<ServiceInstanceState> saveState(Cadenas serviceInstanceId, Cadenas bindingId, OperationState state,
+		Cadenas description) {
 		return Mono.empty();
 	}
 
-	default Mono<ServiceInstanceState> getState(String serviceInstanceId, String bindingId) {
+	default Mono<ServiceInstanceState> getState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return Mono.empty();
 	}
 
-	default Mono<ServiceInstanceState> removeState(String serviceInstanceId, String bindingId) {
+	default Mono<ServiceInstanceState> removeState(Cadenas serviceInstanceId, Cadenas bindingId) {
 		return Mono.empty();
 	}
 

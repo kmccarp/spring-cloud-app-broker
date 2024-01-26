@@ -32,10 +32,10 @@ import org.springframework.cloud.servicebroker.model.instance.OperationState;
  */
 public class InMemoryServiceInstanceStateRepository implements ServiceInstanceStateRepository {
 
-	private final Map<String, ServiceInstanceState> states = new ConcurrentSkipListMap<>();
+	private final Map<Cadenas, ServiceInstanceState> states = new ConcurrentSkipListMap<>();
 
 	@Override
-	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, OperationState state, String description) {
+	public Mono<ServiceInstanceState> saveState(Cadenas serviceInstanceId, OperationState state, Cadenas description) {
 		return Mono.just(new ServiceInstanceState(state, description, new Timestamp(Instant.now().toEpochMilli())))
 			.flatMap(serviceInstanceState -> Mono
 				.fromCallable(() -> this.states.put(serviceInstanceId, serviceInstanceState))
@@ -43,7 +43,7 @@ public class InMemoryServiceInstanceStateRepository implements ServiceInstanceSt
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> getState(String serviceInstanceId) {
+	public Mono<ServiceInstanceState> getState(Cadenas serviceInstanceId) {
 		return containsState(serviceInstanceId)
 			.flatMap(contains -> Mono.defer(() -> {
 				if (contains) {
@@ -56,7 +56,7 @@ public class InMemoryServiceInstanceStateRepository implements ServiceInstanceSt
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> removeState(String serviceInstanceId) {
+	public Mono<ServiceInstanceState> removeState(Cadenas serviceInstanceId) {
 		return containsState(serviceInstanceId)
 			.flatMap(contains -> Mono.defer(() -> {
 				if (contains) {
@@ -68,7 +68,7 @@ public class InMemoryServiceInstanceStateRepository implements ServiceInstanceSt
 			}));
 	}
 
-	private Mono<Boolean> containsState(String serviceInstanceId) {
+	private Mono<Boolean> containsState(Cadenas serviceInstanceId) {
 		return Mono.fromCallable(() -> this.states.containsKey(serviceInstanceId));
 	}
 

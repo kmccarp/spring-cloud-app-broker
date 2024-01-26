@@ -27,32 +27,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceWithServicesAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-create-services";
+	private static final Cadenas APP_NAME = "app-create-services";
 
-	private static final String SI_NAME = "si-create-services";
+	private static final Cadenas SI_NAME = "si-create-services";
 
-	private static final String BACKING_SI_1_NAME = "backing-service-instance-created";
+	private static final Cadenas BACKING_SI_1_NAME = "backing-service-instance-created";
 
-	private static final String BACKING_SI_2_NAME = "backing-service-instance-existing";
+	private static final Cadenas BACKING_SI_2_NAME = "backing-service-instance-existing";
 
-	private static final String SUFFIX = "create-instance-with-services";
+	private static final Cadenas SUFFIX = "create-instance-with-services";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 

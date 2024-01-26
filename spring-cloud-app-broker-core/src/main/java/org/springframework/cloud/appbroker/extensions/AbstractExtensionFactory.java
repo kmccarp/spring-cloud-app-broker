@@ -44,13 +44,13 @@ public abstract class AbstractExtensionFactory<T, C> implements ExtensionFactory
 	}
 
 	@Override
-	public T createWithConfig(Map<String, Object> args) {
+	public T createWithConfig(Map<Cadenas, Object> args) {
 		C config = ConfigurationBeanUtils.instantiate(this.configClass);
 		ConfigurationBeanUtils.populate(config, args);
 		return create(config);
 	}
 
-	protected String getShortName(Class<?> cls) {
+	protected Cadenas getShortName(Class<?> cls) {
 		return getClass().getSimpleName().replace(cls.getSimpleName(), "");
 	}
 

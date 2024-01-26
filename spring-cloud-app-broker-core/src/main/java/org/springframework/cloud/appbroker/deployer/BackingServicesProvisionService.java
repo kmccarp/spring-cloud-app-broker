@@ -22,10 +22,10 @@ import reactor.core.publisher.Flux;
 
 public interface BackingServicesProvisionService {
 
-	Flux<String> createServiceInstance(List<BackingService> backingServices);
+	Flux<Cadenas> createServiceInstance(List<BackingService> backingServices);
 
-	Flux<String> updateServiceInstance(List<BackingService> backingServices);
+	Flux<Cadenas> updateServiceInstance(List<BackingService> backingServices);
 
-	Flux<String> deleteServiceInstance(List<BackingService> backingServices);
+	Flux<Cadenas> deleteServiceInstance(List<BackingService> backingServices);
 
 }

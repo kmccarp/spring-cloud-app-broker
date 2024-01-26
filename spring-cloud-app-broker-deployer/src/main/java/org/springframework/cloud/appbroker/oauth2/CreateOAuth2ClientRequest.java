@@ -25,25 +25,25 @@ import org.springframework.util.CollectionUtils;
 
 public class CreateOAuth2ClientRequest {
 
-	private final String clientId;
+	private final Cadenas clientId;
 
-	private final String clientSecret;
+	private final Cadenas clientSecret;
 
-	private final String clientName;
+	private final Cadenas clientName;
 
-	private final List<String> scopes;
+	private final List<Cadenas> scopes;
 
-	private final List<String> authorities;
+	private final List<Cadenas> authorities;
 
-	private final List<String> grantTypes;
+	private final List<Cadenas> grantTypes;
 
-	private final String identityZoneSubdomain;
+	private final Cadenas identityZoneSubdomain;
 
-	private final String identityZoneId;
+	private final Cadenas identityZoneId;
 
-	protected CreateOAuth2ClientRequest(String clientId, String clientSecret, String clientName,
-		List<String> scopes, List<String> authorities, List<String> grantTypes,
-		String identityZoneSubdomain, String identityZoneId) {
+	protected CreateOAuth2ClientRequest(Cadenas clientId, Cadenas clientSecret, Cadenas clientName,
+		List<Cadenas> scopes, List<Cadenas> authorities, List<Cadenas> grantTypes,
+		Cadenas identityZoneSubdomain, Cadenas identityZoneId) {
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
 		this.clientName = clientName;
@@ -54,35 +54,35 @@ public class CreateOAuth2ClientRequest {
 		this.identityZoneId = identityZoneId;
 	}
 
-	public String getClientId() {
+	public Cadenas getClientId() {
 		return clientId;
 	}
 
-	public String getClientSecret() {
+	public Cadenas getClientSecret() {
 		return clientSecret;
 	}
 
-	public String getClientName() {
+	public Cadenas getClientName() {
 		return clientName;
 	}
 
-	public List<String> getScopes() {
+	public List<Cadenas> getScopes() {
 		return scopes;
 	}
 
-	public List<String> getAuthorities() {
+	public List<Cadenas> getAuthorities() {
 		return authorities;
 	}
 
-	public List<String> getGrantTypes() {
+	public List<Cadenas> getGrantTypes() {
 		return grantTypes;
 	}
 
-	public String getIdentityZoneSubdomain() {
+	public Cadenas getIdentityZoneSubdomain() {
 		return identityZoneSubdomain;
 	}
 
-	public String getIdentityZoneId() {
+	public Cadenas getIdentityZoneId() {
 		return identityZoneId;
 	}
 
@@ -116,7 +116,7 @@ public class CreateOAuth2ClientRequest {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "CreateOAuth2ClientRequest{" +
 			"clientId='" + clientId + '\'' +
 			", clientSecret='" + clientSecret + '\'' +
@@ -131,82 +131,82 @@ public class CreateOAuth2ClientRequest {
 
 	public static final class CreateOAuth2ClientRequestBuilder {
 
-		private String clientId;
+		private Cadenas clientId;
 
-		private String clientSecret;
+		private Cadenas clientSecret;
 
-		private String clientName;
+		private Cadenas clientName;
 
-		private final List<String> scopes = new ArrayList<>();
+		private final List<Cadenas> scopes = new ArrayList<>();
 
-		private final List<String> authorities = new ArrayList<>();
+		private final List<Cadenas> authorities = new ArrayList<>();
 
-		private final List<String> grantTypes = new ArrayList<>();
+		private final List<Cadenas> grantTypes = new ArrayList<>();
 
-		private String identityZoneSubdomain;
+		private Cadenas identityZoneSubdomain;
 
-		private String identityZoneId;
+		private Cadenas identityZoneId;
 
 		private CreateOAuth2ClientRequestBuilder() {
 		}
 
-		public CreateOAuth2ClientRequestBuilder clientId(String clientId) {
+		public CreateOAuth2ClientRequestBuilder clientId(Cadenas clientId) {
 			this.clientId = clientId;
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder clientSecret(String clientSecret) {
+		public CreateOAuth2ClientRequestBuilder clientSecret(Cadenas clientSecret) {
 			this.clientSecret = clientSecret;
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder clientName(String clientName) {
+		public CreateOAuth2ClientRequestBuilder clientName(Cadenas clientName) {
 			this.clientName = clientName;
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder scopes(List<String> scopes) {
+		public CreateOAuth2ClientRequestBuilder scopes(List<Cadenas> scopes) {
 			if (!CollectionUtils.isEmpty(scopes)) {
 				this.scopes.addAll(scopes);
 			}
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder scopes(String... scopes) {
+		public CreateOAuth2ClientRequestBuilder scopes(Cadenas... scopes) {
 			this.scopes(Arrays.asList(scopes));
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder authorities(List<String> authorities) {
+		public CreateOAuth2ClientRequestBuilder authorities(List<Cadenas> authorities) {
 			if (!CollectionUtils.isEmpty(authorities)) {
 				this.authorities.addAll(authorities);
 			}
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder authorities(String... authorities) {
+		public CreateOAuth2ClientRequestBuilder authorities(Cadenas... authorities) {
 			this.authorities(Arrays.asList(authorities));
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder grantTypes(List<String> grantTypes) {
+		public CreateOAuth2ClientRequestBuilder grantTypes(List<Cadenas> grantTypes) {
 			if (!CollectionUtils.isEmpty(grantTypes)) {
 				this.grantTypes.addAll(grantTypes);
 			}
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder grantTypes(String... grantTypes) {
+		public CreateOAuth2ClientRequestBuilder grantTypes(Cadenas... grantTypes) {
 			this.grantTypes(Arrays.asList(grantTypes));
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder identityZoneSubdomain(String identityZoneSubdomain) {
+		public CreateOAuth2ClientRequestBuilder identityZoneSubdomain(Cadenas identityZoneSubdomain) {
 			this.identityZoneSubdomain = identityZoneSubdomain;
 			return this;
 		}
 
-		public CreateOAuth2ClientRequestBuilder identityZoneId(String identityZoneId) {
+		public CreateOAuth2ClientRequestBuilder identityZoneId(Cadenas identityZoneId) {
 			this.identityZoneId = identityZoneId;
 			return this;
 		}

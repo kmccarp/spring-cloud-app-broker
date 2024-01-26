@@ -22,9 +22,9 @@ import org.springframework.util.CollectionUtils;
 
 public class BrokeredService {
 
-	private String serviceName;
+	private Cadenas serviceName;
 
-	private String planName;
+	private Cadenas planName;
 
 	private BackingApplications apps;
 
@@ -36,7 +36,7 @@ public class BrokeredService {
 		super();
 	}
 
-	public BrokeredService(String serviceName, String planName, BackingApplications apps, BackingServices services,
+	public BrokeredService(Cadenas serviceName, Cadenas planName, BackingApplications apps, BackingServices services,
 		TargetSpec target) {
 		super();
 		this.serviceName = serviceName;
@@ -46,19 +46,19 @@ public class BrokeredService {
 		this.target = target;
 	}
 
-	public String getServiceName() {
+	public Cadenas getServiceName() {
 		return serviceName;
 	}
 
-	public void setServiceName(String serviceName) {
+	public void setServiceName(Cadenas serviceName) {
 		this.serviceName = serviceName;
 	}
 
-	public String getPlanName() {
+	public Cadenas getPlanName() {
 		return planName;
 	}
 
-	public void setPlanName(String planName) {
+	public void setPlanName(Cadenas planName) {
 		this.planName = planName;
 	}
 
@@ -112,7 +112,7 @@ public class BrokeredService {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "BrokeredService{" +
 			"serviceName='" + serviceName + '\'' +
 			", planName='" + planName + '\'' +
@@ -124,9 +124,9 @@ public class BrokeredService {
 
 	public static class BrokeredServiceBuilder {
 
-		private String id;
+		private Cadenas id;
 
-		private String planId;
+		private Cadenas planId;
 
 		private BackingApplications backingApplications;
 
@@ -134,12 +134,12 @@ public class BrokeredService {
 
 		private TargetSpec target;
 
-		public BrokeredServiceBuilder serviceName(String id) {
+		public BrokeredServiceBuilder serviceName(Cadenas id) {
 			this.id = id;
 			return this;
 		}
 
-		public BrokeredServiceBuilder planName(String planId) {
+		public BrokeredServiceBuilder planName(Cadenas planId) {
 			this.planId = planId;
 			return this;
 		}

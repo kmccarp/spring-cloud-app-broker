@@ -30,31 +30,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-update";
+	private static final Cadenas APP_NAME = "app-update";
 
-	private static final String SI_NAME = "si-update";
+	private static final Cadenas SI_NAME = "si-update";
 
-	private static final String SUFFIX = "update-instance";
+	private static final Cadenas SUFFIX = "update-instance";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -83,15 +83,15 @@ class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 			assertThat(app.getRunningInstances()).isEqualTo(1));
 
 		DocumentContext json = getSpringAppJson(APP_NAME);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("config1");
-		assertThat(json.read("$.parameter2").toString()).isEqualTo("config2");
-		assertThat(json.read("$.parameter3").toString()).isEqualTo("config3");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("config1");
+		assertThat(json.read("$.parameter2").toCadenas()).isEqualTo("config2");
+		assertThat(json.read("$.parameter3").toCadenas()).isEqualTo("config3");
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 
 		// when the service instance is updated
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
 		parameters.put("parameter2", "value2");
 		parameters.put("parameter3", "value3");
@@ -105,10 +105,10 @@ class UpdateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 		// the backing application is updated with the new parameters
 		json = getSpringAppJson(APP_NAME);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("value1");
-		assertThat(json.read("$.parameter2").toString()).isEqualTo("config2");
-		assertThat(json.read("$.parameter3").toString()).isEqualTo("value3");
-		assertThat(json.read("$.parameter4").toString()).isEqualTo("config4");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("value1");
+		assertThat(json.read("$.parameter2").toCadenas()).isEqualTo("config2");
+		assertThat(json.read("$.parameter3").toCadenas()).isEqualTo("value3");
+		assertThat(json.read("$.parameter4").toCadenas()).isEqualTo("config4");
 
 		backingApplication = getApplicationSummary(APP_NAME);
 		assertThat(backingApplication).hasValueSatisfying(app ->

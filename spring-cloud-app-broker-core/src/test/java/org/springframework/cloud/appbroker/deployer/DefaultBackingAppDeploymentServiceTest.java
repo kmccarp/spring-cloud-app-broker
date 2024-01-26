@@ -61,7 +61,7 @@ class DefaultBackingAppDeploymentServiceTest {
 		doReturn(Mono.just("app2"))
 			.when(deployerClient).deploy(backingApps.get(1), "instance-id");
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("app1");
 		expectedValues.add("app2");
 
@@ -80,7 +80,7 @@ class DefaultBackingAppDeploymentServiceTest {
 		doReturn(Mono.just("app2"))
 			.when(deployerClient).preUpdate(backingApps.get(1), "instance-id");
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("app1");
 		expectedValues.add("app2");
 
@@ -99,7 +99,7 @@ class DefaultBackingAppDeploymentServiceTest {
 		doReturn(Mono.just("app2"))
 			.when(deployerClient).update(backingApps.get(1), "instance-id");
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("app1");
 		expectedValues.add("app2");
 
@@ -118,7 +118,7 @@ class DefaultBackingAppDeploymentServiceTest {
 		doReturn(Mono.just("deleted2"))
 			.when(deployerClient).undeploy(backingApps.get(1));
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("deleted1");
 		expectedValues.add("deleted2");
 

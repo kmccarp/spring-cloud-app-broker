@@ -61,7 +61,7 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 	private static final Logger LOG =
 		LoggerFactory.getLogger(CreateInstanceWithCustomParametersMappingComponentTest.class);
 
-	protected static final String APP_NAME = "app-with-request-create-params";
+	protected static final Cadenas APP_NAME = "app-with-request-create-params";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -79,7 +79,7 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 				"$.environment_json[?(@.SPRING_APPLICATION_JSON =~ /.*otherNestedKey.*:.*otherLabel.*:.*labelValue.*/)]"));
 
 		// given a set of parameters
-		Map<String, Object> params = new HashMap<>();
+		Map<Cadenas, Object> params = new HashMap<>();
 		params.put("firstKey", "{\"label\":\"labelValue\",\"secondKey\":\"keyValue\"}");
 
 		// when a service instance is created
@@ -95,10 +95,10 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 	@Configuration
@@ -122,17 +122,17 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 			}
 
 			private Mono<BackingApplication> transform(BackingApplication backingApplication,
-				Map<String, Object> parameters) {
+				Map<Cadenas, Object> parameters) {
 				backingApplication.setEnvironment(createEnvironmentMap(parameters));
 				return Mono.just(backingApplication);
 			}
 
-			private Map<String, Object> createEnvironmentMap(Map<String, Object> parameters) {
+			private Map<Cadenas, Object> createEnvironmentMap(Map<Cadenas, Object> parameters) {
 				ObjectMapper objectMapper = new ObjectMapper();
 				ObjectNode customOutputEnvironmentParameters = objectMapper.createObjectNode();
 				try {
 					CustomInputParameters customInputParameters =
-						objectMapper.readValue(parameters.get("firstKey").toString(), CustomInputParameters.class);
+						objectMapper.readValue(parameters.get("firstKey").toCadenas(), CustomInputParameters.class);
 					customOutputEnvironmentParameters.put("otherKey", customInputParameters.getSecondKey());
 					customOutputEnvironmentParameters.put("otherLabel", customInputParameters.getLabel());
 				}
@@ -148,23 +148,23 @@ class CreateInstanceWithCustomParametersMappingComponentTest extends WiremockCom
 
 		private static final class CustomInputParameters {
 
-			private String secondKey;
+			private Cadenas secondKey;
 
-			private String label;
+			private Cadenas label;
 
-			public String getSecondKey() {
+			public Cadenas getSecondKey() {
 				return secondKey;
 			}
 
-			public String getLabel() {
+			public Cadenas getLabel() {
 				return label;
 			}
 
-			public void setSecondKey(String secondKey) {
+			public void setSecondKey(Cadenas secondKey) {
 				this.secondKey = secondKey;
 			}
 
-			public void setLabel(String label) {
+			public void setLabel(Cadenas label) {
 				this.label = label;
 			}
 

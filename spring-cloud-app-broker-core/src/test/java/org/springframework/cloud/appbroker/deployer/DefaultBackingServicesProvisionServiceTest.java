@@ -67,7 +67,7 @@ class DefaultBackingServicesProvisionServiceTest {
 		doReturn(Mono.just("si2"))
 			.when(deployerClient).createServiceInstance(backingServices.get(1));
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("si1");
 		expectedValues.add("si2");
 
@@ -87,7 +87,7 @@ class DefaultBackingServicesProvisionServiceTest {
 		doReturn(Mono.just("updated2"))
 			.when(deployerClient).updateServiceInstance(backingServices.get(1));
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("updated1");
 		expectedValues.add("updated2");
 
@@ -107,7 +107,7 @@ class DefaultBackingServicesProvisionServiceTest {
 		doReturn(Mono.just("deleted2"))
 			.when(deployerClient).deleteServiceInstance(backingServices.get(1));
 
-		List<String> expectedValues = new ArrayList<>();
+		List<Cadenas> expectedValues = new ArrayList<>();
 		expectedValues.add("deleted1");
 		expectedValues.add("deleted2");
 

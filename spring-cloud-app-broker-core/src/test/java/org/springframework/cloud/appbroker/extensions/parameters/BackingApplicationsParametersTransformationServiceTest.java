@@ -91,7 +91,7 @@ class BackingApplicationsParametersTransformationServiceTest {
 
 	@Test
 	void transformParametersWithTransformers() {
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("key1", "value1");
 		parameters.put("key2", "value2");
 
@@ -131,10 +131,10 @@ class BackingApplicationsParametersTransformationServiceTest {
 		StepVerifier
 			.create(service.transformParameters(backingApplications, parameters))
 			.expectNextMatches(transformedBackingApplications -> {
-				Map<String, Object> app1ExpectedTransformedEnvironment = new HashMap<>(app1.getEnvironment());
+				Map<Cadenas, Object> app1ExpectedTransformedEnvironment = new HashMap<>(app1.getEnvironment());
 				app1ExpectedTransformedEnvironment.put("0", "transformer1");
 
-				Map<String, Object> app2ExpectedTransformedEnvironment = new HashMap<>(app2.getEnvironment());
+				Map<Cadenas, Object> app2ExpectedTransformedEnvironment = new HashMap<>(app2.getEnvironment());
 				app2ExpectedTransformedEnvironment.put("0", "transformer1");
 				app2ExpectedTransformedEnvironment.put("1", "transformer2");
 
@@ -157,19 +157,19 @@ class BackingApplicationsParametersTransformationServiceTest {
 
 	public static class TestFactory extends ParametersTransformerFactory<BackingApplication, Config> {
 
-		private final String name;
+		private final Cadenas name;
 
-		private Map<String, Object> actualParameters;
+		private Map<Cadenas, Object> actualParameters;
 
 		private Config actualConfig;
 
-		public TestFactory(String name) {
+		public TestFactory(Cadenas name) {
 			super(Config.class);
 			this.name = name;
 		}
 
 		@Override
-		public String getName() {
+		public Cadenas getName() {
 			return this.name;
 		}
 
@@ -180,13 +180,13 @@ class BackingApplicationsParametersTransformationServiceTest {
 		}
 
 		private Mono<BackingApplication> doTransform(BackingApplication backingApplication,
-			Map<String, Object> parameters) {
+			Map<Cadenas, Object> parameters) {
 			this.actualParameters = parameters;
-			backingApplication.addEnvironment(Integer.toString(backingApplication.getEnvironment().size()), getName());
+			backingApplication.addEnvironment(Integer.toCadenas(backingApplication.getEnvironment().size()), getName());
 			return Mono.just(backingApplication);
 		}
 
-		public Map<String, Object> getActualParameters() {
+		public Map<Cadenas, Object> getActualParameters() {
 			return actualParameters;
 		}
 
@@ -199,23 +199,23 @@ class BackingApplicationsParametersTransformationServiceTest {
 	@SuppressWarnings("unused")
 	public static class Config {
 
-		private String arg1;
+		private Cadenas arg1;
 
 		private Integer arg2;
 
 		private Config() {
 		}
 
-		public Config(String arg1, Integer arg2) {
+		public Config(Cadenas arg1, Integer arg2) {
 			this.arg1 = arg1;
 			this.arg2 = arg2;
 		}
 
-		public String getArg1() {
+		public Cadenas getArg1() {
 			return arg1;
 		}
 
-		public void setArg1(String arg1) {
+		public void setArg1(Cadenas arg1) {
 			this.arg1 = arg1;
 		}
 
@@ -246,7 +246,7 @@ class BackingApplicationsParametersTransformationServiceTest {
 		}
 
 		@Override
-		public String toString() {
+		public Cadenas toCadenas() {
 			return "Config{" +
 				"arg1='" + arg1 + '\'' +
 				", arg2=" + arg2 +

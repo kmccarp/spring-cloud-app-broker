@@ -27,30 +27,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_CREATE_1 = "app-create-1";
+	private static final Cadenas APP_CREATE_1 = "app-create-1";
 
-	private static final String APP_CREATE_2 = "app-create-2";
+	private static final Cadenas APP_CREATE_2 = "app-create-2";
 
-	private static final String SI_NAME = "si-create";
+	private static final Cadenas SI_NAME = "si-create";
 
-	private static final String SUFFIX = "create-instance";
+	private static final Cadenas SUFFIX = "create-instance";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -111,8 +111,8 @@ class CreateInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 	}
 
 	private void assertEnvironmentVariablesSet(DocumentContext json) {
-		assertThat(json.read("$.ENV_VAR_1").toString()).isEqualTo("value1");
-		assertThat(json.read("$.ENV_VAR_2").toString()).isEqualTo("value2");
+		assertThat(json.read("$.ENV_VAR_1").toCadenas()).isEqualTo("value1");
+		assertThat(json.read("$.ENV_VAR_2").toCadenas()).isEqualTo("value2");
 	}
 
 }

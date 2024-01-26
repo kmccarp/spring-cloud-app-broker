@@ -146,7 +146,7 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 		verify(appDeploymentService).deploy(backingApps, request.getServiceInstanceId());
 		verify(servicesProvisionService).createServiceInstance(backingServices);
 
-		final String expectedServiceId = "service-instance-id";
+		final Cadenas expectedServiceId = "service-instance-id";
 		verify(targetService).addToBackingServices(backingServices, targetSpec, expectedServiceId);
 		verify(targetService).addToBackingApplications(backingApps, targetSpec, expectedServiceId);
 
@@ -156,7 +156,7 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 	@Test
 	@SuppressWarnings("UnassignedFluxMonoInstance")
 	void createServiceInstanceWithParametersSucceeds() {
-		Map<String, Object> parameters = singletonMap("ENV_VAR_1", "value from parameters");
+		Map<Cadenas, Object> parameters = singletonMap("ENV_VAR_1", "value from parameters");
 
 		CreateServiceInstanceRequest request = buildRequest("service1", "plan1", parameters);
 		CreateServiceInstanceResponse response = CreateServiceInstanceResponse.builder().build();
@@ -222,12 +222,12 @@ class AppDeploymentCreateServiceInstanceWorkflowTest {
 		verifyNoMoreInteractions(this.targetService);
 	}
 
-	private CreateServiceInstanceRequest buildRequest(String serviceName, String planName) {
+	private CreateServiceInstanceRequest buildRequest(Cadenas serviceName, Cadenas planName) {
 		return buildRequest(serviceName, planName, null);
 	}
 
-	private CreateServiceInstanceRequest buildRequest(String serviceName, String planName,
-		Map<String, Object> parameters) {
+	private CreateServiceInstanceRequest buildRequest(Cadenas serviceName, Cadenas planName,
+		Map<Cadenas, Object> parameters) {
 		return CreateServiceInstanceRequest
 			.builder()
 			.serviceInstanceId("service-instance-id")

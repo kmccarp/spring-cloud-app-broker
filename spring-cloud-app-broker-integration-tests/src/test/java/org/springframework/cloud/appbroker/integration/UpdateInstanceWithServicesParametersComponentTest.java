@@ -53,17 +53,17 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceWith
 })
 class UpdateInstanceWithServicesParametersComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-update-services-param";
+	protected static final Cadenas APP_NAME = "app-update-services-param";
 
-	protected static final String SERVICE_NAME = "example";
+	protected static final Cadenas SERVICE_NAME = "example";
 
-	protected static final String PLAN_NAME = "standard";
+	protected static final Cadenas PLAN_NAME = "standard";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "backing-standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "backing-standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -78,7 +78,7 @@ class UpdateInstanceWithServicesParametersComponentTest extends WiremockComponen
 		cloudControllerFixture.stubUpdateApp(APP_NAME);
 
 		// will update with filtered parameters and bind the service instance
-		HashMap<String, Object> expectedCreationParameters = new HashMap<>();
+		HashMap<Cadenas, Object> expectedCreationParameters = new HashMap<>();
 		expectedCreationParameters.put("paramA", "valueA");
 		expectedCreationParameters.put("paramC", Collections.singletonMap("paramC1", "valueC1"));
 
@@ -86,7 +86,7 @@ class UpdateInstanceWithServicesParametersComponentTest extends WiremockComponen
 		cloudControllerFixture.stubUpdateServiceInstanceWithParameters(BACKING_SI_NAME, expectedCreationParameters);
 
 		// when a service instance is created with parameters
-		HashMap<String, Object> creationParameters = new HashMap<>();
+		HashMap<Cadenas, Object> creationParameters = new HashMap<>();
 		creationParameters.put("paramA", "valueA");
 		creationParameters.put("paramB", "valueB");
 		creationParameters.put("paramC", Collections.singletonMap("paramC1", "valueC1"));
@@ -103,10 +103,10 @@ class UpdateInstanceWithServicesParametersComponentTest extends WiremockComponen
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

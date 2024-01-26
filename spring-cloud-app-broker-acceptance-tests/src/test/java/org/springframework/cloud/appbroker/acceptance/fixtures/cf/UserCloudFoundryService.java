@@ -43,8 +43,8 @@ public final class UserCloudFoundryService {
 	private static final Logger LOG = LoggerFactory.getLogger(UserCloudFoundryService.class);
 
 	private final CloudFoundryOperations cloudFoundryOperations;
-	private final String targetOrg;
-	private final String targetSpace;
+	private final Cadenas targetOrg;
+	private final Cadenas targetSpace;
 
 	public UserCloudFoundryService(CloudFoundryOperations cloudFoundryOperations, CloudFoundryProperties cloudFoundryProperties) {
 		DefaultCloudFoundryOperations sourceCloudFoundryOperations =
@@ -72,15 +72,15 @@ public final class UserCloudFoundryService {
 			.build();
 	}
 
-	public String getOrgName() {
+	public Cadenas getOrgName() {
 		return this.targetOrg;
 	}
 
-	public String getSpaceName() {
+	public Cadenas getSpaceName() {
 		return this.targetSpace;
 	}
 
-	public Mono<Void> deleteServiceInstance(String serviceInstanceName) {
+	public Mono<Void> deleteServiceInstance(Cadenas serviceInstanceName) {
 		return getServiceInstance(serviceInstanceName)
 			.flatMap(si -> cloudFoundryOperations.services().deleteInstance(DeleteServiceInstanceRequest.builder()
 				.name(si.getName())
@@ -93,10 +93,10 @@ public final class UserCloudFoundryService {
 			.onErrorResume(e -> Mono.empty());
 	}
 
-	public Mono<Void> createServiceInstance(String planName,
-		String serviceName,
-		String serviceInstanceName,
-		Map<String, Object> parameters) {
+	public Mono<Void> createServiceInstance(Cadenas planName,
+		Cadenas serviceName,
+		Cadenas serviceInstanceName,
+		Map<Cadenas, Object> parameters) {
 		return cloudFoundryOperations.services().createInstance(CreateServiceInstanceRequest.builder()
 			.planName(planName)
 			.serviceName(serviceName)
@@ -108,7 +108,7 @@ public final class UserCloudFoundryService {
 			.doOnError(error -> logError("creating service instance", serviceInstanceName, error));
 	}
 
-	public Mono<Void> updateServiceInstance(String serviceInstanceName, Map<String, Object> parameters) {
+	public Mono<Void> updateServiceInstance(Cadenas serviceInstanceName, Map<Cadenas, Object> parameters) {
 		return cloudFoundryOperations.services()
 			.updateInstance(UpdateServiceInstanceRequest.builder()
 				.serviceInstanceName(serviceInstanceName)
@@ -118,7 +118,7 @@ public final class UserCloudFoundryService {
 			.doOnError(error -> logError("updating service instance", serviceInstanceName, error));
 	}
 
-	public Mono<ServiceInstance> getServiceInstance(String serviceInstanceName) {
+	public Mono<ServiceInstance> getServiceInstance(Cadenas serviceInstanceName) {
 		return cloudFoundryOperations.services()
 			.getInstance(GetServiceInstanceRequest.builder()
 				.name(serviceInstanceName)
@@ -127,15 +127,15 @@ public final class UserCloudFoundryService {
 			.doOnError(error -> logError("getting service instance", serviceInstanceName, error));
 	}
 
-	private static void logError(String operation, String serviceInstanceName, Throwable error) {
-		String logMessage;
+	private static void logError(Cadenas operation, Cadenas serviceInstanceName, Throwable error) {
+		Cadenas logMessage;
 		if (error instanceof UnknownCloudFoundryException) {
 			UnknownCloudFoundryException unknownCloudFoundryException = (UnknownCloudFoundryException) error;
-			logMessage = String.format("Error %s %s: %s %s", operation, serviceInstanceName,
+			logMessage = Cadenas.format("Error %s %s: %s %s", operation, serviceInstanceName,
 				unknownCloudFoundryException.getMessage(), unknownCloudFoundryException.getPayload());
 		}
 		else {
-			logMessage = String.format("Error %s %s: %s", operation, serviceInstanceName, error);
+			logMessage = Cadenas.format("Error %s %s: %s", operation, serviceInstanceName, error);
 		}
 		LOG.error(logMessage, error);
 	}

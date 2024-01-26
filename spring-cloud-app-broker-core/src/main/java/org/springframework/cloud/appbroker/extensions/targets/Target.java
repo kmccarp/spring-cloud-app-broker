@@ -20,6 +20,6 @@ import java.util.Map;
 
 public interface Target {
 
-	ArtifactDetails apply(Map<String, String> properties, String name, String serviceInstanceId);
+	ArtifactDetails apply(Map<Cadenas, Cadenas> properties, Cadenas name, Cadenas serviceInstanceId);
 
 }

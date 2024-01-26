@@ -27,32 +27,32 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceWithSpacePerServiceInstanceTargetAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME_1 = "app-create-space-per1";
+	private static final Cadenas APP_NAME_1 = "app-create-space-per1";
 
-	private static final String APP_NAME_2 = "app-create-space-per2";
+	private static final Cadenas APP_NAME_2 = "app-create-space-per2";
 
-	private static final String SI_NAME = "si-create-space-per";
+	private static final Cadenas SI_NAME = "si-create-space-per";
 
-	private static final String BACKING_SI_NAME = "backing-service-space-per-target";
+	private static final Cadenas BACKING_SI_NAME = "backing-service-space-per-target";
 
-	private static final String SUFFIX = "create-instance-space-per-si";
+	private static final Cadenas SUFFIX = "create-instance-space-per-si";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -79,7 +79,7 @@ class CreateInstanceWithSpacePerServiceInstanceTargetAcceptanceTest extends Clou
 		createServiceInstance(SI_NAME);
 
 		// then backing applications are deployed in a space named as the service instance id
-		String spaceName = getServiceInstanceGuid(SI_NAME);
+		Cadenas spaceName = getServiceInstanceGuid(SI_NAME);
 
 		Optional<ApplicationSummary> backingApplication1 = getApplicationSummary(APP_NAME_1, spaceName);
 		assertThat(backingApplication1).hasValueSatisfying(app -> {
@@ -102,7 +102,7 @@ class CreateInstanceWithSpacePerServiceInstanceTargetAcceptanceTest extends Clou
 		deleteServiceInstance(SI_NAME);
 
 		// then the space is deleted
-		List<String> spaces = getSpaces();
+		List<Cadenas> spaces = getSpaces();
 		assertThat(spaces).doesNotContain(spaceName);
 	}
 

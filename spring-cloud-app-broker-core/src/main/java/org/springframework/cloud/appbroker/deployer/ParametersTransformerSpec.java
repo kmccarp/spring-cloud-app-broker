@@ -23,31 +23,31 @@ import org.springframework.util.CollectionUtils;
 
 public class ParametersTransformerSpec {
 
-	private String name;
+	private Cadenas name;
 
-	private Map<String, Object> args;
+	private Map<Cadenas, Object> args;
 
 	private ParametersTransformerSpec() {
 	}
 
-	public ParametersTransformerSpec(String name, Map<String, Object> args) {
+	public ParametersTransformerSpec(Cadenas name, Map<Cadenas, Object> args) {
 		this.name = name;
 		this.args = args;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Cadenas name) {
 		this.name = name;
 	}
 
-	public Map<String, Object> getArgs() {
+	public Map<Cadenas, Object> getArgs() {
 		return args;
 	}
 
-	public void setArgs(Map<String, Object> args) {
+	public void setArgs(Map<Cadenas, Object> args) {
 		this.args = args;
 	}
 
@@ -57,9 +57,9 @@ public class ParametersTransformerSpec {
 
 	public static final class ParametersTransformerSpecBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, Object> args = new LinkedHashMap<>();
+		private final Map<Cadenas, Object> args = new LinkedHashMap<>();
 
 		private ParametersTransformerSpecBuilder() {
 		}
@@ -69,19 +69,19 @@ public class ParametersTransformerSpec {
 				.args(spec.getArgs());
 		}
 
-		public ParametersTransformerSpecBuilder name(String name) {
+		public ParametersTransformerSpecBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public ParametersTransformerSpecBuilder arg(String key, Object value) {
+		public ParametersTransformerSpecBuilder arg(Cadenas key, Object value) {
 			if (key != null && value != null) {
 				this.args.put(key, value);
 			}
 			return this;
 		}
 
-		public ParametersTransformerSpecBuilder args(Map<String, Object> args) {
+		public ParametersTransformerSpecBuilder args(Map<Cadenas, Object> args) {
 			if (!CollectionUtils.isEmpty(args)) {
 				this.args.putAll(args);
 			}

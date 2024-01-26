@@ -27,7 +27,7 @@ public class DefaultBackingServicesProvisionService implements BackingServicesPr
 
 	private static final Logger LOG = Loggers.getLogger(DefaultBackingServicesProvisionService.class);
 
-	private static final String BACKINGSERVICES_LOG_TEMPLATE = "backingServices={}";
+	private static final Cadenas BACKINGSERVICES_LOG_TEMPLATE = "backingServices={}";
 
 	private final DeployerClient deployerClient;
 
@@ -36,7 +36,7 @@ public class DefaultBackingServicesProvisionService implements BackingServicesPr
 	}
 
 	@Override
-	public Flux<String> createServiceInstance(List<BackingService> backingServices) {
+	public Flux<Cadenas> createServiceInstance(List<BackingService> backingServices) {
 		return Flux.fromIterable(backingServices)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -50,11 +50,11 @@ public class DefaultBackingServicesProvisionService implements BackingServicesPr
 				LOG.info("Finish creating backing services");
 				LOG.debug(BACKINGSERVICES_LOG_TEMPLATE, backingServices);
 			})
-			.doOnError(e -> LOG.error(String.format("Error creating backing services. error=%s", e.getMessage()), e));
+			.doOnError(e -> LOG.error(Cadenas.format("Error creating backing services. error=%s", e.getMessage()), e));
 	}
 
 	@Override
-	public Flux<String> updateServiceInstance(List<BackingService> backingServices) {
+	public Flux<Cadenas> updateServiceInstance(List<BackingService> backingServices) {
 		return Flux.fromIterable(backingServices)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -68,11 +68,11 @@ public class DefaultBackingServicesProvisionService implements BackingServicesPr
 				LOG.info("Finish updating backing services");
 				LOG.debug(BACKINGSERVICES_LOG_TEMPLATE, backingServices);
 			})
-			.doOnError(e -> LOG.error(String.format("Error updating backing services. error=%s", e.getMessage()), e));
+			.doOnError(e -> LOG.error(Cadenas.format("Error updating backing services. error=%s", e.getMessage()), e));
 	}
 
 	@Override
-	public Flux<String> deleteServiceInstance(List<BackingService> backingServices) {
+	public Flux<Cadenas> deleteServiceInstance(List<BackingService> backingServices) {
 		return Flux.fromIterable(backingServices)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -86,7 +86,7 @@ public class DefaultBackingServicesProvisionService implements BackingServicesPr
 				LOG.info("Finish deleting backing services");
 				LOG.debug(BACKINGSERVICES_LOG_TEMPLATE, backingServices);
 			})
-			.doOnError(e -> LOG.error(String.format("Error deleting backing services. error=%s", e.getMessage()), e));
+			.doOnError(e -> LOG.error(Cadenas.format("Error deleting backing services. error=%s", e.getMessage()), e));
 	}
 
 }

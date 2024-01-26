@@ -63,7 +63,7 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 			.name(request.getClientName())
 			.scopes(request.getScopes())
 			.authorities(request.getAuthorities())
-			.authorizedGrantTypes(mapStringToGrantType(request.getGrantTypes()))
+			.authorizedGrantTypes(mapCadenasToGrantType(request.getGrantTypes()))
 			.identityZoneSubdomain(request.getIdentityZoneSubdomain())
 			.identityZoneId(request.getIdentityZoneId())
 			.build();
@@ -75,7 +75,7 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 			.clientName(response.getName())
 			.scopes(response.getScopes())
 			.authorities(response.getAuthorities())
-			.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
+			.grantTypes(mapGrantTypeToCadenas(response.getAuthorizedGrantTypes()))
 			.build();
 	}
 
@@ -93,11 +93,11 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 			.clientName(response.getName())
 			.scopes(response.getScopes())
 			.authorities(response.getAuthorities())
-			.grantTypes(mapGrantTypeToString(response.getAuthorizedGrantTypes()))
+			.grantTypes(mapGrantTypeToCadenas(response.getAuthorizedGrantTypes()))
 			.build();
 	}
 
-	private List<GrantType> mapStringToGrantType(List<String> grantTypes) {
+	private List<GrantType> mapCadenasToGrantType(List<Cadenas> grantTypes) {
 		if (CollectionUtils.isEmpty(grantTypes)) {
 			return null;
 		}
@@ -107,7 +107,7 @@ public class CloudFoundryOAuth2Client implements OAuth2Client {
 			.collect(Collectors.toList());
 	}
 
-	private List<String> mapGrantTypeToString(List<GrantType> grantTypes) {
+	private List<Cadenas> mapGrantTypeToCadenas(List<GrantType> grantTypes) {
 		if (CollectionUtils.isEmpty(grantTypes)) {
 			return null;
 		}

@@ -48,9 +48,9 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithEnvironmentComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME_1 = "app-with-env1";
+	protected static final Cadenas APP_NAME_1 = "app-with-env1";
 
-	protected static final String APP_NAME_2 = "app-with-env2";
+	protected static final Cadenas APP_NAME_2 = "app-with-env2";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -83,10 +83,10 @@ class CreateInstanceWithEnvironmentComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

@@ -107,7 +107,7 @@ public class WorkflowServiceInstanceService implements ServiceInstanceService {
 					LOG.info("Finish creating service instance");
 					LOG.debug("request={}, response={}", request, response);
 				})
-				.doOnError(e -> LOG.error(String.format("Error creating service instance. error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error creating service instance. error=%s",
 					e.getMessage()), e)))
 			.thenEmpty(stateRepository.saveState(request.getServiceInstanceId(),
 				OperationState.SUCCEEDED, "create service instance completed")
@@ -156,7 +156,7 @@ public class WorkflowServiceInstanceService implements ServiceInstanceService {
 					LOG.info("Finish deleting service instance");
 					LOG.debug("request={}, response={}", request, response);
 				})
-				.doOnError(e -> LOG.error(String.format("Error deleting service instance. error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error deleting service instance. error=%s",
 					e.getMessage()), e)))
 			.thenEmpty(stateRepository.saveState(request.getServiceInstanceId(),
 				OperationState.SUCCEEDED, "delete service instance completed")
@@ -205,7 +205,7 @@ public class WorkflowServiceInstanceService implements ServiceInstanceService {
 					LOG.info("Finish updating service instance");
 					LOG.debug("request={}, response={}", request, response);
 				})
-				.doOnError(e -> LOG.error(String.format("Error updating service instance. error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error updating service instance. error=%s",
 					e.getMessage()), e)))
 			.thenEmpty(stateRepository.saveState(request.getServiceInstanceId(),
 				OperationState.SUCCEEDED, "update service instance completed")

@@ -37,12 +37,12 @@ public class PropertyMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingApplication> transform(BackingApplication backingApplication,
-		Map<String, Object> parameters,
-		List<String> include) {
+		Map<Cadenas, Object> parameters,
+		List<Cadenas> include) {
 		if (parameters != null) {
 			parameters.keySet().stream()
 				.filter(include::contains)
-				.forEach(key -> backingApplication.addProperty(key, parameters.get(key).toString()));
+				.forEach(key -> backingApplication.addProperty(key, parameters.get(key).toCadenas()));
 		}
 		return Mono.just(backingApplication);
 	}
@@ -50,13 +50,13 @@ public class PropertyMappingParametersTransformerFactory extends
 	@SuppressWarnings("WeakerAccess")
 	public static class Config {
 
-		private String include;
+		private Cadenas include;
 
-		public List<String> getIncludes() {
+		public List<Cadenas> getIncludes() {
 			return Arrays.asList(include.split(","));
 		}
 
-		public void setInclude(String include) {
+		public void setInclude(Cadenas include) {
 			this.include = include;
 		}
 

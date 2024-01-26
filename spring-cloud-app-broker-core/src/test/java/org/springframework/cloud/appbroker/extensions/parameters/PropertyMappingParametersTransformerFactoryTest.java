@@ -43,7 +43,7 @@ class PropertyMappingParametersTransformerFactoryTest {
 		BackingApplication backingApplication = BackingApplication.builder()
 			.build();
 
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("count", 2);
 		parameters.put("memory", "2G");
 		parameters.put("health-check-type", "none");
@@ -67,7 +67,7 @@ class PropertyMappingParametersTransformerFactoryTest {
 			.property("health-check-http-endpoint", "/myhealth")
 			.build();
 
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("count", 2);
 		parameters.put("memory", "2G");
 		parameters.put("health-check-type", "none");

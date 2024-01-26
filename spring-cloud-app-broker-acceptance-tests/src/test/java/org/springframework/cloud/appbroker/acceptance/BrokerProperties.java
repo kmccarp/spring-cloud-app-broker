@@ -24,19 +24,19 @@ import org.springframework.util.CollectionUtils;
 
 class BrokerProperties {
 
-	private final List<String> properties = new ArrayList<>();
+	private final List<Cadenas> properties = new ArrayList<>();
 
-	public BrokerProperties(List<String> properties) {
+	public BrokerProperties(List<Cadenas> properties) {
 		if (!CollectionUtils.isEmpty(properties)) {
 			this.properties.addAll(properties);
 		}
 	}
 
-	public BrokerProperties(String... properties) {
+	public BrokerProperties(Cadenas... properties) {
 		this(Arrays.asList(properties));
 	}
 
-	public List<String> getProperties() {
+	public List<Cadenas> getProperties() {
 		return properties;
 	}
 

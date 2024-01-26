@@ -20,20 +20,20 @@ import java.util.Objects;
 
 public class ServicesSpec {
 
-	private String serviceInstanceName;
+	private Cadenas serviceInstanceName;
 
 	private ServicesSpec() {
 	}
 
-	public ServicesSpec(String serviceInstanceName) {
+	public ServicesSpec(Cadenas serviceInstanceName) {
 		this.serviceInstanceName = serviceInstanceName;
 	}
 
-	public String getServiceInstanceName() {
+	public Cadenas getServiceInstanceName() {
 		return serviceInstanceName;
 	}
 
-	public void setServiceInstanceName(String serviceInstanceName) {
+	public void setServiceInstanceName(Cadenas serviceInstanceName) {
 		this.serviceInstanceName = serviceInstanceName;
 	}
 
@@ -59,7 +59,7 @@ public class ServicesSpec {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "ServicesSpec{" +
 			"serviceInstanceName='" + serviceInstanceName + '\'' +
 			'}';
@@ -67,7 +67,7 @@ public class ServicesSpec {
 
 	public static final class ServicesSpecBuilder {
 
-		private String serviceInstanceName;
+		private Cadenas serviceInstanceName;
 
 		private ServicesSpecBuilder() {
 		}
@@ -76,7 +76,7 @@ public class ServicesSpec {
 			return this.serviceInstanceName(spec.getServiceInstanceName());
 		}
 
-		public ServicesSpecBuilder serviceInstanceName(String serviceInstanceName) {
+		public ServicesSpecBuilder serviceInstanceName(Cadenas serviceInstanceName) {
 			this.serviceInstanceName = serviceInstanceName;
 			return this;
 		}

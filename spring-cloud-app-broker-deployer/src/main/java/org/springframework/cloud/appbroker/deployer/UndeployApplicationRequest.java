@@ -23,11 +23,11 @@ import org.springframework.util.CollectionUtils;
 
 public class UndeployApplicationRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected UndeployApplicationRequest(String name, Map<String, String> properties) {
+	protected UndeployApplicationRequest(Cadenas name, Map<Cadenas, Cadenas> properties) {
 		this.name = name;
 		this.properties = properties;
 	}
@@ -36,29 +36,29 @@ public class UndeployApplicationRequest {
 		return new UndeployApplicationRequestBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
 	public static final class UndeployApplicationRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private UndeployApplicationRequestBuilder() {
 		}
 
-		public UndeployApplicationRequestBuilder name(String name) {
+		public UndeployApplicationRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public UndeployApplicationRequestBuilder properties(Map<String, String> properties) {
+		public UndeployApplicationRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

@@ -150,7 +150,7 @@ class AppDeploymentInstanceWorkflowTest {
 			.verifyComplete();
 	}
 
-	private ServiceDefinition buildServiceDefinition(String serviceName, String planName) {
+	private ServiceDefinition buildServiceDefinition(Cadenas serviceName, Cadenas planName) {
 		return ServiceDefinition.builder()
 			.id(serviceName + "-id")
 			.name(serviceName)

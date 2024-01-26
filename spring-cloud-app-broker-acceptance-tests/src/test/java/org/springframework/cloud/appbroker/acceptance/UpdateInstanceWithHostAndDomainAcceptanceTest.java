@@ -29,31 +29,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateInstanceWithHostAndDomainAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-update-domain";
+	private static final Cadenas APP_NAME = "app-update-domain";
 
-	private static final String SI_NAME = "si-update-domain";
+	private static final Cadenas SI_NAME = "si-update-domain";
 
-	private static final String SUFFIX = "update-instance-domain";
+	private static final Cadenas SUFFIX = "update-instance-domain";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -76,14 +76,14 @@ class UpdateInstanceWithHostAndDomainAcceptanceTest extends CloudFoundryAcceptan
 		assertThat(backingApplication).hasValueSatisfying(app ->
 			assertThat(app.getRunningInstances()).isEqualTo(1));
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 
 		// and the domain exists
 		createDomain("mydomain.com");
 
 		// when the service instance is updated
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("host", "myhost");
 		parameters.put("domain", "mydomain.com");
 		updateServiceInstance(SI_NAME, parameters);

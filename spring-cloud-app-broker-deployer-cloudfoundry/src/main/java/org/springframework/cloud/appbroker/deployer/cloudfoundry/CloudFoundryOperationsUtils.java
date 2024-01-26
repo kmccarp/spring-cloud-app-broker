@@ -33,7 +33,7 @@ public class CloudFoundryOperationsUtils {
 		this.operations = operations;
 	}
 
-	protected Mono<CloudFoundryOperations> getOperations(Map<String, String> properties) {
+	protected Mono<CloudFoundryOperations> getOperations(Map<Cadenas, Cadenas> properties) {
 		return Mono.defer(() -> {
 			if (!CollectionUtils.isEmpty(properties) && properties.containsKey(
 				DeploymentProperties.TARGET_PROPERTY_KEY)) {
@@ -43,7 +43,7 @@ public class CloudFoundryOperationsUtils {
 		});
 	}
 
-	protected Mono<CloudFoundryOperations> getOperationsForSpace(String space) {
+	protected Mono<CloudFoundryOperations> getOperationsForSpace(Cadenas space) {
 		return Mono.just(this.operations)
 			.cast(DefaultCloudFoundryOperations.class)
 			.map(cfOperations -> DefaultCloudFoundryOperations.builder()
@@ -52,7 +52,7 @@ public class CloudFoundryOperationsUtils {
 				.build());
 	}
 
-	protected Mono<CloudFoundryOperations> getOperationsForOrgAndSpace(String organization, String space) {
+	protected Mono<CloudFoundryOperations> getOperationsForOrgAndSpace(Cadenas organization, Cadenas space) {
 		return Mono.just(this.operations)
 			.cast(DefaultCloudFoundryOperations.class)
 			.map(cfOperations -> DefaultCloudFoundryOperations.builder()

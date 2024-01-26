@@ -38,40 +38,40 @@ import static org.awaitility.Awaitility.await;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-new-service";
+	private static final Cadenas APP_NAME = "app-new-service";
 
 	private static final int FIRST_TEST = 1;
 
 	private static final int SECOND_TEST = 2;
 
-	private static final String SI_NAME = "si-new-service";
+	private static final Cadenas SI_NAME = "si-new-service";
 
-	private static final String OLD_BACKING_SI_NAME = "backing-service-instance-old";
+	private static final Cadenas OLD_BACKING_SI_NAME = "backing-service-instance-old";
 
-	private static final String NEW_BACKING_SI_NAME = "backing-service-instance-new";
+	private static final Cadenas NEW_BACKING_SI_NAME = "backing-service-instance-new";
 
-	private static final String SUFFIX = "update-with-new-services-and-target";
+	private static final Cadenas SUFFIX = "update-with-new-services-and-target";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -97,7 +97,7 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 		createServiceInstance(SI_NAME);
 
 		// then a backing application is deployed
-		String spaceName = getServiceInstanceGuid(SI_NAME);
+		Cadenas spaceName = getServiceInstanceGuid(SI_NAME);
 
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME, spaceName);
 		assertThat(backingApplication).hasValueSatisfying(app -> assertThat(app.getRunningInstances()).isEqualTo(1));
@@ -106,7 +106,7 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 		ServiceInstance backingServiceInstance = getBackingServiceInstance(OLD_BACKING_SI_NAME, spaceName);
 		assertThat(backingServiceInstance.getApplications()).contains(APP_NAME);
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 	}
 
@@ -130,7 +130,7 @@ class UpdateInstanceWithNewServiceAndTargetAcceptanceTest extends CloudFoundryAc
 	void weUpdateTheServiceInstanceWithANewBackingService() {
 		// when the service instance is updated with a new service
 		updateServiceInstance(SI_NAME, Collections.emptyMap());
-		String spaceName = getServiceInstanceGuid(SI_NAME);
+		Cadenas spaceName = getServiceInstanceGuid(SI_NAME);
 
 		// then the backing application was updated with zero downtime
 		healthListener.stop();

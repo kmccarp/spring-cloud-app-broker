@@ -37,7 +37,7 @@ public class TargetService {
 	}
 
 	public Mono<List<BackingApplication>> addToBackingApplications(List<BackingApplication> backingApplications,
-		TargetSpec targetSpec, String serviceInstanceId) {
+		TargetSpec targetSpec, Cadenas serviceInstanceId) {
 		return Flux.fromIterable(backingApplications)
 			.flatMap(backingApplication -> {
 				if (targetSpec != null) {
@@ -59,7 +59,7 @@ public class TargetService {
 
 	public Mono<List<BackingService>> addToBackingServices(List<BackingService> backingServices,
 		TargetSpec targetSpec,
-		String serviceInstanceId) {
+		Cadenas serviceInstanceId) {
 		return Flux.fromIterable(backingServices)
 			.flatMap(backingService -> {
 				if (targetSpec != null) {
@@ -73,8 +73,8 @@ public class TargetService {
 			.collectList();
 	}
 
-	private ArtifactDetails getArtifactDetails(TargetSpec targetSpec, String serviceInstanceId,
-		String name, Map<String, String> properties) {
+	private ArtifactDetails getArtifactDetails(TargetSpec targetSpec, Cadenas serviceInstanceId,
+		Cadenas name, Map<Cadenas, Cadenas> properties) {
 		Target target = locator.getByName(targetSpec.getName());
 		return target.apply(properties, name, serviceInstanceId);
 	}

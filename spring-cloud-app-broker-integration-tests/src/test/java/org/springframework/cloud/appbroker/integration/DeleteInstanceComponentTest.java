@@ -44,13 +44,13 @@ import static org.springframework.cloud.appbroker.integration.DeleteInstanceComp
 })
 class DeleteInstanceComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME_1 = "first-app";
+	protected static final Cadenas APP_NAME_1 = "first-app";
 
-	protected static final String APP_NAME_2 = "second-app";
+	protected static final Cadenas APP_NAME_2 = "second-app";
 
-	protected static final String SERVICE_NAME = "example";
+	protected static final Cadenas SERVICE_NAME = "example";
 
-	protected static final String PLAN_NAME = "standard";
+	protected static final Cadenas PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -82,10 +82,10 @@ class DeleteInstanceComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 	@Test
@@ -106,10 +106,10 @@ class DeleteInstanceComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

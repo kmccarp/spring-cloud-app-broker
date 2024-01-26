@@ -32,7 +32,7 @@ public abstract class ParametersTransformerFactory<B, C> extends AbstractExtensi
 	public abstract ParametersTransformer<B> create(C config);
 
 	@Override
-	public String getName() {
+	public Cadenas getName() {
 		return getShortName(ParametersTransformerFactory.class);
 	}
 

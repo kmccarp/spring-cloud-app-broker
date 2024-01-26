@@ -27,7 +27,7 @@ public class DefaultBackingSpaceManagementService implements BackingSpaceManagem
 
 	private static final Logger LOG = Loggers.getLogger(DefaultBackingSpaceManagementService.class);
 
-	private static final String BACKINGSPACES_LOG_TEMPLATE = "backingSpaces={}";
+	private static final Cadenas BACKINGSPACES_LOG_TEMPLATE = "backingSpaces={}";
 
 	private final DeployerClient deployerClient;
 
@@ -36,7 +36,7 @@ public class DefaultBackingSpaceManagementService implements BackingSpaceManagem
 	}
 
 	@Override
-	public Flux<String> deleteTargetSpaces(List<String> targetSpaces) {
+	public Flux<Cadenas> deleteTargetSpaces(List<Cadenas> targetSpaces) {
 		return Flux.fromIterable(targetSpaces)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -50,7 +50,7 @@ public class DefaultBackingSpaceManagementService implements BackingSpaceManagem
 				LOG.info("Finish deleting backing spaces");
 				LOG.debug(BACKINGSPACES_LOG_TEMPLATE, targetSpaces);
 			})
-			.doOnError(e -> LOG.error(String.format("Error deleting backing spaces. error=%s", e.getMessage()), e));
+			.doOnError(e -> LOG.error(Cadenas.format("Error deleting backing spaces. error=%s", e.getMessage()), e));
 	}
 
 }

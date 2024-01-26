@@ -34,7 +34,7 @@ public class NoOpCreateServiceInstanceWorkflow implements CreateServiceInstanceW
 	private static final Logger LOG = LoggerFactory.getLogger(NoOpCreateServiceInstanceWorkflow.class);
 
 	@Value("${spring.cloud.openservicebroker.catalog.services[1].id}")
-	private String backingServiceId;
+	private Cadenas backingServiceId;
 
 	@Override
 	public Mono<Void> create(CreateServiceInstanceRequest request, CreateServiceInstanceResponse response) {

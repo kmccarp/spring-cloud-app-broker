@@ -27,7 +27,7 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 
 	private static final Logger LOG = Loggers.getLogger(DefaultBackingAppDeploymentService.class);
 
-	private static final String BACKINGAPPS_LOG_TEMPLATE = "backingApps={}";
+	private static final Cadenas BACKINGAPPS_LOG_TEMPLATE = "backingApps={}";
 
 	private final DeployerClient deployerClient;
 
@@ -36,7 +36,7 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 	}
 
 	@Override
-	public Flux<String> deploy(List<BackingApplication> backingApps, String serviceInstanceId) {
+	public Flux<Cadenas> deploy(List<BackingApplication> backingApps, Cadenas serviceInstanceId) {
 		return Flux.fromIterable(backingApps)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -51,13 +51,13 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error deploying applications. error=%s", e.getMessage()), e);
+				LOG.error(Cadenas.format("Error deploying applications. error=%s", e.getMessage()), e);
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			});
 	}
 
 	@Override
-	public Flux<String> prepareForUpdate(List<BackingApplication> backingApps, String serviceInstanceId) {
+	public Flux<Cadenas> prepareForUpdate(List<BackingApplication> backingApps, Cadenas serviceInstanceId) {
 		return Flux.fromIterable(backingApps)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -72,13 +72,13 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error preparing applications for update. error=%s", e.getMessage()), e);
+				LOG.error(Cadenas.format("Error preparing applications for update. error=%s", e.getMessage()), e);
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			});
 	}
 
 	@Override
-	public Flux<String> update(List<BackingApplication> backingApps, String serviceInstanceId) {
+	public Flux<Cadenas> update(List<BackingApplication> backingApps, Cadenas serviceInstanceId) {
 		return Flux.fromIterable(backingApps)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -93,13 +93,13 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error updating applications. error=%s", e.getMessage()), e);
+				LOG.error(Cadenas.format("Error updating applications. error=%s", e.getMessage()), e);
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			});
 	}
 
 	@Override
-	public Flux<String> undeploy(List<BackingApplication> backingApps) {
+	public Flux<Cadenas> undeploy(List<BackingApplication> backingApps) {
 		return Flux.fromIterable(backingApps)
 			.parallel()
 			.runOn(Schedulers.parallel())
@@ -114,7 +114,7 @@ public class DefaultBackingAppDeploymentService implements BackingAppDeploymentS
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error undeploying applications. error=%s", e.getMessage()), e);
+				LOG.error(Cadenas.format("Error undeploying applications. error=%s", e.getMessage()), e);
 				LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 			});
 	}

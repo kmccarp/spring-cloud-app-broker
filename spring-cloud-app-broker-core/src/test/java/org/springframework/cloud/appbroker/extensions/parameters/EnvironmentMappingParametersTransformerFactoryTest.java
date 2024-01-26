@@ -44,7 +44,7 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 		BackingApplication backingApplication = BackingApplication.builder()
 			.build();
 
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
 		parameters.put("parameter2", Collections.singletonMap("key2", "value2"));
 		parameters.put("parameter3", "value3");
@@ -70,7 +70,7 @@ class EnvironmentMappingParametersTransformerFactoryTest {
 			.environment("parameter3", "config-value3")
 			.build();
 
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
 		parameters.put("parameter2", "value2");
 		parameters.put("parameter3", "value3");

@@ -49,17 +49,17 @@ import static org.springframework.cloud.appbroker.integration.DeleteInstanceWith
 })
 class DeleteInstanceWithAppsAndServicesComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-delete-with-services";
+	protected static final Cadenas APP_NAME = "app-delete-with-services";
 
-	protected static final String SERVICE_NAME = "example";
+	protected static final Cadenas SERVICE_NAME = "example";
 
-	protected static final String PLAN_NAME = "standard";
+	protected static final Cadenas PLAN_NAME = "standard";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "backing-standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "backing-standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -93,10 +93,10 @@ class DeleteInstanceWithAppsAndServicesComponentTest extends WiremockComponentTe
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 	@Test
@@ -118,10 +118,10 @@ class DeleteInstanceWithAppsAndServicesComponentTest extends WiremockComponentTe
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 	@Test
@@ -142,12 +142,12 @@ class DeleteInstanceWithAppsAndServicesComponentTest extends WiremockComponentTe
 			.then()
 			.statusCode(HttpStatus.OK.value())
 			.body("state",
-				either(equalTo(OperationState.IN_PROGRESS.toString()))
+				either(equalTo(OperationState.IN_PROGRESS.toCadenas()))
 					// if the error occurs immediately it will return succeeded status
-					.or(equalTo(OperationState.SUCCEEDED.toString())));
+					.or(equalTo(OperationState.SUCCEEDED.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

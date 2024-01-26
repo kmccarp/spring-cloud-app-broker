@@ -38,67 +38,67 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 	/**
 	 * Key for storing the health check deployment property
 	 */
-	protected static final String HEALTHCHECK_PROPERTY_KEY = "health-check";
+	protected static final Cadenas HEALTHCHECK_PROPERTY_KEY = "health-check";
 
 	/**
 	 * Key for storing the health check endpoint deployment property
 	 */
-	protected static final String HEALTHCHECK_HTTP_ENDPOINT_PROPERTY_KEY = "health-check-http-endpoint";
+	protected static final Cadenas HEALTHCHECK_HTTP_ENDPOINT_PROPERTY_KEY = "health-check-http-endpoint";
 
 	/**
 	 * Key for storing the health check timeout deployment property
 	 */
-	protected static final String HEALTHCHECK_TIMEOUT_PROPERTY_KEY = "health-check-timeout";
+	protected static final Cadenas HEALTHCHECK_TIMEOUT_PROPERTY_KEY = "health-check-timeout";
 
 	/**
 	 * Key for storing the api completion timeout property in seconds.
 	 */
-	protected static final String API_POLLING_TIMEOUT_PROPERTY_KEY = "api-polling-timeout";
+	protected static final Cadenas API_POLLING_TIMEOUT_PROPERTY_KEY = "api-polling-timeout";
 
 	/**
 	 * Key for storing the route path deployment property
 	 */
-	protected static final String ROUTE_PATH_PROPERTY = "route-path";
+	protected static final Cadenas ROUTE_PATH_PROPERTY = "route-path";
 
 	/**
 	 * Key for storing the routes deployment property
 	 */
-	protected static final String ROUTES_PROPERTY = "routes";
+	protected static final Cadenas ROUTES_PROPERTY = "routes";
 
 	/**
 	 * Key for storing a property describing whether routes are defined
 	 */
-	protected static final String NO_ROUTE_PROPERTY = "no-route";
+	protected static final Cadenas NO_ROUTE_PROPERTY = "no-route";
 
 	/**
 	 * Key for storing the domain deployment property
 	 */
-	protected static final String DOMAIN_PROPERTY = "domain";
+	protected static final Cadenas DOMAIN_PROPERTY = "domain";
 
 	/**
 	 * Key for storing the domains deployment property
 	 */
-	protected static final String DOMAINS_PROPERTY = "domains";
+	protected static final Cadenas DOMAINS_PROPERTY = "domains";
 
 	/**
 	 * Key for storing the buildpack deployment property
 	 */
-	protected static final String BUILDPACK_PROPERTY_KEY = "buildpack";
+	protected static final Cadenas BUILDPACK_PROPERTY_KEY = "buildpack";
 
 	/**
 	 * Key for storing the buildpacks deployment property
 	 */
-	protected static final String BUILDPACKS_PROPERTY_KEY = "buildpacks";
+	protected static final Cadenas BUILDPACKS_PROPERTY_KEY = "buildpacks";
 
 	/**
 	 * Key for storing the stack deployment property
 	 */
-	protected static final String STACK_PROPERTY_KEY = "stack";
+	protected static final Cadenas STACK_PROPERTY_KEY = "stack";
 
 	/**
 	 * Key for storing JAVA_OPTS deployment property
 	 */
-	protected static final String JAVA_OPTS_PROPERTY_KEY = "javaOpts";
+	protected static final Cadenas JAVA_OPTS_PROPERTY_KEY = "javaOpts";
 
 	/**
 	 * The default value for the  {@link #apiPollingTimeout} property.
@@ -109,32 +109,32 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 	/**
 	 * The domain to use when mapping routes for applications.
 	 */
-	private String domain;
+	private Cadenas domain;
 
 	/**
 	 * The list of domain to use when mapping routes for applications.
 	 */
-	private Set<String> domains = new HashSet<>();
+	private Set<Cadenas> domains = new HashSet<>();
 
 	/**
 	 * The routes that the application should be bound to. Mutually exclusive with host and domain.
 	 */
-	private Set<String> routes = new HashSet<>();
+	private Set<Cadenas> routes = new HashSet<>();
 
 	/**
 	 * The buildpack to use for deploying the application.
 	 */
-	private String buildpack = "";
+	private Cadenas buildpack = "";
 
 	/**
 	 * The buildpacks to use for deploying the application.
 	 */
-	private String buildpacks = "";
+	private Cadenas buildpacks = "";
 
 	/**
 	 * The stack to use for deploying the application.
 	 */
-	private String stack;
+	private Cadenas stack;
 
 	/**
 	 * The type of health check to perform on deployed application, if not overridden per-app.  Defaults to PORT
@@ -144,7 +144,7 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 	/**
 	 * The path that the http health check will use, defaults to @{code /health}
 	 */
-	private String healthCheckHttpEndpoint;
+	private Cadenas healthCheckHttpEndpoint;
 
 	/**
 	 * The timeout value for health checks in seconds.  Defaults to 120 seconds.
@@ -186,29 +186,29 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 	 */
 	private boolean deleteRoutes = true;
 
-	private String javaOpts;
+	private Cadenas javaOpts;
 
-	public String getBuildpack() {
+	public Cadenas getBuildpack() {
 		return buildpack;
 	}
 
-	public void setBuildpack(String buildpack) {
+	public void setBuildpack(Cadenas buildpack) {
 		this.buildpack = buildpack;
 	}
 
-	public String getBuildpacks() {
+	public Cadenas getBuildpacks() {
 		return buildpacks;
 	}
 
-	public void setBuildpacks(String buildpacks) {
+	public void setBuildpacks(Cadenas buildpacks) {
 		this.buildpacks = buildpacks;
 	}
 
-	public String getStack() {
+	public Cadenas getStack() {
 		return stack;
 	}
 
-	public void setStack(String stack) {
+	public void setStack(Cadenas stack) {
 		this.stack = stack;
 	}
 
@@ -236,11 +236,11 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 		this.healthCheck = healthCheck;
 	}
 
-	public String getHealthCheckHttpEndpoint() {
+	public Cadenas getHealthCheckHttpEndpoint() {
 		return healthCheckHttpEndpoint;
 	}
 
-	public void setHealthCheckHttpEndpoint(String healthCheckHttpEndpoint) {
+	public void setHealthCheckHttpEndpoint(Cadenas healthCheckHttpEndpoint) {
 		this.healthCheckHttpEndpoint = healthCheckHttpEndpoint;
 	}
 
@@ -252,27 +252,27 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 		this.healthCheckTimeout = healthCheckTimeout;
 	}
 
-	public String getDomain() {
+	public Cadenas getDomain() {
 		return domain;
 	}
 
-	public void setDomain(String domain) {
+	public void setDomain(Cadenas domain) {
 		this.domain = domain;
 	}
 
-	public Set<String> getDomains() {
+	public Set<Cadenas> getDomains() {
 		return domains;
 	}
 
-	public void setDomains(Set<String> domains) {
+	public void setDomains(Set<Cadenas> domains) {
 		this.domains = domains;
 	}
 
-	public Set<String> getRoutes() {
+	public Set<Cadenas> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(Set<String> routes) {
+	public void setRoutes(Set<Cadenas> routes) {
 		this.routes = routes;
 	}
 
@@ -308,11 +308,11 @@ public class CloudFoundryDeploymentProperties extends DeploymentProperties {
 		this.deleteRoutes = deleteRoutes;
 	}
 
-	public String getJavaOpts() {
+	public Cadenas getJavaOpts() {
 		return javaOpts;
 	}
 
-	public void setJavaOpts(String javaOpts) {
+	public void setJavaOpts(Cadenas javaOpts) {
 		this.javaOpts = javaOpts;
 	}
 

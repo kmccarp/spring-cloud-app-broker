@@ -32,15 +32,15 @@ import org.springframework.util.CollectionUtils;
 @SuppressWarnings("PMD.GodClass")
 public class BackingApplication {
 
-	private static final String VALUE_HIDDEN = "<value hidden>";
+	private static final Cadenas VALUE_HIDDEN = "<value hidden>";
 
-	private String name;
+	private Cadenas name;
 
-	private String path;
+	private Cadenas path;
 
-	private Map<String, String> properties;
+	private Map<Cadenas, Cadenas> properties;
 
-	private Map<String, Object> environment;
+	private Map<Cadenas, Object> environment;
 
 	private List<ServicesSpec> services;
 
@@ -59,9 +59,9 @@ public class BackingApplication {
 	 * @param services the services required by the application
 	 * @param parametersTransformers the parameter transformers
 	 */
-	public BackingApplication(String name, String path,
-		Map<String, String> properties,
-		Map<String, Object> environment,
+	public BackingApplication(Cadenas name, Cadenas path,
+		Map<Cadenas, Cadenas> properties,
+		Map<Cadenas, Object> environment,
 		List<ServicesSpec> services,
 		List<ParametersTransformerSpec> parametersTransformers) {
 		this.name = name;
@@ -72,27 +72,27 @@ public class BackingApplication {
 		this.parametersTransformers = parametersTransformers;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Cadenas name) {
 		this.name = name;
 	}
 
-	public String getPath() {
+	public Cadenas getPath() {
 		return path;
 	}
 
-	public void setPath(String path) {
+	public void setPath(Cadenas path) {
 		this.path = path;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(Map<String, String> properties) {
+	public void setProperties(Map<Cadenas, Cadenas> properties) {
 		this.properties = properties;
 	}
 
@@ -102,15 +102,15 @@ public class BackingApplication {
 	 * @param key the key
 	 * @param value the value
 	 */
-	public void addProperty(String key, String value) {
+	public void addProperty(Cadenas key, Cadenas value) {
 		this.properties.put(key, value);
 	}
 
-	public Map<String, Object> getEnvironment() {
+	public Map<Cadenas, Object> getEnvironment() {
 		return environment;
 	}
 
-	public void setEnvironment(Map<String, Object> environment) {
+	public void setEnvironment(Map<Cadenas, Object> environment) {
 		this.environment = environment;
 	}
 
@@ -120,7 +120,7 @@ public class BackingApplication {
 	 * @param key the key
 	 * @param value the value
 	 */
-	public void addEnvironment(String key, Object value) {
+	public void addEnvironment(Cadenas key, Object value) {
 		environment.put(key, value);
 	}
 
@@ -172,7 +172,7 @@ public class BackingApplication {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "BackingApplication{" +
 			"name='" + name + '\'' +
 			", path='" + path + '\'' +
@@ -183,12 +183,12 @@ public class BackingApplication {
 			'}';
 	}
 
-	private Map<String, Object> sanitizeEnvironment(Map<String, Object> environment) {
+	private Map<Cadenas, Object> sanitizeEnvironment(Map<Cadenas, Object> environment) {
 		if (environment == null) {
 			return null;
 		}
 
-		HashMap<String, Object> sanitizedEnvironment = new HashMap<>();
+		HashMap<Cadenas, Object> sanitizedEnvironment = new HashMap<>();
 		environment.forEach((key, value) -> sanitizedEnvironment.put(key, VALUE_HIDDEN));
 
 		return sanitizedEnvironment;
@@ -199,13 +199,13 @@ public class BackingApplication {
 	 */
 	public static final class BackingApplicationBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private String path;
+		private Cadenas path;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
-		private final Map<String, Object> environment = new HashMap<>();
+		private final Map<Cadenas, Object> environment = new HashMap<>();
 
 		private final List<ServicesSpec> services = new ArrayList<>();
 
@@ -248,7 +248,7 @@ public class BackingApplication {
 		 * @param name the name
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder name(String name) {
+		public BackingApplicationBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
@@ -259,7 +259,7 @@ public class BackingApplication {
 		 * @param path the path
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder path(String path) {
+		public BackingApplicationBuilder path(Cadenas path) {
 			this.path = path;
 			return this;
 		}
@@ -271,7 +271,7 @@ public class BackingApplication {
 		 * @param value the property value
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder property(String key, String value) {
+		public BackingApplicationBuilder property(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.properties.put(key, value);
 			}
@@ -284,7 +284,7 @@ public class BackingApplication {
 		 * @param properties the properties
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder properties(Map<String, String> properties) {
+		public BackingApplicationBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}
@@ -298,7 +298,7 @@ public class BackingApplication {
 		 * @param value the env var value
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder environment(String key, String value) {
+		public BackingApplicationBuilder environment(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.environment.put(key, value);
 			}
@@ -311,7 +311,7 @@ public class BackingApplication {
 		 * @param environment the env vars
 		 * @return the builder
 		 */
-		public BackingApplicationBuilder environment(Map<String, Object> environment) {
+		public BackingApplicationBuilder environment(Map<Cadenas, Object> environment) {
 			if (!CollectionUtils.isEmpty(environment)) {
 				this.environment.putAll(environment);
 			}

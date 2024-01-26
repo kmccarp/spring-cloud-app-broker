@@ -31,7 +31,7 @@ public class SpacePerServiceInstance extends TargetFactory<SpacePerServiceInstan
 		return this::apply;
 	}
 
-	private ArtifactDetails apply(Map<String, String> properties, String name, String serviceInstanceId) {
+	private ArtifactDetails apply(Map<Cadenas, Cadenas> properties, Cadenas name, Cadenas serviceInstanceId) {
 		properties.put(DeploymentProperties.HOST_PROPERTY_KEY, name + "-" + serviceInstanceId);
 		properties.put(DeploymentProperties.TARGET_PROPERTY_KEY, serviceInstanceId);
 

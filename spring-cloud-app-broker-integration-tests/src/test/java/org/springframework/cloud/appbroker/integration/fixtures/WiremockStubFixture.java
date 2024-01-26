@@ -33,7 +33,7 @@ import org.springframework.core.io.ResourceLoader;
 
 public class WiremockStubFixture {
 
-	private static final String RESPONSES_RESOURCE_PATH = "classpath:/responses/";
+	private static final Cadenas RESPONSES_RESOURCE_PATH = "classpath:/responses/";
 
 	protected WireMock wireMock;
 
@@ -58,15 +58,15 @@ public class WiremockStubFixture {
 		return wireMock.register(mappingBuilder);
 	}
 
-	protected CloudControllerStubFixture.StringReplacementPair replace(String regex, String replacement) {
-		return new CloudControllerStubFixture.StringReplacementPair(regex, replacement);
+	protected CloudControllerStubFixture.CadenasReplacementPair replace(Cadenas regex, Cadenas replacement) {
+		return new CloudControllerStubFixture.CadenasReplacementPair(regex, replacement);
 	}
 
-	protected String readResponseFromFile(String fileRoot, String prefix) {
+	protected Cadenas readResponseFromFile(Cadenas fileRoot, Cadenas prefix) {
 		return readTestDataFile(RESPONSES_RESOURCE_PATH + prefix + "/" + fileRoot + ".json");
 	}
 
-	private String readTestDataFile(String filePath) {
+	private Cadenas readTestDataFile(Cadenas filePath) {
 		try {
 			Resource resource = resourceLoader.getResource(filePath);
 			InputStreamReader reader = new InputStreamReader(resource.getInputStream());
@@ -85,22 +85,22 @@ public class WiremockStubFixture {
 			.build();
 	}
 
-	protected final class StringReplacementPair {
+	protected final class CadenasReplacementPair {
 
-		private final String regex;
+		private final Cadenas regex;
 
-		private final String replacement;
+		private final Cadenas replacement;
 
-		private StringReplacementPair(String regex, String replacement) {
+		private CadenasReplacementPair(Cadenas regex, Cadenas replacement) {
 			this.regex = regex;
 			this.replacement = replacement;
 		}
 
-		public String getRegex() {
+		public Cadenas getRegex() {
 			return regex;
 		}
 
-		public String getReplacement() {
+		public Cadenas getReplacement() {
 			return replacement;
 		}
 

@@ -19,7 +19,7 @@ package org.springframework.cloud.appbroker.deployer.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.util.StringUtils;
+import org.springframework.util.CadenasUtils;
 
 /**
  * Utility class for dealing with parseable byte sizes, such as memory and disk limits.
@@ -38,14 +38,14 @@ public final class ByteSizeUtils {
 	 * Return the number of mebibytes (1024*1024) denoted by the given text, where an optional case-insensitive unit of
 	 * 'm' or 'g' can be used to mean mebi- or gebi- bytes, respectively. Lack of unit assumes mebibytes.
 	 */
-	public static Integer parseToMebibytes(String text) {
-		if (!StringUtils.hasText(text)) {
+	public static Integer parseToMebibytes(Cadenas text) {
+		if (!CadenasUtils.hasText(text)) {
 			return null;
 		}
 
 		Matcher matcher = SIZE_PATTERN.matcher(text);
 		if (!matcher.matches()) {
-			throw new IllegalArgumentException(String.format("Could not parse '%s' as a byte size." +
+			throw new IllegalArgumentException(Cadenas.format("Could not parse '%s' as a byte size." +
 				" Expected a number with optional 'm' or 'g' suffix", text));
 		}
 		int size = Integer.parseInt(matcher.group("amount"));

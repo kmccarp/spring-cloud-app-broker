@@ -38,35 +38,35 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-upgrade";
+	private static final Cadenas APP_NAME = "app-upgrade";
 
 	private static final int FIRST_TEST = 1;
 
 	private static final int SECOND_TEST = 2;
 
-	private static final String SI_NAME = "si-upgrade";
+	private static final Cadenas SI_NAME = "si-upgrade";
 
-	private static final String SUFFIX = "upgrade";
+	private static final Cadenas SUFFIX = "upgrade";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -94,10 +94,10 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 		// and the environment variables are applied correctly
 		DocumentContext json = getSpringAppJson(APP_NAME);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("old-config1");
-		assertThat(json.read("$.parameter2").toString()).isEqualTo("old-config2");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("old-config1");
+		assertThat(json.read("$.parameter2").toCadenas()).isEqualTo("old-config2");
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 	}
 
@@ -126,9 +126,9 @@ class UpgradeInstanceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
 		// the backing application is updated with the new parameters
 		DocumentContext json = getSpringAppJson(APP_NAME);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("new-config1");
-		assertThat(json.read("$.parameter3").toString()).isEqualTo("new-config3");
-		assertThat(json.jsonString()).doesNotContain("parameter2");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("new-config1");
+		assertThat(json.read("$.parameter3").toCadenas()).isEqualTo("new-config3");
+		assertThat(json.jsonCadenas()).doesNotContain("parameter2");
 
 		// and stack is updated when specified
 		Optional<ApplicationDetail> application1Detail = getApplicationDetail(APP_NAME);

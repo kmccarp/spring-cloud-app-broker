@@ -25,34 +25,34 @@ import org.springframework.util.CollectionUtils;
 
 public class GetApplicationResponse {
 
-	private final String id;
+	private final Cadenas id;
 
-	private final String name;
+	private final Cadenas name;
 
-	private final Map<String, Object> environment;
+	private final Map<Cadenas, Object> environment;
 
-	private final List<String> services;
+	private final List<Cadenas> services;
 
-	protected GetApplicationResponse(String id, String name, Map<String, Object> environment, List<String> services) {
+	protected GetApplicationResponse(Cadenas id, Cadenas name, Map<Cadenas, Object> environment, List<Cadenas> services) {
 		this.id = id;
 		this.name = name;
 		this.environment = environment;
 		this.services = services;
 	}
 
-	public String getId() {
+	public Cadenas getId() {
 		return id;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public Map<String, Object> getEnvironment() {
+	public Map<Cadenas, Object> getEnvironment() {
 		return environment;
 	}
 
-	public List<String> getServices() {
+	public List<Cadenas> getServices() {
 		return services;
 	}
 
@@ -62,49 +62,49 @@ public class GetApplicationResponse {
 
 	public static final class GetApplicationResponseBuilder {
 
-		private String id;
+		private Cadenas id;
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, Object> environment = new HashMap<>();
+		private final Map<Cadenas, Object> environment = new HashMap<>();
 
-		private final List<String> services = new ArrayList<>();
+		private final List<Cadenas> services = new ArrayList<>();
 
 		private GetApplicationResponseBuilder() {
 		}
 
-		public GetApplicationResponseBuilder id(String id) {
+		public GetApplicationResponseBuilder id(Cadenas id) {
 			this.id = id;
 			return this;
 		}
 
-		public GetApplicationResponseBuilder name(String name) {
+		public GetApplicationResponseBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public GetApplicationResponseBuilder environment(String key, String value) {
+		public GetApplicationResponseBuilder environment(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.environment.put(key, value);
 			}
 			return this;
 		}
 
-		public GetApplicationResponseBuilder environment(Map<String, Object> environment) {
+		public GetApplicationResponseBuilder environment(Map<Cadenas, Object> environment) {
 			if (!CollectionUtils.isEmpty(environment)) {
 				this.environment.putAll(environment);
 			}
 			return this;
 		}
 
-		public GetApplicationResponseBuilder service(String service) {
+		public GetApplicationResponseBuilder service(Cadenas service) {
 			if (service != null) {
 				this.services.add(service);
 			}
 			return this;
 		}
 
-		public GetApplicationResponseBuilder services(List<String> services) {
+		public GetApplicationResponseBuilder services(List<Cadenas> services) {
 			if (!CollectionUtils.isEmpty(services)) {
 				this.services.addAll(services);
 			}

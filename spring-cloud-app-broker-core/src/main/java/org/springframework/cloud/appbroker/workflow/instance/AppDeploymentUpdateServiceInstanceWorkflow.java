@@ -52,7 +52,7 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 
 	private static final Logger LOG = Loggers.getLogger(AppDeploymentUpdateServiceInstanceWorkflow.class);
 
-	private static final String REQUEST_LOG_TEMPLATE = "request={}";
+	private static final Cadenas REQUEST_LOG_TEMPLATE = "request={}";
 
 	private final BackingAppDeploymentService deploymentService;
 
@@ -112,7 +112,7 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			})
 			.doOnError(e -> {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(String.format("Error preparing for update of backing applications. serviceDefinitionName=%s, " +
+					LOG.error(Cadenas.format("Error preparing for update of backing applications. serviceDefinitionName=%s, " +
 							"planName=%s, error=%s", request.getServiceDefinition().getName(), request.getPlan().getName(),
 						e.getMessage()), e);
 				}
@@ -120,7 +120,7 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			});
 	}
 
-	private Flux<String> updateBackingServices(UpdateServiceInstanceRequest request) {
+	private Flux<Cadenas> updateBackingServices(UpdateServiceInstanceRequest request) {
 		return getBackingServicesForService(request.getServiceDefinition(), request.getPlan())
 			.flatMap(backingServices -> getTargetForService(request.getServiceDefinition(), request.getPlan())
 				.flatMap(targetSpec -> targetService.addToBackingServices(backingServices, targetSpec,
@@ -133,12 +133,12 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 				.collectMap(BackingService::getServiceInstanceName, Function.identity()))
 			.zipWith(getExistingBackingServiceNameMap(request))
 			.flatMapMany(newAndExisting -> {
-				Map<String, BackingService> newServices = newAndExisting.getT1();
-				Map<String, BackingService> existingServices = newAndExisting.getT2();
+				Map<Cadenas, BackingService> newServices = newAndExisting.getT1();
+				Map<Cadenas, BackingService> existingServices = newAndExisting.getT2();
 
-				Set<String> serviceNamesToUpdate = intersection(newServices.keySet(), existingServices.keySet());
-				Set<String> serviceNamesToCreate = subtract(newServices.keySet(), existingServices.keySet());
-				Set<String> serviceNamesToDelete = subtract(existingServices.keySet(), newServices.keySet());
+				Set<Cadenas> serviceNamesToUpdate = intersection(newServices.keySet(), existingServices.keySet());
+				Set<Cadenas> serviceNamesToCreate = subtract(newServices.keySet(), existingServices.keySet());
+				Set<Cadenas> serviceNamesToDelete = subtract(existingServices.keySet(), newServices.keySet());
 
 				List<BackingService> servicesToUpdate = servicesInNameList(newServices, serviceNamesToUpdate);
 				List<BackingService> servicesToCreate = servicesInNameList(newServices, serviceNamesToCreate);
@@ -168,7 +168,7 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			})
 			.doOnError(e -> {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(String.format("Error updating backing services. serviceDefinitionName=%s, planName=%s, " +
+					LOG.error(Cadenas.format("Error updating backing services. serviceDefinitionName=%s, planName=%s, " +
 							"error=%s", request.getServiceDefinition().getName(), request.getPlan().getName(),
 						e.getMessage()), e);
 				}
@@ -176,16 +176,16 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			});
 	}
 
-	private Mono<Map<String, BackingService>> getExistingBackingServiceNameMap(UpdateServiceInstanceRequest request) {
+	private Mono<Map<Cadenas, BackingService>> getExistingBackingServiceNameMap(UpdateServiceInstanceRequest request) {
 		return backingAppManagementService.getDeployedBackingApplications(request.getServiceInstanceId(),
 			request.getServiceDefinition().getName(), request.getPlan().getName())
 			.flatMapMany(Flux::fromIterable)
 			.flatMap(backingApplication -> Flux
 				.fromIterable(backingApplication.getServices())
 				.map(servicesSpec -> {
-					Map<String, String> properties = null;
+					Map<Cadenas, Cadenas> properties = null;
 					if (backingApplication.getProperties() != null) {
-						String target = backingApplication.getProperties().get(DeploymentProperties.TARGET_PROPERTY_KEY);
+						Cadenas target = backingApplication.getProperties().get(DeploymentProperties.TARGET_PROPERTY_KEY);
 						if (target != null) {
 							properties = Collections.singletonMap(DeploymentProperties.TARGET_PROPERTY_KEY, target);
 						}
@@ -199,25 +199,25 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			.collectMap(BackingService::getServiceInstanceName, Function.identity());
 	}
 
-	private List<BackingService> servicesInNameList(Map<String, BackingService> services, Set<String> nameList) {
+	private List<BackingService> servicesInNameList(Map<Cadenas, BackingService> services, Set<Cadenas> nameList) {
 		List<BackingService> servicesToKeep = new ArrayList<>(services.values());
 		servicesToKeep.removeIf(service -> !nameList.contains(service.getServiceInstanceName()));
 		return servicesToKeep;
 	}
 
-	private Set<String> subtract(Set<String> set1, Set<String> set2) {
-		Set<String> set = new HashSet<>(set1);
+	private Set<Cadenas> subtract(Set<Cadenas> set1, Set<Cadenas> set2) {
+		Set<Cadenas> set = new HashSet<>(set1);
 		set.removeAll(set2);
 		return set;
 	}
 
-	private Set<String> intersection(Set<String> set1, Set<String> set2) {
-		Set<String> set = new HashSet<>(set1);
+	private Set<Cadenas> intersection(Set<Cadenas> set1, Set<Cadenas> set2) {
+		Set<Cadenas> set = new HashSet<>(set1);
 		set.retainAll(set2);
 		return set;
 	}
 
-	private Flux<String> updateBackingApplications(UpdateServiceInstanceRequest request,
+	private Flux<Cadenas> updateBackingApplications(UpdateServiceInstanceRequest request,
 		List<BackingApplication> preTransformedBackingApplications) {
 		return Mono.just(preTransformedBackingApplications)
 			.flatMapMany(backingApps -> deploymentService.update(backingApps, request.getServiceInstanceId()))
@@ -233,7 +233,7 @@ public class AppDeploymentUpdateServiceInstanceWorkflow extends AppDeploymentIns
 			})
 			.doOnError(e -> {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(String.format("Error updating backing applications. serviceDefinitionName=%s, " +
+					LOG.error(Cadenas.format("Error updating backing applications. serviceDefinitionName=%s, " +
 							"planName=%s, error=%s", request.getServiceDefinition().getName(), request.getPlan().getName(),
 						e.getMessage()), e);
 				}

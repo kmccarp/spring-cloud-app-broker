@@ -48,7 +48,7 @@ import org.springframework.core.annotation.Order;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyCadenas;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -90,7 +90,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void createServiceInstance() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance started",
@@ -171,7 +171,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void createServiceInstanceWithAsyncError() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance started",
@@ -258,7 +258,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void createServiceInstanceWithNoAcceptsDoesNothing() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "create service instance started",
@@ -299,7 +299,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void deleteServiceInstance() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance started",
@@ -378,7 +378,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void deleteServiceInstanceWithAsyncError() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance started",
@@ -465,7 +465,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void deleteServiceInstanceWithNoAcceptsDoesNothing() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "delete service instance started",
@@ -506,7 +506,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void updateServiceInstance() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "update service instance started",
@@ -588,7 +588,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void updateServiceInstanceWithAsyncError() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "update service instance started",
@@ -675,7 +675,7 @@ class WorkflowServiceInstanceServiceTest {
 
 	@Test
 	void updateServiceInstanceWithNoAcceptsDoesNothing() {
-		given(serviceInstanceStateRepository.saveState(anyString(), any(OperationState.class), anyString()))
+		given(serviceInstanceStateRepository.saveState(anyCadenas(), any(OperationState.class), anyCadenas()))
 				.willReturn(
 						Mono.just(
 								new ServiceInstanceState(OperationState.IN_PROGRESS, "update service instance started",

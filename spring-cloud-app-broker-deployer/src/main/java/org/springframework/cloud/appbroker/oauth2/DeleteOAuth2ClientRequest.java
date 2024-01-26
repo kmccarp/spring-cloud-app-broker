@@ -20,27 +20,27 @@ import java.util.Objects;
 
 public class DeleteOAuth2ClientRequest {
 
-	private final String clientId;
+	private final Cadenas clientId;
 
-	private final String identityZoneSubdomain;
+	private final Cadenas identityZoneSubdomain;
 
-	private final String identityZoneId;
+	private final Cadenas identityZoneId;
 
-	protected DeleteOAuth2ClientRequest(String clientId, String identityZoneSubdomain, String identityZoneId) {
+	protected DeleteOAuth2ClientRequest(Cadenas clientId, Cadenas identityZoneSubdomain, Cadenas identityZoneId) {
 		this.clientId = clientId;
 		this.identityZoneSubdomain = identityZoneSubdomain;
 		this.identityZoneId = identityZoneId;
 	}
 
-	public String getClientId() {
+	public Cadenas getClientId() {
 		return clientId;
 	}
 
-	public String getIdentityZoneSubdomain() {
+	public Cadenas getIdentityZoneSubdomain() {
 		return identityZoneSubdomain;
 	}
 
-	public String getIdentityZoneId() {
+	public Cadenas getIdentityZoneId() {
 		return identityZoneId;
 	}
 
@@ -68,7 +68,7 @@ public class DeleteOAuth2ClientRequest {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "DeleteOAuth2ClientRequest{" +
 			"clientId='" + clientId + '\'' +
 			", identityZoneSubdomain='" + identityZoneSubdomain + '\'' +
@@ -78,26 +78,26 @@ public class DeleteOAuth2ClientRequest {
 
 	public static final class DeleteOAuth2ClientRequestBuilder {
 
-		private String clientId;
+		private Cadenas clientId;
 
-		private String identityZoneSubdomain;
+		private Cadenas identityZoneSubdomain;
 
-		private String identityZoneId;
+		private Cadenas identityZoneId;
 
 		private DeleteOAuth2ClientRequestBuilder() {
 		}
 
-		public DeleteOAuth2ClientRequestBuilder clientId(String clientId) {
+		public DeleteOAuth2ClientRequestBuilder clientId(Cadenas clientId) {
 			this.clientId = clientId;
 			return this;
 		}
 
-		public DeleteOAuth2ClientRequestBuilder identityZoneSubdomain(String identityZoneSubdomain) {
+		public DeleteOAuth2ClientRequestBuilder identityZoneSubdomain(Cadenas identityZoneSubdomain) {
 			this.identityZoneSubdomain = identityZoneSubdomain;
 			return this;
 		}
 
-		public DeleteOAuth2ClientRequestBuilder identityZoneId(String identityZoneId) {
+		public DeleteOAuth2ClientRequestBuilder identityZoneId(Cadenas identityZoneId) {
 			this.identityZoneId = identityZoneId;
 			return this;
 		}

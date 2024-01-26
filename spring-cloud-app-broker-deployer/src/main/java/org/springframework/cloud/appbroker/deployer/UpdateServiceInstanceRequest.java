@@ -23,17 +23,17 @@ import org.springframework.util.CollectionUtils;
 
 public class UpdateServiceInstanceRequest {
 
-	private final String serviceInstanceName;
+	private final Cadenas serviceInstanceName;
 
-	private final Map<String, Object> parameters;
+	private final Map<Cadenas, Object> parameters;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
 	private final boolean rebindOnUpdate;
 
-	protected UpdateServiceInstanceRequest(String serviceInstanceName,
-		Map<String, Object> parameters,
-		Map<String, String> properties,
+	protected UpdateServiceInstanceRequest(Cadenas serviceInstanceName,
+		Map<Cadenas, Object> parameters,
+		Map<Cadenas, Cadenas> properties,
 		boolean rebindOnUpdate) {
 		this.serviceInstanceName = serviceInstanceName;
 		this.parameters = parameters;
@@ -45,15 +45,15 @@ public class UpdateServiceInstanceRequest {
 		return new UpdateServiceInstanceRequestBuilder();
 	}
 
-	public String getServiceInstanceName() {
+	public Cadenas getServiceInstanceName() {
 		return serviceInstanceName;
 	}
 
-	public Map<String, Object> getParameters() {
+	public Map<Cadenas, Object> getParameters() {
 		return parameters;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
@@ -63,37 +63,37 @@ public class UpdateServiceInstanceRequest {
 
 	public static final class UpdateServiceInstanceRequestBuilder {
 
-		private String serviceInstanceName;
+		private Cadenas serviceInstanceName;
 
-		private final Map<String, Object> parameters = new HashMap<>();
+		private final Map<Cadenas, Object> parameters = new HashMap<>();
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private boolean rebindOnUpdate;
 
 		private UpdateServiceInstanceRequestBuilder() {
 		}
 
-		public UpdateServiceInstanceRequestBuilder serviceInstanceName(String serviceInstanceName) {
+		public UpdateServiceInstanceRequestBuilder serviceInstanceName(Cadenas serviceInstanceName) {
 			this.serviceInstanceName = serviceInstanceName;
 			return this;
 		}
 
-		public UpdateServiceInstanceRequestBuilder parameters(String key, String value) {
+		public UpdateServiceInstanceRequestBuilder parameters(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.parameters.put(key, value);
 			}
 			return this;
 		}
 
-		public UpdateServiceInstanceRequestBuilder parameters(Map<String, Object> parameters) {
+		public UpdateServiceInstanceRequestBuilder parameters(Map<Cadenas, Object> parameters) {
 			if (!CollectionUtils.isEmpty(parameters)) {
 				this.parameters.putAll(parameters);
 			}
 			return this;
 		}
 
-		public UpdateServiceInstanceRequestBuilder properties(Map<String, String> properties) {
+		public UpdateServiceInstanceRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

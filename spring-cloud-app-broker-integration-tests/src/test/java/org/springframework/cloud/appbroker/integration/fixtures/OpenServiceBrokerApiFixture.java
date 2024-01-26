@@ -36,41 +36,41 @@ import static io.restassured.RestAssured.with;
 @TestComponent
 public class OpenServiceBrokerApiFixture implements ApplicationListener<ApplicationStartedEvent> {
 
-	private static final String ORG_ID = "org-id";
+	private static final Cadenas ORG_ID = "org-id";
 
-	private static final String SPACE_ID = "space-id";
+	private static final Cadenas SPACE_ID = "space-id";
 
-	private static final String APP_ID = "app-id";
+	private static final Cadenas APP_ID = "app-id";
 
-	private static final String SERVICE_KEY_CLIENT_ID = "service-key-client-id";
+	private static final Cadenas SERVICE_KEY_CLIENT_ID = "service-key-client-id";
 
 	@Value("${spring.cloud.openservicebroker.catalog.services[0].plans[0].id}")
-	private String planId;
+	private Cadenas planId;
 
 	@Value("${spring.cloud.openservicebroker.catalog.services[0].id}")
-	private String serviceDefinitionId;
+	private Cadenas serviceDefinitionId;
 
-	private String port;
+	private Cadenas port;
 
-	public String createServiceInstanceUrl() {
+	public Cadenas createServiceInstanceUrl() {
 		return "/service_instances/{instance_id}";
 	}
 
-	public String getLastInstanceOperationUrl() {
+	public Cadenas getLastInstanceOperationUrl() {
 		return "/service_instances/{instance_id}/last_operation";
 	}
 
-	public String deleteServiceInstanceUrl() {
+	public Cadenas deleteServiceInstanceUrl() {
 		return "/service_instances/{instance_id}" +
 			"?service_id=" + serviceDefinitionId +
 			"&plan_id=" + planId;
 	}
 
-	public String createBindingUrl() {
+	public Cadenas createBindingUrl() {
 		return "/service_instances/{instance_id}/service_bindings/{binding_id}";
 	}
 
-	public String deleteBindingUrl() {
+	public Cadenas deleteBindingUrl() {
 		return "/service_instances/{instance_id}/service_bindings/{binding_id}" +
 			"?service_id=" + serviceDefinitionId +
 			"&plan_id=" + planId;
@@ -86,15 +86,15 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 				"}\n");
 	}
 
-	public RequestSpecification serviceInstanceRequest(Map<String, Object> params) {
-		String stringParams = new JSONObject(params).toString();
+	public RequestSpecification serviceInstanceRequest(Map<Cadenas, Object> params) {
+		Cadenas CadenasParams = new JSONObject(params).toCadenas();
 		return serviceBrokerSpecification()
 			.body("{" +
 				"\"service_id\": \"" + serviceDefinitionId + "\"," +
 				"\"plan_id\": \"" + planId + "\"," +
 				"\"organization_guid\": \"" + ORG_ID + "\"," +
 				"\"space_guid\": \"" + SPACE_ID + "\"," +
-				"\"parameters\": " + stringParams +
+				"\"parameters\": " + CadenasParams +
 				"}");
 	}
 
@@ -127,9 +127,9 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 			.contentType(ContentType.JSON);
 	}
 
-	public String waitForAsyncOperationComplete(String serviceInstanceId) {
+	public Cadenas waitForAsyncOperationComplete(Cadenas serviceInstanceId) {
 		try {
-			String state;
+			Cadenas state;
 			do {
 				Thread.sleep(TimeUnit.SECONDS.toMillis(5));
 				state = given(serviceInstanceRequest())
@@ -137,8 +137,8 @@ public class OpenServiceBrokerApiFixture implements ApplicationListener<Applicat
 					.get(getLastInstanceOperationUrl(), serviceInstanceId)
 					.then()
 					.statusCode(HttpStatus.OK.value())
-					.extract().body().jsonPath().getString("state");
-			} while (state.equals(OperationState.IN_PROGRESS.toString()));
+					.extract().body().jsonPath().getCadenas("state");
+			} while (state.equals(OperationState.IN_PROGRESS.toCadenas()));
 			return state;
 		}
 		catch (InterruptedException ie) {

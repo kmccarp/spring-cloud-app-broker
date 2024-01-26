@@ -23,13 +23,13 @@ import org.springframework.util.CollectionUtils;
 
 public class GetServiceInstanceRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final String serviceInstanceId;
+	private final Cadenas serviceInstanceId;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected GetServiceInstanceRequest(String name, String serviceInstanceId, Map<String, String> properties) {
+	protected GetServiceInstanceRequest(Cadenas name, Cadenas serviceInstanceId, Map<Cadenas, Cadenas> properties) {
 		this.name = name;
 		this.serviceInstanceId = serviceInstanceId;
 		this.properties = properties;
@@ -39,40 +39,40 @@ public class GetServiceInstanceRequest {
 		return new GetServiceInstanceRequestBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public String getServiceInstanceId() {
+	public Cadenas getServiceInstanceId() {
 		return serviceInstanceId;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
 	public static final class GetServiceInstanceRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private String serviceInstanceId;
+		private Cadenas serviceInstanceId;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private GetServiceInstanceRequestBuilder() {
 		}
 
-		public GetServiceInstanceRequestBuilder name(String name) {
+		public GetServiceInstanceRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public GetServiceInstanceRequestBuilder serviceInstanceId(String serviceInstanceId) {
+		public GetServiceInstanceRequestBuilder serviceInstanceId(Cadenas serviceInstanceId) {
 			this.serviceInstanceId = serviceInstanceId;
 			return this;
 		}
 
-		public GetServiceInstanceRequestBuilder properties(Map<String, String> properties) {
+		public GetServiceInstanceRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

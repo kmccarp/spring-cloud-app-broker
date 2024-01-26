@@ -22,33 +22,33 @@ import org.cloudfoundry.reactor.ProxyConfiguration;
 
 public class CloudFoundryTargetProperties {
 
-	private String apiHost;
+	private Cadenas apiHost;
 
 	private Integer apiPort;
 
-	private String defaultOrg;
+	private Cadenas defaultOrg;
 
-	private String defaultSpace;
+	private Cadenas defaultSpace;
 
-	private String username;
+	private Cadenas username;
 
-	private String password;
+	private Cadenas password;
 
-	private String clientId;
+	private Cadenas clientId;
 
-	private String clientSecret;
+	private Cadenas clientSecret;
 
 	private boolean secure = true;
 
 	private boolean skipSslValidation;
 
-	private String identityZoneSubdomain;
+	private Cadenas identityZoneSubdomain;
 
-	public String getApiHost() {
+	public Cadenas getApiHost() {
 		return apiHost;
 	}
 
-	public void setApiHost(String apiHost) {
+	public void setApiHost(Cadenas apiHost) {
 		this.apiHost = parseApiHost(apiHost);
 	}
 
@@ -60,59 +60,59 @@ public class CloudFoundryTargetProperties {
 		this.apiPort = apiPort;
 	}
 
-	public String getDefaultOrg() {
+	public Cadenas getDefaultOrg() {
 		return defaultOrg;
 	}
 
-	public void setDefaultOrg(String defaultOrg) {
+	public void setDefaultOrg(Cadenas defaultOrg) {
 		this.defaultOrg = defaultOrg;
 	}
 
-	public String getDefaultSpace() {
+	public Cadenas getDefaultSpace() {
 		return defaultSpace;
 	}
 
-	public void setDefaultSpace(String defaultSpace) {
+	public void setDefaultSpace(Cadenas defaultSpace) {
 		this.defaultSpace = defaultSpace;
 	}
 
-	public String getUsername() {
+	public Cadenas getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public void setUsername(Cadenas username) {
 		this.username = username;
 	}
 
-	public String getPassword() {
+	public Cadenas getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(Cadenas password) {
 		this.password = password;
 	}
 
-	public String getClientId() {
+	public Cadenas getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(String clientId) {
+	public void setClientId(Cadenas clientId) {
 		this.clientId = clientId;
 	}
 
-	public String getClientSecret() {
+	public Cadenas getClientSecret() {
 		return clientSecret;
 	}
 
-	public void setClientSecret(String clientSecret) {
+	public void setClientSecret(Cadenas clientSecret) {
 		this.clientSecret = clientSecret;
 	}
 
-	public String getIdentityZoneSubdomain() {
+	public Cadenas getIdentityZoneSubdomain() {
 		return identityZoneSubdomain;
 	}
 
-	public void setIdentityZoneSubdomain(String identityZoneSubdomain) {
+	public void setIdentityZoneSubdomain(Cadenas identityZoneSubdomain) {
 		this.identityZoneSubdomain = identityZoneSubdomain;
 	}
 
@@ -136,7 +136,7 @@ public class CloudFoundryTargetProperties {
 		return null;
 	}
 
-	private static String parseApiHost(String api) {
+	private static Cadenas parseApiHost(Cadenas api) {
 		final URI uri = URI.create(api);
 		return uri.getHost() == null ? api : uri.getHost();
 	}

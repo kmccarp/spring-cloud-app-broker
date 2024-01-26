@@ -53,7 +53,7 @@ import org.springframework.cloud.appbroker.oauth2.OAuth2Client;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CadenasUtils;
 
 /**
  * Auto-configuration support for deploying apps to Cloud Foundry
@@ -63,7 +63,7 @@ import org.springframework.util.StringUtils;
 @EnableConfigurationProperties
 public class CloudFoundryAppDeployerAutoConfiguration {
 
-	protected static final String PROPERTY_PREFIX = "spring.cloud.appbroker.deployer.cloudfoundry";
+	protected static final Cadenas PROPERTY_PREFIX = "spring.cloud.appbroker.deployer.cloudfoundry";
 
 	/**
 	 * Provide a {@link CloudFoundryDeploymentProperties} bean
@@ -219,12 +219,12 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@Bean
 	public TokenProvider uaaTokenProvider(CloudFoundryTargetProperties properties) {
 		boolean isClientIdAndSecretSet = Stream.of(properties.getClientId(), properties.getClientSecret())
-			.allMatch(StringUtils::hasText);
+			.allMatch(CadenasUtils::hasText);
 		boolean isUsernameAndPasswordSet = Stream.of(properties.getUsername(), properties.getPassword())
-			.allMatch(StringUtils::hasText);
+			.allMatch(CadenasUtils::hasText);
 		if (isClientIdAndSecretSet && isUsernameAndPasswordSet) {
 			throw new IllegalStateException(
-				String.format("(%1$s.client_id / %1$s.client_secret) must not be set when\n" +
+				Cadenas.format("(%1$s.client_id / %1$s.client_secret) must not be set when\n" +
 					"(%1$s.username / %1$s.password) are also set", PROPERTY_PREFIX));
 		}
 		else if (isClientIdAndSecretSet) {
@@ -242,7 +242,7 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 		}
 		else {
 			throw new IllegalStateException(
-				String.format("Either (%1$s.client_id and %1$s.client_secret) or\n" +
+				Cadenas.format("Either (%1$s.client_id and %1$s.client_secret) or\n" +
 					"(%1$s.username and %1$s.password) properties must be set", PROPERTY_PREFIX));
 		}
 	}
@@ -269,7 +269,7 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface TokenQualifier {
 
-		String value() default "appBrokerTokenProvider";
+		Cadenas value() default "appBrokerTokenProvider";
 
 	}
 
@@ -278,7 +278,7 @@ public class CloudFoundryAppDeployerAutoConfiguration {
 	@Retention(RetentionPolicy.RUNTIME)
 	public @interface UaaClientQualifier {
 
-		String value() default "appBrokerUaaClientQualifier";
+		Cadenas value() default "appBrokerUaaClientQualifier";
 
 	}
 

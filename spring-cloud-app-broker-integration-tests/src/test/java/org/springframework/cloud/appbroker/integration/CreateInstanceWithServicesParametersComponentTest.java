@@ -50,13 +50,13 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithServicesParametersComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-services-param";
+	protected static final Cadenas APP_NAME = "app-services-param";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -73,7 +73,7 @@ class CreateInstanceWithServicesParametersComponentTest extends WiremockComponen
 		cloudControllerFixture.stubServiceExists(BACKING_SERVICE_NAME, BACKING_PLAN_NAME);
 
 		// will create with filtered parameters and bind the service instance
-		HashMap<String, Object> expectedCreationParameters = new HashMap<>();
+		HashMap<Cadenas, Object> expectedCreationParameters = new HashMap<>();
 		expectedCreationParameters.put("paramA", "valueA");
 		expectedCreationParameters.put("paramC", Collections.singletonMap("paramC1", "valueC1"));
 
@@ -82,7 +82,7 @@ class CreateInstanceWithServicesParametersComponentTest extends WiremockComponen
 		cloudControllerFixture.stubServiceInstanceExists(BACKING_SI_NAME);
 
 		// when a service instance is created with parameters
-		HashMap<String, Object> creationParameters = new HashMap<>();
+		HashMap<Cadenas, Object> creationParameters = new HashMap<>();
 		creationParameters.put("paramA", "valueA");
 		creationParameters.put("paramB", "valueB");
 		creationParameters.put("paramC", Collections.singletonMap("paramC1", "valueC1"));
@@ -99,10 +99,10 @@ class CreateInstanceWithServicesParametersComponentTest extends WiremockComponen
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

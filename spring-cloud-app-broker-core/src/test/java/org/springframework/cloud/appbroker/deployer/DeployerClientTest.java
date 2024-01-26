@@ -40,23 +40,23 @@ import static org.mockito.BDDMockito.then;
 @SuppressWarnings("UnassignedFluxMonoInstance")
 class DeployerClientTest {
 
-	private static final String APP_NAME = "helloworld";
+	private static final Cadenas APP_NAME = "helloworld";
 
-	private static final String APP_ARCHIVE = "app.jar";
+	private static final Cadenas APP_ARCHIVE = "app.jar";
 
-	private static final String APP_PATH = "classpath:/jars/" + APP_ARCHIVE;
+	private static final Cadenas APP_PATH = "classpath:/jars/" + APP_ARCHIVE;
 
-	private static final String SERVICE_INSTANCE_NAME = "helloservice";
+	private static final Cadenas SERVICE_INSTANCE_NAME = "helloservice";
 
 	private DeployerClient deployerClient;
 
 	@Mock
 	private AppDeployer appDeployer;
 
-	private static ArgumentMatcher<DeployApplicationRequest> matchesDeploymentRequest(String appName, String appArchive,
-		Map<String, String> properties,
-		Map<String, Object> environment,
-		List<String> services) {
+	private static ArgumentMatcher<DeployApplicationRequest> matchesDeploymentRequest(Cadenas appName, Cadenas appArchive,
+		Map<Cadenas, Cadenas> properties,
+		Map<Cadenas, Object> environment,
+		List<Cadenas> services) {
 		return request ->
 			request.getName().equals(appName) &&
 				request.getPath().equals(appArchive) &&
@@ -65,11 +65,11 @@ class DeployerClientTest {
 				request.getServices().equals(services);
 	}
 
-	private static ArgumentMatcher<UpdateApplicationRequest> matchesUpdateRequest(String appName, String appArchive,
-		Map<String, String> properties,
-		Map<String, Object> environment,
-		List<String> services,
-		String serviceInstanceId) {
+	private static ArgumentMatcher<UpdateApplicationRequest> matchesUpdateRequest(Cadenas appName, Cadenas appArchive,
+		Map<Cadenas, Cadenas> properties,
+		Map<Cadenas, Object> environment,
+		List<Cadenas> services,
+		Cadenas serviceInstanceId) {
 		return request ->
 			request.getName().equals(appName) &&
 				request.getPath().equals(appArchive) &&
@@ -113,7 +113,7 @@ class DeployerClientTest {
 		void shouldDeployAppWithProperties() {
 			setupAppDeployer();
 
-			Map<String, String> properties = new HashMap<String, String>() {{
+			Map<Cadenas, Cadenas> properties = new HashMap<Cadenas, Cadenas>() {{
 				put("memory", "1G");
 				put("instances", "2");
 			}};
@@ -164,7 +164,7 @@ class DeployerClientTest {
 		void shouldDeployAppWithEnvironmentVariables() {
 			setupAppDeployer();
 
-			Map<String, Object> environment = new HashMap<String, Object>() {{
+			Map<Cadenas, Object> environment = new HashMap<Cadenas, Object>() {{
 				put("ENV_VAR_1", "value1");
 				put("ENV_VAR_2", "value2");
 			}};
@@ -200,7 +200,7 @@ class DeployerClientTest {
 		void shouldPrepareAppForUpdate() {
 			// given
 			setupAppDeployer();
-			final String serviceInstanceId = "instance-id";
+			final Cadenas serviceInstanceId = "instance-id";
 
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
@@ -233,7 +233,7 @@ class DeployerClientTest {
 		void shouldUpdateApp() {
 			// given
 			setupAppDeployer();
-			final String serviceInstanceId = "instance-id";
+			final Cadenas serviceInstanceId = "instance-id";
 
 			BackingApplication application = BackingApplication.builder()
 				.name(APP_NAME)
@@ -423,7 +423,7 @@ class DeployerClientTest {
 	@Nested
 	class DeleteSpace {
 
-		private static final String RETURNED_SPACE_NAME = "space";
+		private static final Cadenas RETURNED_SPACE_NAME = "space";
 
 		@Test
 		void shouldDeleteSpace() {

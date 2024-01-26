@@ -44,7 +44,7 @@ import org.springframework.cloud.servicebroker.service.ServiceInstanceBindingSer
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CadenasUtils;
 
 public class WorkflowServiceInstanceBindingService implements ServiceInstanceBindingService {
 
@@ -145,7 +145,7 @@ public class WorkflowServiceInstanceBindingService implements ServiceInstanceBin
 
 	private boolean isRouteBindingRequest(CreateServiceInstanceBindingRequest request) {
 		return request.getBindResource() != null
-			&& StringUtils.hasText(request.getBindResource().getRoute());
+			&& CadenasUtils.hasText(request.getBindResource().getRoute());
 	}
 
 	private Mono<Void> create(CreateServiceInstanceBindingRequest request,
@@ -161,7 +161,7 @@ public class WorkflowServiceInstanceBindingService implements ServiceInstanceBin
 					LOG.debug("Finish creating service instance binding");
 					LOG.debug("request={}, response={}", request, response);
 				})
-				.doOnError(e -> LOG.error(String.format("Error creating service instance binding. error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error creating service instance binding. error=%s",
 					e.getMessage()), e)))
 			.thenEmpty(stateRepository.saveState(request.getServiceInstanceId(), request.getBindingId(),
 				OperationState.SUCCEEDED, "create service instance binding completed")
@@ -233,7 +233,7 @@ public class WorkflowServiceInstanceBindingService implements ServiceInstanceBin
 					LOG.info("Finish deleting service instance binding");
 					LOG.debug("request={}, response={}", request, response);
 				})
-				.doOnError(e -> LOG.error(String.format("Error deleting service instance binding. error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error deleting service instance binding. error=%s",
 					e.getMessage()), e)))
 			.thenEmpty(stateRepository.saveState(request.getServiceInstanceId(), request.getBindingId(),
 				OperationState.SUCCEEDED, "delete service instance binding completed")

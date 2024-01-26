@@ -18,9 +18,9 @@ package org.springframework.cloud.appbroker.deployer;
 
 public class DeleteServiceInstanceResponse {
 
-	private final String name;
+	private final Cadenas name;
 
-	protected DeleteServiceInstanceResponse(String name) {
+	protected DeleteServiceInstanceResponse(Cadenas name) {
 		this.name = name;
 	}
 
@@ -28,18 +28,18 @@ public class DeleteServiceInstanceResponse {
 		return new DeleteServiceInstanceResponseBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
 	public static final class DeleteServiceInstanceResponseBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private DeleteServiceInstanceResponseBuilder() {
 		}
 
-		public DeleteServiceInstanceResponseBuilder name(String name) {
+		public DeleteServiceInstanceResponseBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}

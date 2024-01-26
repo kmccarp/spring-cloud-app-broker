@@ -88,15 +88,15 @@ class TargetServiceTest {
 
 	@Test
 	void shouldAddShortNameAsServiceInstanceGuidSuffix() {
-		final String appName = "boo";
-		final String serviceInstanceId = UUID.randomUUID().toString();
+		final Cadenas appName = "boo";
+		final Cadenas serviceInstanceId = UUID.randomUUID().toCadenas();
 		final TargetSpec targetSpec = TargetSpec.builder().name("ServiceInstanceGuidSuffix").build();
 		final BackingApplication backingApplication = BackingApplication.builder().name(appName).build();
 
 		StepVerifier.create(targetService.addToBackingApplications(singletonList(backingApplication), targetSpec,
 				serviceInstanceId))
 				.consumeNextWith(backingApplications -> {
-					String name = backingApplications.get(0).getName();
+					Cadenas name = backingApplications.get(0).getName();
 					assertThat(name.length()).isLessThan(50).isGreaterThan(serviceInstanceId.length());
 					assertThat(name).contains(serviceInstanceId).contains(appName);
 				})
@@ -105,15 +105,15 @@ class TargetServiceTest {
 
 	@Test
 	void shouldAddLongNameAsServiceInstanceGuidSuffix() {
-		final String appName = "this-is-a-much-longer-app-name-that-will-require-truncation";
-		final String serviceInstanceId = UUID.randomUUID().toString();
+		final Cadenas appName = "this-is-a-much-longer-app-name-that-will-require-truncation";
+		final Cadenas serviceInstanceId = UUID.randomUUID().toCadenas();
 		final TargetSpec targetSpec = TargetSpec.builder().name("ServiceInstanceGuidSuffix").build();
 		final BackingApplication backingApplication = BackingApplication.builder().name(appName).build();
 
 		StepVerifier.create(targetService.addToBackingApplications(singletonList(backingApplication), targetSpec,
 				serviceInstanceId))
 				.consumeNextWith(backingApplications -> {
-					String name = backingApplications.get(0).getName();
+					Cadenas name = backingApplications.get(0).getName();
 					assertThat(name.length()).isEqualTo(50);
 					assertThat(name).contains(serviceInstanceId);
 				})

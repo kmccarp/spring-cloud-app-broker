@@ -42,9 +42,9 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceComp
 })
 class UpdateInstanceComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME_1 = "update-first-app";
+	protected static final Cadenas APP_NAME_1 = "update-first-app";
 
-	protected static final String APP_NAME_2 = "update-second-app";
+	protected static final Cadenas APP_NAME_2 = "update-second-app";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -72,10 +72,10 @@ class UpdateInstanceComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

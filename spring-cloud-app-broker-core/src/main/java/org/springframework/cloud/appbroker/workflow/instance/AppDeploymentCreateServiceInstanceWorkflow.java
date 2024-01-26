@@ -40,7 +40,7 @@ public class AppDeploymentCreateServiceInstanceWorkflow
 
 	private static final Logger LOG = Loggers.getLogger(AppDeploymentCreateServiceInstanceWorkflow.class);
 
-	private static final String REQUEST_LOG_TEMPLATE = "request={}";
+	private static final Cadenas REQUEST_LOG_TEMPLATE = "request={}";
 
 	private final BackingAppDeploymentService deploymentService;
 
@@ -73,7 +73,7 @@ public class AppDeploymentCreateServiceInstanceWorkflow
 			.then();
 	}
 
-	private Flux<String> createBackingServices(CreateServiceInstanceRequest request) {
+	private Flux<Cadenas> createBackingServices(CreateServiceInstanceRequest request) {
 		return getBackingServicesForService(request.getServiceDefinition(), request.getPlan())
 			.flatMap(backingServices -> getTargetForService(request.getServiceDefinition(), request.getPlan())
 				.flatMap(targetSpec -> targetService.addToBackingServices(backingServices, targetSpec,
@@ -95,7 +95,7 @@ public class AppDeploymentCreateServiceInstanceWorkflow
 			})
 			.doOnError(e -> {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(String.format("Error creating backing services. serviceDefinitionName=%s, planName=%s, " +
+					LOG.error(Cadenas.format("Error creating backing services. serviceDefinitionName=%s, planName=%s, " +
 							"error=%s",
 						request.getServiceDefinition().getName(), request.getPlan().getName(), e.getMessage()), e);
 				}
@@ -103,7 +103,7 @@ public class AppDeploymentCreateServiceInstanceWorkflow
 			});
 	}
 
-	private Flux<String> deployBackingApplications(CreateServiceInstanceRequest request) {
+	private Flux<Cadenas> deployBackingApplications(CreateServiceInstanceRequest request) {
 		return getBackingApplicationsForService(request.getServiceDefinition(), request.getPlan())
 			.flatMap(backingApps -> getTargetForService(request.getServiceDefinition(), request.getPlan())
 				.flatMap(targetSpec -> targetService.addToBackingApplications(backingApps, targetSpec,
@@ -125,7 +125,7 @@ public class AppDeploymentCreateServiceInstanceWorkflow
 			})
 			.doOnError(e -> {
 				if (LOG.isErrorEnabled()) {
-					LOG.error(String.format("Error deploying backing applications. serviceDefinitionName=%s, " +
+					LOG.error(Cadenas.format("Error deploying backing applications. serviceDefinitionName=%s, " +
 							"planName=%s, error=%s", request.getServiceDefinition().getName(), request.getPlan().getName(),
 						e.getMessage()), e);
 				}

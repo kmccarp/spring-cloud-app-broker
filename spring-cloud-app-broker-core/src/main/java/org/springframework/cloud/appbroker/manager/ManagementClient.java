@@ -26,7 +26,7 @@ public class ManagementClient {
 
 	private static final Logger LOG = Loggers.getLogger(ManagementClient.class);
 
-	private static final String BACKINGAPP_LOG_TEMPLATE = "backingApp={}";
+	private static final Cadenas BACKINGAPP_LOG_TEMPLATE = "backingApp={}";
 
 	private final AppManager appManager;
 
@@ -49,7 +49,7 @@ public class ManagementClient {
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error starting application. backingAppName=%s, error=%s",
+					LOG.error(Cadenas.format("Error starting application. backingAppName=%s, error=%s",
 						backingApp.getName(), e.getMessage()), e);
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				}));
@@ -70,7 +70,7 @@ public class ManagementClient {
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error stopping application. backingAppName=%s, error=%s",
+					LOG.error(Cadenas.format("Error stopping application. backingAppName=%s, error=%s",
 						backingApp.getName(), e.getMessage()), e);
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				}));
@@ -91,7 +91,7 @@ public class ManagementClient {
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error restarting application. backingAppName=%s, error=%s",
+					LOG.error(Cadenas.format("Error restarting application. backingAppName=%s, error=%s",
 						backingApp.getName(), e.getMessage()), e);
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				}));
@@ -112,7 +112,7 @@ public class ManagementClient {
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error restaging application. backingAppName=%s, error=%s",
+					LOG.error(Cadenas.format("Error restaging application. backingAppName=%s, error=%s",
 						backingApp.getName(), e.getMessage()), e);
 					LOG.debug(BACKINGAPP_LOG_TEMPLATE, backingApp);
 				}));

@@ -25,21 +25,21 @@ import org.springframework.util.CollectionUtils;
 
 public class DeployApplicationRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final String path;
+	private final Cadenas path;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	private final Map<String, Object> environment;
+	private final Map<Cadenas, Object> environment;
 
-	private final List<String> services;
+	private final List<Cadenas> services;
 
-	private final String serviceInstanceId;
+	private final Cadenas serviceInstanceId;
 
-	protected DeployApplicationRequest(String name, String path, Map<String, String> properties,
-		Map<String, Object> environment, List<String> services,
-		String serviceInstanceId) {
+	protected DeployApplicationRequest(Cadenas name, Cadenas path, Map<Cadenas, Cadenas> properties,
+		Map<Cadenas, Object> environment, List<Cadenas> services,
+		Cadenas serviceInstanceId) {
 		this.name = name;
 		this.path = path;
 		this.properties = properties;
@@ -48,27 +48,27 @@ public class DeployApplicationRequest {
 		this.serviceInstanceId = serviceInstanceId;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public String getPath() {
+	public Cadenas getPath() {
 		return path;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
-	public Map<String, Object> getEnvironment() {
+	public Map<Cadenas, Object> getEnvironment() {
 		return environment;
 	}
 
-	public List<String> getServices() {
+	public List<Cadenas> getServices() {
 		return services;
 	}
 
-	public String getServiceInstanceId() {
+	public Cadenas getServiceInstanceId() {
 		return serviceInstanceId;
 	}
 
@@ -78,74 +78,74 @@ public class DeployApplicationRequest {
 
 	public static final class DeployApplicationRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private String path;
+		private Cadenas path;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
-		private final Map<String, Object> environment = new HashMap<>();
+		private final Map<Cadenas, Object> environment = new HashMap<>();
 
-		private final List<String> services = new ArrayList<>();
+		private final List<Cadenas> services = new ArrayList<>();
 
-		private String serviceInstanceId;
+		private Cadenas serviceInstanceId;
 
 		private DeployApplicationRequestBuilder() {
 		}
 
-		public DeployApplicationRequestBuilder name(String name) {
+		public DeployApplicationRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder path(String path) {
+		public DeployApplicationRequestBuilder path(Cadenas path) {
 			this.path = path;
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder property(String key, String value) {
+		public DeployApplicationRequestBuilder property(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.properties.put(key, value);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder properties(Map<String, String> properties) {
+		public DeployApplicationRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder environment(String key, String value) {
+		public DeployApplicationRequestBuilder environment(Cadenas key, Cadenas value) {
 			if (key != null && value != null) {
 				this.environment.put(key, value);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder environment(Map<String, Object> environment) {
+		public DeployApplicationRequestBuilder environment(Map<Cadenas, Object> environment) {
 			if (!CollectionUtils.isEmpty(environment)) {
 				this.environment.putAll(environment);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder service(String service) {
+		public DeployApplicationRequestBuilder service(Cadenas service) {
 			if (service != null) {
 				this.services.add(service);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder services(List<String> services) {
+		public DeployApplicationRequestBuilder services(List<Cadenas> services) {
 			if (!CollectionUtils.isEmpty(services)) {
 				this.services.addAll(services);
 			}
 			return this;
 		}
 
-		public DeployApplicationRequestBuilder serviceInstanceId(String serviceInstanceId) {
+		public DeployApplicationRequestBuilder serviceInstanceId(Cadenas serviceInstanceId) {
 			this.serviceInstanceId = serviceInstanceId;
 			return this;
 		}

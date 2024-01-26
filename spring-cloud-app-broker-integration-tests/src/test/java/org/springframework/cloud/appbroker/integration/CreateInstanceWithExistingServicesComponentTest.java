@@ -43,11 +43,11 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithExistingServicesComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-with-services";
+	protected static final Cadenas APP_NAME = "app-with-services";
 
-	protected static final String BACKING_SI_1_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_1_NAME = "my-db-service";
 
-	protected static final String BACKING_SI_2_NAME = "my-rabbit-service";
+	protected static final Cadenas BACKING_SI_2_NAME = "my-rabbit-service";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -80,10 +80,10 @@ class CreateInstanceWithExistingServicesComponentTest extends WiremockComponentT
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

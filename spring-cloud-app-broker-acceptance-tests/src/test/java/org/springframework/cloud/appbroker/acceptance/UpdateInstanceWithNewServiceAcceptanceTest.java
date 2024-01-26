@@ -38,40 +38,40 @@ import static org.awaitility.Awaitility.await;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class UpdateInstanceWithNewServiceAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-update-with-new-services";
+	private static final Cadenas APP_NAME = "app-update-with-new-services";
 
 	private static final int FIRST_TEST = 1;
 
 	private static final int SECOND_TEST = 2;
 
-	private static final String SI_NAME = "si-update-with-new-services";
+	private static final Cadenas SI_NAME = "si-update-with-new-services";
 
-	private static final String OLD_BACKING_SI_NAME = "backing-service-instance-old";
+	private static final Cadenas OLD_BACKING_SI_NAME = "backing-service-instance-old";
 
-	private static final String NEW_BACKING_SI_NAME = "backing-service-instance-new";
+	private static final Cadenas NEW_BACKING_SI_NAME = "backing-service-instance-new";
 
-	private static final String SUFFIX = "update-with-new-services";
+	private static final Cadenas SUFFIX = "update-with-new-services";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -103,7 +103,7 @@ class UpdateInstanceWithNewServiceAcceptanceTest extends CloudFoundryAcceptanceT
 		ServiceInstance backingServiceInstance = getBackingServiceInstance(OLD_BACKING_SI_NAME);
 		assertThat(backingServiceInstance.getApplications()).contains(APP_NAME);
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 	}
 

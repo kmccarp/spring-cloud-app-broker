@@ -47,10 +47,10 @@ public class ManagementController {
 	 * @return a response
 	 */
 	@GetMapping("/start/{serviceName}/{planName}/{serviceInstanceId}")
-	public Mono<String> startApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
+	public Mono<Cadenas> startApplications(
+		@PathVariable Cadenas serviceInstanceId,
+		@PathVariable Cadenas serviceName,
+		@PathVariable Cadenas planName
 	) {
 		return service.start(serviceInstanceId, serviceName, planName)
 			.thenReturn("starting " + serviceInstanceId);
@@ -63,10 +63,10 @@ public class ManagementController {
 	 * @return a response
 	 */
 	@GetMapping("/stop/{serviceName}/{planName}/{serviceInstanceId}")
-	public Mono<String> stopApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
+	public Mono<Cadenas> stopApplications(
+		@PathVariable Cadenas serviceInstanceId,
+		@PathVariable Cadenas serviceName,
+		@PathVariable Cadenas planName
 	) {
 		return service.stop(serviceInstanceId, serviceName, planName)
 			.thenReturn("stopping " + serviceInstanceId);
@@ -79,10 +79,10 @@ public class ManagementController {
 	 * @return a response
 	 */
 	@GetMapping("/restart/{serviceName}/{planName}/{serviceInstanceId}")
-	public Mono<String> restartApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
+	public Mono<Cadenas> restartApplications(
+		@PathVariable Cadenas serviceInstanceId,
+		@PathVariable Cadenas serviceName,
+		@PathVariable Cadenas planName
 	) {
 		return service.restart(serviceInstanceId, serviceName, planName)
 			.thenReturn("restarting " + serviceInstanceId);
@@ -95,10 +95,10 @@ public class ManagementController {
 	 * @return a response
 	 */
 	@GetMapping("/restage/{serviceName}/{planName}/{serviceInstanceId}")
-	public Mono<String> restageApplications(
-		@PathVariable String serviceInstanceId,
-		@PathVariable String serviceName,
-		@PathVariable String planName
+	public Mono<Cadenas> restageApplications(
+		@PathVariable Cadenas serviceInstanceId,
+		@PathVariable Cadenas serviceName,
+		@PathVariable Cadenas planName
 	) {
 		return service.restage(serviceInstanceId, serviceName, planName)
 			.thenReturn("restaging " + serviceInstanceId);

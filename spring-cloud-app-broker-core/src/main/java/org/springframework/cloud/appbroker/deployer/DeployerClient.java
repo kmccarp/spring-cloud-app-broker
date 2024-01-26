@@ -32,7 +32,7 @@ public class DeployerClient {
 		this.appDeployer = appDeployer;
 	}
 
-	public Mono<String> deploy(BackingApplication backingApplication, String serviceInstanceId) {
+	public Mono<Cadenas> deploy(BackingApplication backingApplication, Cadenas serviceInstanceId) {
 		return appDeployer
 			.deploy(DeployApplicationRequest
 				.builder()
@@ -54,14 +54,14 @@ public class DeployerClient {
 				debugLog(response, backingApplication);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error deploying application. backingAppName=%s, error=%s",
+				LOG.error(Cadenas.format("Error deploying application. backingAppName=%s, error=%s",
 					backingApplication.getName(), e.getMessage()), e);
 				debugLog(backingApplication);
 			})
 			.map(DeployApplicationResponse::getName);
 	}
 
-	public Mono<String> preUpdate(BackingApplication backingApplication, String serviceInstanceId) {
+	public Mono<Cadenas> preUpdate(BackingApplication backingApplication, Cadenas serviceInstanceId) {
 		return appDeployer.preUpdate(getUpdateApplicationRequest(backingApplication, serviceInstanceId))
 			.doOnRequest(l -> {
 				LOG.info("Pre-updating application. backingAppName={}", backingApplication.getName());
@@ -72,14 +72,14 @@ public class DeployerClient {
 				debugLog(response, backingApplication);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error pre-updating application. backingAppName=%s, error=%s",
+				LOG.error(Cadenas.format("Error pre-updating application. backingAppName=%s, error=%s",
 					backingApplication.getName(), e.getMessage()), e);
 				debugLog(backingApplication);
 			})
 			.map(UpdateApplicationResponse::getName);
 	}
 
-	public Mono<String> update(BackingApplication backingApplication, String serviceInstanceId) {
+	public Mono<Cadenas> update(BackingApplication backingApplication, Cadenas serviceInstanceId) {
 		return appDeployer
 			.update(getUpdateApplicationRequest(backingApplication, serviceInstanceId))
 			.doOnRequest(l -> {
@@ -91,14 +91,14 @@ public class DeployerClient {
 				debugLog(response, backingApplication);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error updating application. backingAppName=%s, error=%s",
+				LOG.error(Cadenas.format("Error updating application. backingAppName=%s, error=%s",
 					backingApplication.getName(), e.getMessage()), e);
 				debugLog(backingApplication);
 			})
 			.map(UpdateApplicationResponse::getName);
 	}
 
-	public Mono<String> undeploy(BackingApplication backingApplication) {
+	public Mono<Cadenas> undeploy(BackingApplication backingApplication) {
 		return appDeployer
 			.undeploy(UndeployApplicationRequest
 				.builder()
@@ -114,7 +114,7 @@ public class DeployerClient {
 				debugLog(response, backingApplication);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error undeploying application. backingAppName=%s, error=%s",
+				LOG.error(Cadenas.format("Error undeploying application. backingAppName=%s, error=%s",
 					backingApplication.getName(), e.getMessage()), e);
 				debugLog(backingApplication);
 			})
@@ -124,7 +124,7 @@ public class DeployerClient {
 			.map(UndeployApplicationResponse::getName);
 	}
 
-	public Mono<String> createServiceInstance(BackingService backingService) {
+	public Mono<Cadenas> createServiceInstance(BackingService backingService) {
 		return appDeployer
 			.createServiceInstance(
 				CreateServiceInstanceRequest
@@ -144,14 +144,14 @@ public class DeployerClient {
 				debugLog(response, backingService);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error creating backing service. backingServiceName=%s, error=%s",
+				LOG.error(Cadenas.format("Error creating backing service. backingServiceName=%s, error=%s",
 					backingService.getName(), e.getMessage()), e);
 				debugLog(backingService);
 			})
 			.map(CreateServiceInstanceResponse::getName);
 	}
 
-	public Mono<String> updateServiceInstance(BackingService backingService) {
+	public Mono<Cadenas> updateServiceInstance(BackingService backingService) {
 		return appDeployer
 			.updateServiceInstance(
 				UpdateServiceInstanceRequest
@@ -170,14 +170,14 @@ public class DeployerClient {
 				debugLog(response, backingService);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error updating backing service. backingServiceName=%s, error=%s",
+				LOG.error(Cadenas.format("Error updating backing service. backingServiceName=%s, error=%s",
 					backingService.getName(), e.getMessage()), e);
 				debugLog(backingService);
 			})
 			.map(UpdateServiceInstanceResponse::getName);
 	}
 
-	public Mono<String> deleteServiceInstance(BackingService backingService) {
+	public Mono<Cadenas> deleteServiceInstance(BackingService backingService) {
 		return appDeployer
 			.deleteServiceInstance(
 				DeleteServiceInstanceRequest
@@ -194,7 +194,7 @@ public class DeployerClient {
 				debugLog(response, backingService);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error deleting backing service. backingServiceName=%s, error=%s",
+				LOG.error(Cadenas.format("Error deleting backing service. backingServiceName=%s, error=%s",
 					backingService.getName(), e.getMessage()), e);
 				debugLog(backingService);
 			})
@@ -204,7 +204,7 @@ public class DeployerClient {
 			.map(DeleteServiceInstanceResponse::getName);
 	}
 
-	public Mono<String> deleteSpace(String spaceName) {
+	public Mono<Cadenas> deleteSpace(Cadenas spaceName) {
 		return appDeployer
 			.deleteBackingSpace(
 				DeleteBackingSpaceRequest
@@ -218,7 +218,7 @@ public class DeployerClient {
 				LOG.info("Success deleting backing space {}", spaceName);
 			})
 			.doOnError(e -> {
-				LOG.error(String.format("Error deleting backing space. backingSpaceName=%s, error=%s",
+				LOG.error(Cadenas.format("Error deleting backing space. backingSpaceName=%s, error=%s",
 					spaceName, e.getMessage()), e);
 			})
 			.onErrorReturn(DeleteBackingSpaceResponse.builder()
@@ -228,7 +228,7 @@ public class DeployerClient {
 	}
 
 	private static UpdateApplicationRequest getUpdateApplicationRequest(BackingApplication backingApplication,
-		String serviceInstanceId) {
+		Cadenas serviceInstanceId) {
 		return UpdateApplicationRequest
 			.builder()
 			.name(backingApplication.getName())

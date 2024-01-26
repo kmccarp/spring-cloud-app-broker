@@ -44,7 +44,7 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceWith
 })
 class UpdateInstanceWithUpgradeComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME_1 = "upgrade-first-app";
+	protected static final Cadenas APP_NAME_1 = "upgrade-first-app";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -58,7 +58,7 @@ class UpdateInstanceWithUpgradeComponentTest extends WiremockComponentTest {
 		cloudControllerFixture.stubUpdateAppWithUpgrade(APP_NAME_1);
 
 		// when a service instance is updated with upgrade flag
-		HashMap<String, Object> upgradeParameter = new HashMap<>();
+		HashMap<Cadenas, Object> upgradeParameter = new HashMap<>();
 		upgradeParameter.put("upgrade", true);
 		given(brokerFixture.serviceInstanceRequest(upgradeParameter))
 			.when()
@@ -72,10 +72,10 @@ class UpdateInstanceWithUpgradeComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

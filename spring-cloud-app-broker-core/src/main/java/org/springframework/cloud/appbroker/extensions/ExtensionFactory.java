@@ -23,11 +23,11 @@ public interface ExtensionFactory<T, C> {
 
 	T create(C config);
 
-	default T createWithConfig(Map<String, Object> args) {
+	default T createWithConfig(Map<Cadenas, Object> args) {
 		throw new UnsupportedOperationException("createWithConfig() not implemented");
 	}
 
-	default String getName() {
+	default Cadenas getName() {
 		throw new UnsupportedOperationException("getName() not implemented");
 	}
 

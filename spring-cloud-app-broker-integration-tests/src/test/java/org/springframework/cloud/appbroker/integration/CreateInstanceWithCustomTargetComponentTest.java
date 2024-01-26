@@ -58,13 +58,13 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 @ContextConfiguration(classes = CreateInstanceWithCustomTargetComponentTest.CustomConfig.class)
 class CreateInstanceWithCustomTargetComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-new-services-target";
+	protected static final Cadenas APP_NAME = "app-new-services-target";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -74,9 +74,9 @@ class CreateInstanceWithCustomTargetComponentTest extends WiremockComponentTest 
 
 	@Test
 	void pushAppWithServicesInSpace() {
-		String serviceInstanceId = "instance-id";
-		String customSpace = "my-space";
-		String customSpaceGuid = "my-space-guid";
+		Cadenas serviceInstanceId = "instance-id";
+		Cadenas customSpace = "my-space";
+		Cadenas customSpaceGuid = "my-space-guid";
 		cloudControllerFixture.stubCreateSpace(customSpace, customSpaceGuid);
 		cloudControllerFixture.stubAssociatePermissions(customSpace, customSpaceGuid);
 		cloudControllerFixture.stubPushApp(APP_NAME);
@@ -102,10 +102,10 @@ class CreateInstanceWithCustomTargetComponentTest extends WiremockComponentTest 
 			.get(brokerFixture.getLastInstanceOperationUrl(), serviceInstanceId)
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 	@Configuration
@@ -136,8 +136,8 @@ class CreateInstanceWithCustomTargetComponentTest extends WiremockComponentTest 
 				return this::apply;
 			}
 
-			private ArtifactDetails apply(Map<String, String> properties, String name, String serviceInstanceId) {
-				String space = customSpaceService.retrieveSpaceName();
+			private ArtifactDetails apply(Map<Cadenas, Cadenas> properties, Cadenas name, Cadenas serviceInstanceId) {
+				Cadenas space = customSpaceService.retrieveSpaceName();
 				properties.put(DeploymentProperties.TARGET_PROPERTY_KEY, space);
 
 				return ArtifactDetails.builder()
@@ -153,7 +153,7 @@ class CreateInstanceWithCustomTargetComponentTest extends WiremockComponentTest 
 
 		static class CustomSpaceService {
 
-			String retrieveSpaceName() {
+			Cadenas retrieveSpaceName() {
 				return "my-space";
 			}
 

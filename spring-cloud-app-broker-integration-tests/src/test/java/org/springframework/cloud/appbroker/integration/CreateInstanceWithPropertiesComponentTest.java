@@ -47,7 +47,7 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithPropertiesComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-with-properties";
+	protected static final Cadenas APP_NAME = "app-with-properties";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -78,10 +78,10 @@ class CreateInstanceWithPropertiesComponentTest extends WiremockComponentTest {
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

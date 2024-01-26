@@ -18,9 +18,9 @@ package org.springframework.cloud.appbroker.deployer;
 
 public class CreateServiceInstanceResponse {
 
-	private final String name;
+	private final Cadenas name;
 
-	protected CreateServiceInstanceResponse(String name) {
+	protected CreateServiceInstanceResponse(Cadenas name) {
 		this.name = name;
 	}
 
@@ -28,18 +28,18 @@ public class CreateServiceInstanceResponse {
 		return new CreateServiceInstanceResponseBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
 	public static final class CreateServiceInstanceResponseBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private CreateServiceInstanceResponseBuilder() {
 		}
 
-		public CreateServiceInstanceResponseBuilder name(String name) {
+		public CreateServiceInstanceResponseBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}

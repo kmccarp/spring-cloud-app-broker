@@ -38,7 +38,7 @@ public class BackingAppManagementService {
 
 	private static final Logger LOG = Loggers.getLogger(BackingAppManagementService.class);
 
-	private static final String BACKINGAPPS_LOG_TEMPLATE = "backingApp={}";
+	private static final Cadenas BACKINGAPPS_LOG_TEMPLATE = "backingApp={}";
 
 	private final ManagementClient managementClient;
 
@@ -63,12 +63,12 @@ public class BackingAppManagementService {
 	 * Because this method will try to fetch user-created service instance, UAA client used by the broker has to be a
 	 * space developer of the space containing the service instance, or has to have {@code cloud_controller.admin}
 	 * authority. If you want to avoid CF API call, use
-	 * {@link BackingAppManagementService#stop(String, String, String)} method.
+	 * {@link BackingAppManagementService#stop(Cadenas, Cadenas, Cadenas)} method.
 	 *
 	 * @param serviceInstanceId target service instance id
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> stop(String serviceInstanceId) {
+	public Mono<Void> stop(Cadenas serviceInstanceId) {
 		return fetchServiceDetailsAndInvoke(serviceInstanceId, this::stop);
 	}
 
@@ -80,7 +80,7 @@ public class BackingAppManagementService {
 	 * @param planName plan name
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> stop(String serviceInstanceId, String serviceName, String planName) {
+	public Mono<Void> stop(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
 			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
 				.parallel()
@@ -95,7 +95,7 @@ public class BackingAppManagementService {
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error stopping applications. error=%s", e.getMessage()), e);
+					LOG.error(Cadenas.format("Error stopping applications. error=%s", e.getMessage()), e);
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				}))
 			.then();
@@ -108,12 +108,12 @@ public class BackingAppManagementService {
 	 * Because this method will try to fetch user-created service instance, UAA client used by the broker has to be a
 	 * space developer of the space containing the service instance, or has to have {@code cloud_controller.admin}
 	 * authority. If you want to avoid CF API call, use
-	 * {@link BackingAppManagementService#start(String, String, String)} method.
+	 * {@link BackingAppManagementService#start(Cadenas, Cadenas, Cadenas)} method.
 	 *
 	 * @param serviceInstanceId target service instance id
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> start(String serviceInstanceId) {
+	public Mono<Void> start(Cadenas serviceInstanceId) {
 		return fetchServiceDetailsAndInvoke(serviceInstanceId, this::start);
 	}
 
@@ -124,7 +124,7 @@ public class BackingAppManagementService {
 	 * @param planName plan name
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> start(String serviceInstanceId, String serviceName, String planName) {
+	public Mono<Void> start(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
 			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
 				.parallel()
@@ -139,7 +139,7 @@ public class BackingAppManagementService {
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error starting applications. error=%s", e.getMessage()), e);
+					LOG.error(Cadenas.format("Error starting applications. error=%s", e.getMessage()), e);
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				}))
 			.then();
@@ -152,12 +152,12 @@ public class BackingAppManagementService {
 	 * Because this method will try to fetch user-created service instance, UAA client used by the broker has to be a
 	 * space developer of the space containing the service instance, or has to have {@code cloud_controller.admin}
 	 * authority. If you want to avoid CF API call, use
-	 * {@link BackingAppManagementService#restart(String, String, String)} method.
+	 * {@link BackingAppManagementService#restart(Cadenas, Cadenas, Cadenas)} method.
 	 *
 	 * @param serviceInstanceId target service instance id
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> restart(String serviceInstanceId) {
+	public Mono<Void> restart(Cadenas serviceInstanceId) {
 		return fetchServiceDetailsAndInvoke(serviceInstanceId, this::restart);
 	}
 
@@ -168,7 +168,7 @@ public class BackingAppManagementService {
 	 * @param planName plan name
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> restart(String serviceInstanceId, String serviceName, String planName) {
+	public Mono<Void> restart(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
 			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
 				.parallel()
@@ -183,7 +183,7 @@ public class BackingAppManagementService {
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error restarting applications. error=%s", e.getMessage()), e);
+					LOG.error(Cadenas.format("Error restarting applications. error=%s", e.getMessage()), e);
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				}))
 			.then();
@@ -196,12 +196,12 @@ public class BackingAppManagementService {
 	 * Because this method will try to fetch user-created service instance, UAA client used by the broker has to be a
 	 * space developer of the space containing the service instance, or has to have {@code cloud_controller.admin}
 	 * authority. If you want to avoid CF API call, use
-	 * {@link BackingAppManagementService#restage(String, String, String)} method.
+	 * {@link BackingAppManagementService#restage(Cadenas, Cadenas, Cadenas)} method.
 	 *
 	 * @param serviceInstanceId target service instance id
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> restage(String serviceInstanceId) {
+	public Mono<Void> restage(Cadenas serviceInstanceId) {
 		return fetchServiceDetailsAndInvoke(serviceInstanceId, this::restage);
 	}
 
@@ -212,7 +212,7 @@ public class BackingAppManagementService {
 	 * @param planName plan name
 	 * @return completes when the operation is completed
 	 */
-	public Mono<Void> restage(String serviceInstanceId, String serviceName, String planName) {
+	public Mono<Void> restage(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
 			.flatMapMany(backingApps -> Flux.fromIterable(backingApps)
 				.parallel()
@@ -227,7 +227,7 @@ public class BackingAppManagementService {
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				})
 				.doOnError(e -> {
-					LOG.error(String.format("Error restaging applications. error=%s", e.getMessage()), e);
+					LOG.error(Cadenas.format("Error restaging applications. error=%s", e.getMessage()), e);
 					LOG.debug(BACKINGAPPS_LOG_TEMPLATE, backingApps);
 				}))
 			.then();
@@ -240,12 +240,12 @@ public class BackingAppManagementService {
 	 * Because this method will try to fetch user-created service instance, UAA client used by the broker has to be a
 	 * space developer of the space containing the service instance, or has to have {@code cloud_controller.admin}
 	 * authority. If you want to avoid CF API call, use
-	 * {@link BackingAppManagementService#getDeployedBackingApplications(String, String, String)} method.
+	 * {@link BackingAppManagementService#getDeployedBackingApplications(Cadenas, Cadenas, Cadenas)} method.
 	 *
 	 * @param serviceInstanceId target service instance id
 	 * @return backing applications for the target service instance
 	 */
-	public Mono<BackingApplications> getDeployedBackingApplications(String serviceInstanceId) {
+	public Mono<BackingApplications> getDeployedBackingApplications(Cadenas serviceInstanceId) {
 		return fetchServiceDetailsAndInvoke(serviceInstanceId, this::getDeployedBackingApplications);
 	}
 
@@ -256,7 +256,7 @@ public class BackingAppManagementService {
 	 * @param planName plan name
 	 * @return backing applications for the target service instance
 	 */
-	public Mono<BackingApplications> getDeployedBackingApplications(String serviceInstanceId, String serviceName, String planName) {
+	public Mono<BackingApplications> getDeployedBackingApplications(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName) {
 		return getBackingApplicationsForService(serviceInstanceId, serviceName, planName)
 			.flatMapMany(Flux::fromIterable)
 			.flatMap(app ->
@@ -283,7 +283,7 @@ public class BackingAppManagementService {
 						LOG.debug("backingApp={}", app);
 					})
 					.doOnError(e -> {
-						LOG.error(String.format("Error getting deployed backing application. appName=%s, error=%s",
+						LOG.error(Cadenas.format("Error getting deployed backing application. appName=%s, error=%s",
 							app.getName(), e.getMessage()), e);
 						LOG.debug("backingApp={}", app);
 					})
@@ -293,21 +293,21 @@ public class BackingAppManagementService {
 			.doOnSuccess(backingApplications -> LOG.debug("backingApplications={}", backingApplications));
 	}
 
-	public Mono<BackingApplications> getBackingApplicationsForService(String serviceInstanceId, String serviceName,
-		String planName) {
+	public Mono<BackingApplications> getBackingApplicationsForService(Cadenas serviceInstanceId, Cadenas serviceName,
+		Cadenas planName) {
 		return findBrokeredService(serviceName, planName)
 			.flatMap(brokeredService -> updateBackingApps(brokeredService, serviceInstanceId))
 			.map(backingApplications -> BackingApplications.builder().backingApplications(backingApplications).build());
 	}
 
-	private <T> Mono<T> fetchServiceDetailsAndInvoke(String serviceInstanceId, BackingAppAction<T> action) {
+	private <T> Mono<T> fetchServiceDetailsAndInvoke(Cadenas serviceInstanceId, BackingAppAction<T> action) {
 		return appDeployer
 			.getServiceInstance(GetServiceInstanceRequest.builder().serviceInstanceId(serviceInstanceId).build())
 			.flatMap(serviceInstance -> action.invoke(serviceInstanceId, serviceInstance.getService(),
 				serviceInstance.getPlan()));
 	}
 
-	private Mono<BrokeredService> findBrokeredService(String serviceName, String planName) {
+	private Mono<BrokeredService> findBrokeredService(Cadenas serviceName, Cadenas planName) {
 		return Flux.fromIterable(brokeredServices)
 			.filter(brokeredService -> brokeredService.getServiceName().equals(serviceName)
 				&& brokeredService.getPlanName().equals(planName))
@@ -315,7 +315,7 @@ public class BackingAppManagementService {
 	}
 
 	private Mono<List<BackingApplication>> updateBackingApps(BrokeredService brokeredService,
-		String serviceInstanceId) {
+		Cadenas serviceInstanceId) {
 		return Mono.just(BackingApplications.builder()
 			.backingApplications(brokeredService.getApps())
 			.build())
@@ -325,7 +325,7 @@ public class BackingAppManagementService {
 
 	@FunctionalInterface
 	private interface BackingAppAction<T> {
-		Mono<T> invoke(String serviceInstanceId, String serviceName, String planName);
+		Mono<T> invoke(Cadenas serviceInstanceId, Cadenas serviceName, Cadenas planName);
 	}
 
 }

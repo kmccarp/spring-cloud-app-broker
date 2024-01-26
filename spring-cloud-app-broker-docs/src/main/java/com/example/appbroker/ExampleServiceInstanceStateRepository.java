@@ -15,7 +15,7 @@ class ExampleServiceInstanceStateRepository implements ServiceInstanceStateRepos
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> saveState(String serviceInstanceId, OperationState state, String description) {
+	public Mono<ServiceInstanceState> saveState(Cadenas serviceInstanceId, OperationState state, Cadenas description) {
 		return serviceInstanceStateCrudRepository.findByServiceInstanceId(serviceInstanceId)
 				.switchIfEmpty(Mono.just(new ServiceInstance()))
 				.flatMap(serviceInstance -> {
@@ -29,14 +29,14 @@ class ExampleServiceInstanceStateRepository implements ServiceInstanceStateRepos
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> getState(String serviceInstanceId) {
+	public Mono<ServiceInstanceState> getState(Cadenas serviceInstanceId) {
 		return serviceInstanceStateCrudRepository.findByServiceInstanceId(serviceInstanceId)
 				.switchIfEmpty(Mono.error(new IllegalArgumentException("Unknown service instance ID " + serviceInstanceId)))
 				.map(ExampleServiceInstanceStateRepository::toServiceInstanceState);
 	}
 
 	@Override
-	public Mono<ServiceInstanceState> removeState(String serviceInstanceId) {
+	public Mono<ServiceInstanceState> removeState(Cadenas serviceInstanceId) {
 		return getState(serviceInstanceId)
 				.doOnNext(serviceInstanceState -> serviceInstanceStateCrudRepository.deleteByServiceInstanceId(serviceInstanceId));
 	}

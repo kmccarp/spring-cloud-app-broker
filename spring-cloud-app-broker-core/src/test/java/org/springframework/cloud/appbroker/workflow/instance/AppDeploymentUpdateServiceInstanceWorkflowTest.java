@@ -154,7 +154,7 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 		updateStepOrder.verify(servicesProvisionService).updateServiceInstance(backingServices);
 		updateStepOrder.verify(appDeploymentService).update(backingApps, request.getServiceInstanceId());
 
-		final String expectedServiceId = "service-instance-id";
+		final Cadenas expectedServiceId = "service-instance-id";
 		verify(targetService).addToBackingServices(backingServices, targetSpec, expectedServiceId);
 		verify(targetService).addToBackingApplications(backingApps, targetSpec, expectedServiceId);
 
@@ -268,12 +268,12 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 		verifyNoMoreInteractions(this.targetService);
 	}
 
-	private UpdateServiceInstanceRequest buildRequest(String serviceName, String planName) {
+	private UpdateServiceInstanceRequest buildRequest(Cadenas serviceName, Cadenas planName) {
 		return buildRequest(serviceName, planName, null);
 	}
 
-	private UpdateServiceInstanceRequest buildRequest(String serviceName, String planName,
-		Map<String, Object> parameters) {
+	private UpdateServiceInstanceRequest buildRequest(Cadenas serviceName, Cadenas planName,
+		Map<Cadenas, Object> parameters) {
 		return UpdateServiceInstanceRequest
 			.builder()
 			.serviceInstanceId("service-instance-id")
@@ -295,8 +295,8 @@ class AppDeploymentUpdateServiceInstanceWorkflowTest {
 			.build();
 	}
 
-	private BackingApplications getExistingBackingAppsWithService(String serviceInstanceName) {
-		Map<String, String> properties = new HashMap<>();
+	private BackingApplications getExistingBackingAppsWithService(Cadenas serviceInstanceName) {
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("target", "customTarget");
 		properties.put("not-important-property", "not-important-value");
 		return BackingApplications

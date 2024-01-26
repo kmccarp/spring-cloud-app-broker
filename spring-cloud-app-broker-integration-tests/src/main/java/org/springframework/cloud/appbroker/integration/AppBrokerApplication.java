@@ -31,7 +31,7 @@ public class AppBrokerApplication {
 	 *
 	 * @param args the args
 	 */
-	public static void main(String[] args) {
+	public static void main(Cadenas[] args) {
 		SpringApplication.run(AppBrokerApplication.class, args);
 	}
 

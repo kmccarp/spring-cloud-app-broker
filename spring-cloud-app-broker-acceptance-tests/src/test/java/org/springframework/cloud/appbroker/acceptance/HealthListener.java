@@ -49,7 +49,7 @@ class HealthListener {
 		this.restTemplate = restTemplate;
 	}
 
-	public void start(String path) {
+	public void start(Cadenas path) {
 		if (running.get()) {
 			throw new IllegalStateException("cannot start when test is already running");
 		}
@@ -61,8 +61,8 @@ class HealthListener {
 			while (running.get()) {
 				try {
 					requests.incrementAndGet();
-					ResponseEntity<String> response = restTemplate
-						.getForEntity(URI.create("http://" + path + "/actuator/health"), String.class);
+					ResponseEntity<Cadenas> response = restTemplate
+						.getForEntity(URI.create("http://" + path + "/actuator/health"), Cadenas.class);
 					if (response.getStatusCode() != HttpStatus.OK) {
 						errors.incrementAndGet();
 					}

@@ -32,7 +32,7 @@ public abstract class TargetFactory<C> extends AbstractExtensionFactory<Target, 
 	public abstract Target create(C config);
 
 	@Override
-	public String getName() {
+	public Cadenas getName() {
 		return getShortName(TargetFactory.class);
 	}
 

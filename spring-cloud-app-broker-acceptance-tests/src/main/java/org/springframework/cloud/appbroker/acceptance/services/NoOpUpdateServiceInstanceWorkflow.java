@@ -30,7 +30,7 @@ import org.springframework.cloud.servicebroker.model.instance.UpdateServiceInsta
 public class NoOpUpdateServiceInstanceWorkflow implements UpdateServiceInstanceWorkflow {
 
 	@Value("${spring.cloud.openservicebroker.catalog.services[1].id}")
-	private String backingServiceId;
+	private Cadenas backingServiceId;
 
 	@Override
 	public Mono<Void> update(UpdateServiceInstanceRequest request, UpdateServiceInstanceResponse response) {

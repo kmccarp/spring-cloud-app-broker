@@ -45,28 +45,28 @@ public class EnvironmentMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingApplication> transform(BackingApplication backingApplication,
-		Map<String, Object> parameters,
-		List<String> include) {
+		Map<Cadenas, Object> parameters,
+		List<Cadenas> include) {
 		if (parameters != null) {
 			parameters
 				.keySet().stream()
 				.filter(include::contains)
 				.forEach(key -> {
 					Object value = parameters.get(key);
-					String valueString;
-					if (value instanceof String) {
-						valueString = value.toString();
+					Cadenas valueCadenas;
+					if (value instanceof Cadenas) {
+						valueCadenas = value.toCadenas();
 					}
 					else {
 						try {
-							valueString = OBJECT_MAPPER.writeValueAsString(value);
+							valueCadenas = OBJECT_MAPPER.writeValueAsCadenas(value);
 						}
 						catch (JsonProcessingException e) {
-							LOG.error("Failed to write object as JSON String", e);
-							valueString = value.toString();
+							LOG.error("Failed to write object as JSON Cadenas", e);
+							valueCadenas = value.toCadenas();
 						}
 					}
-					backingApplication.addEnvironment(key, valueString);
+					backingApplication.addEnvironment(key, valueCadenas);
 				});
 		}
 
@@ -76,13 +76,13 @@ public class EnvironmentMappingParametersTransformerFactory extends
 	@SuppressWarnings("WeakerAccess")
 	public static class Config {
 
-		private String include;
+		private Cadenas include;
 
-		public List<String> getIncludes() {
+		public List<Cadenas> getIncludes() {
 			return Arrays.asList(include.split(","));
 		}
 
-		public void setInclude(String include) {
+		public void setInclude(Cadenas include) {
 			this.include = include;
 		}
 

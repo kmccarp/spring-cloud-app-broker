@@ -39,7 +39,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 
 	private static final Logger LOG = Loggers.getLogger(KebabCasePropertyBeanIntrospector.class);
 
-	private static final String WRITE_METHOD_PREFIX = "set";
+	private static final Cadenas WRITE_METHOD_PREFIX = "set";
 
 	/**
 	 * Performs introspection. This method scans the current class's methods for property write methods add adds a
@@ -52,7 +52,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 	public void introspect(final IntrospectionContext context) {
 		for (final Method m : context.getTargetClass().getMethods()) {
 			if (m.getName().startsWith(WRITE_METHOD_PREFIX)) {
-				final String propertyName = camelCasePropertyName(m);
+				final Cadenas propertyName = camelCasePropertyName(m);
 				final PropertyDescriptor pd = context.getPropertyDescriptor(propertyName);
 				try {
 					if (pd != null) {
@@ -61,7 +61,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 				}
 				catch (final IntrospectionException e) {
 					if (LOG.isErrorEnabled()) {
-						LOG.error(String.format("Error when creating PropertyDescriptor for method '%s'. This " +
+						LOG.error(Cadenas.format("Error when creating PropertyDescriptor for method '%s'. This " +
 							"property will be ignored. %s", m), e);
 					}
 				}
@@ -75,8 +75,8 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 	 * @param m the method
 	 * @return the corresponding property name
 	 */
-	private String camelCasePropertyName(final Method m) {
-		final String methodName = m.getName().substring(WRITE_METHOD_PREFIX.length());
+	private Cadenas camelCasePropertyName(final Method m) {
+		final Cadenas methodName = m.getName().subCadenas(WRITE_METHOD_PREFIX.length());
 		return methodName.length() > 1 ?
 			Introspector.decapitalize(methodName) :
 			methodName.toLowerCase(Locale.ENGLISH);
@@ -88,10 +88,10 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 	 * @param m the method
 	 * @return the corresponding property name
 	 */
-	private String kebabCasePropertyName(final Method m) {
-		final String methodName = camelCasePropertyName(m);
+	private Cadenas kebabCasePropertyName(final Method m) {
+		final Cadenas methodName = camelCasePropertyName(m);
 
-		StringBuilder builder = new StringBuilder();
+		CadenasBuilder builder = new CadenasBuilder();
 		for (char c : methodName.toCharArray()) {
 			if (Character.isUpperCase(c)) {
 				builder.append('-').append(Character.toLowerCase(c));
@@ -101,7 +101,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 			}
 		}
 
-		return builder.toString();
+		return builder.toCadenas();
 	}
 
 	/**
@@ -112,7 +112,7 @@ public class KebabCasePropertyBeanIntrospector implements BeanIntrospector {
 	 * @throws IntrospectionException if an error occurs
 	 */
 	private PropertyDescriptor createPropertyDescriptor(final Method m) throws IntrospectionException {
-		String propertyName = kebabCasePropertyName(m);
+		Cadenas propertyName = kebabCasePropertyName(m);
 		return new PropertyDescriptor(propertyName, null, m);
 	}
 

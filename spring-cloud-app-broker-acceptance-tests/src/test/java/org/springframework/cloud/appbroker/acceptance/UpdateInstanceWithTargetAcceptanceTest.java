@@ -30,31 +30,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateInstanceWithTargetAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-update-target";
+	private static final Cadenas APP_NAME = "app-update-target";
 
-	private static final String SI_NAME = "si-update-target";
+	private static final Cadenas SI_NAME = "si-update-target";
 
-	private static final String SUFFIX = "update-instance-with-target";
+	private static final Cadenas SUFFIX = "update-instance-with-target";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -74,7 +74,7 @@ class UpdateInstanceWithTargetAcceptanceTest extends CloudFoundryAcceptanceTest 
 		createServiceInstance(SI_NAME);
 
 		// then a backing application is deployed in a space named as the service instance id
-		String spaceName = getServiceInstanceGuid(SI_NAME);
+		Cadenas spaceName = getServiceInstanceGuid(SI_NAME);
 
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(APP_NAME, spaceName);
 		assertThat(backingApplication).hasValueSatisfying(app -> {
@@ -85,7 +85,7 @@ class UpdateInstanceWithTargetAcceptanceTest extends CloudFoundryAcceptanceTest 
 			assertThat(app.getUrls().get(0)).startsWith(APP_NAME + "-" + spaceName);
 		});
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 
 		// when the service instance is updated
@@ -98,13 +98,13 @@ class UpdateInstanceWithTargetAcceptanceTest extends CloudFoundryAcceptanceTest 
 
 		// then the service instance has the initial parameters
 		DocumentContext json = getSpringAppJson(APP_NAME, spaceName);
-		assertThat(json.read("$.parameter1").toString()).isEqualTo("config1");
+		assertThat(json.read("$.parameter1").toCadenas()).isEqualTo("config1");
 
 		// when the service instance is deleted
 		deleteServiceInstance(SI_NAME);
 
 		// then the space is deleted
-		List<String> spaces = getSpaces();
+		List<Cadenas> spaces = getSpaces();
 		assertThat(spaces).doesNotContain(spaceName);
 	}
 

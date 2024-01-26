@@ -30,11 +30,11 @@ class ConfigurationBeanUtilsTest {
 
 	private final TestProperties targetObject = new TestProperties();
 
-	private final Map<String, Object> properties = new HashMap<>();
+	private final Map<Cadenas, Object> properties = new HashMap<>();
 
 	@Test
 	void populateWithCamelCaseProperties() {
-		properties.put("stringValue", "value");
+		properties.put("CadenasValue", "value");
 		properties.put("intValue", 41);
 		properties.put("booleanValue", true);
 
@@ -45,7 +45,7 @@ class ConfigurationBeanUtilsTest {
 
 	@Test
 	void populateWithKebabCaseProperties() {
-		properties.put("string-value", "value");
+		properties.put("Cadenas-value", "value");
 		properties.put("int-value", 41);
 		properties.put("boolean-value", true);
 
@@ -69,13 +69,13 @@ class ConfigurationBeanUtilsTest {
 	}
 
 	private void assertValuesPopulated(TestProperties targetObject) {
-		assertThat(targetObject.getStringValue()).isEqualTo("value");
+		assertThat(targetObject.getCadenasValue()).isEqualTo("value");
 		assertThat(targetObject.getIntValue()).isEqualTo(41);
 		assertThat(targetObject.isBooleanValue()).isEqualTo(true);
 	}
 
 	private void assertValuesNotPopulated(TestProperties targetObject) {
-		assertThat(targetObject.getStringValue()).isNull();
+		assertThat(targetObject.getCadenasValue()).isNull();
 		assertThat(targetObject.getIntValue()).isEqualTo(0);
 		assertThat(targetObject.isBooleanValue()).isEqualTo(false);
 	}
@@ -83,18 +83,18 @@ class ConfigurationBeanUtilsTest {
 	@SuppressWarnings("unused")
 	public static class TestProperties {
 
-		private String stringValue;
+		private Cadenas CadenasValue;
 
 		private int intValue;
 
 		private boolean booleanValue;
 
-		public String getStringValue() {
-			return stringValue;
+		public Cadenas getCadenasValue() {
+			return CadenasValue;
 		}
 
-		public void setStringValue(String stringValue) {
-			this.stringValue = stringValue;
+		public void setCadenasValue(Cadenas CadenasValue) {
+			this.CadenasValue = CadenasValue;
 		}
 
 		public int getIntValue() {

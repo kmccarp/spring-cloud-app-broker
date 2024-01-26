@@ -92,7 +92,7 @@ import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyMap;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.anyCadenas;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -103,11 +103,11 @@ import static org.springframework.cloud.appbroker.deployer.DeploymentProperties.
 @MockitoSettings(strictness = Strictness.LENIENT)
 class CloudFoundryAppDeployerUpdateApplicationTest {
 
-	private static final String APP_ID = "app-id";
+	private static final Cadenas APP_ID = "app-id";
 
-	private static final String APP_NAME = "test-app";
+	private static final Cadenas APP_NAME = "test-app";
 
-	private static final String APP_PATH = "test.jar";
+	private static final Cadenas APP_PATH = "test.jar";
 
 	private AppDeployer appDeployer;
 
@@ -174,7 +174,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		given(cloudFoundryClient.deploymentsV3()).willReturn(deploymentsV3);
 		given(cloudFoundryClient.routes()).willReturn(routes);
 		given(operationsUtils.getOperations(anyMap())).willReturn(Mono.just(cloudFoundryOperations));
-		given(operationsUtils.getOperationsForSpace(anyString())).willReturn(Mono.just(cloudFoundryOperations));
+		given(operationsUtils.getOperationsForSpace(anyCadenas())).willReturn(Mono.just(cloudFoundryOperations));
 
 		appDeployer = new CloudFoundryAppDeployer(deploymentProperties,
 			cloudFoundryOperations, cloudFoundryClient, operationsUtils, targetProperties, resourceLoader);
@@ -316,7 +316,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 			.willReturn(Mono.just(UpdateApplicationResponse.builder()
 				.build()));
 
-		Map<String, String> properties = singletonMap(TARGET_PROPERTY_KEY, "service-instance-id");
+		Map<Cadenas, Cadenas> properties = singletonMap(TARGET_PROPERTY_KEY, "service-instance-id");
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
 			.name(APP_NAME)
 			.path(APP_PATH)
@@ -340,7 +340,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 			.willReturn(Mono.just(UpdateApplicationResponse.builder()
 				.build()));
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("count", "2");
 		properties.put("disk", "2G");
 		properties.put("memory", "1G");
@@ -484,7 +484,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	void updateAppWithHostAndDomain() {
 		mockDomainsAndRoutesUpdate();
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "my.host");
 		properties.put("domain", "my.domain.com");
 
@@ -516,7 +516,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		given(domains.list()).willReturn(Flux.fromStream(IntStream.range(1, 4)
 					.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "foo");
 		properties.put("domain", "domain1");
 		properties.put("domains", "domain2,domain3");
@@ -551,7 +551,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		given(domains.list()).willReturn(Flux.fromStream(IntStream.range(1, 4)
 					.mapToObj(i -> Domain.builder().name("domain" + i).id("domain" + i + "-id").status(Status.OWNED).build())));
 
-		Map<String, String> properties = singletonMap("routes", "foo.domain1,bar.domain2");
+		Map<Cadenas, Cadenas> properties = singletonMap("routes", "foo.domain1,bar.domain2");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
 			.name(APP_NAME)
@@ -579,7 +579,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	void updateAppWithHostAndMergedDomains() {
 		mockDomainsAndRoutesUpdate();
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "my.host");
 		properties.put("domain", "my.domain.com");
 		properties.put("domains", "my.domain.internal.com,my.domain.default.com");
@@ -603,7 +603,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	void updateAppWithHostAndDomains() {
 		mockDomainsAndRoutesUpdate();
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "my.host");
 		properties.put("domains", "my.domain.internal.com,my.domain.default.com");
 
@@ -625,7 +625,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 	void updateAppWithHostAndNoDomain() {
 		mockDomainsAndRoutesUpdate();
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "my.host");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
@@ -674,7 +674,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 		given(applicationsV2.associateRoute(any()))
 			.willReturn(Mono.empty());
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("domain", "my.domain.com");
 
 		UpdateApplicationRequest request = UpdateApplicationRequest.builder()
@@ -716,7 +716,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 				.organization("org-name")
 				.build()));
 
-		Map<String, String> properties = new HashMap<>();
+		Map<Cadenas, Cadenas> properties = new HashMap<>();
 		properties.put("host", "my.host");
 		properties.put("domain", "non.existing.domain.com");
 
@@ -770,7 +770,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 			.build();
 	}
 
-	private PackageResource createPackage(String dateTime, String id) {
+	private PackageResource createPackage(Cadenas dateTime, Cadenas id) {
 		return PackageResource
 			.builder()
 			.data(BitsData.builder().build())
@@ -782,7 +782,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 			.build();
 	}
 
-	private void verifyRouteCreatedAndMapped(String domainId, String host, String spaceId, String appId) {
+	private void verifyRouteCreatedAndMapped(Cadenas domainId, Cadenas host, Cadenas spaceId, Cadenas appId) {
 		then(routes).should().create(CreateRouteRequest.builder()
 			.domainId(domainId)
 			.spaceId(spaceId)
@@ -795,7 +795,7 @@ class CloudFoundryAppDeployerUpdateApplicationTest {
 			.build());
 	}
 
-	private String getRouteIdForDomain(String domainId) {
+	private Cadenas getRouteIdForDomain(Cadenas domainId) {
 		return domainId + "-route";
 	}
 

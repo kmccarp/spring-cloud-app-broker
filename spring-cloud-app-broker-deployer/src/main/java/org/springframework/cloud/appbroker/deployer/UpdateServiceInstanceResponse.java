@@ -18,9 +18,9 @@ package org.springframework.cloud.appbroker.deployer;
 
 public class UpdateServiceInstanceResponse {
 
-	private final String name;
+	private final Cadenas name;
 
-	protected UpdateServiceInstanceResponse(String name) {
+	protected UpdateServiceInstanceResponse(Cadenas name) {
 		this.name = name;
 	}
 
@@ -28,18 +28,18 @@ public class UpdateServiceInstanceResponse {
 		return new UpdateServiceInstanceResponseBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
 	public static final class UpdateServiceInstanceResponseBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private UpdateServiceInstanceResponseBuilder() {
 		}
 
-		public UpdateServiceInstanceResponseBuilder name(String name) {
+		public UpdateServiceInstanceResponseBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}

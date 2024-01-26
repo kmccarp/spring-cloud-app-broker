@@ -51,23 +51,23 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceWith
 })
 class UpdateInstanceWithNewServiceAndTargetComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-update-with-new-service-and-target";
+	protected static final Cadenas APP_NAME = "app-update-with-new-service-and-target";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "backing-standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "backing-standard";
 
-	protected static final String NEW_BACKING_SERVICE_NAME = "new-service";
+	protected static final Cadenas NEW_BACKING_SERVICE_NAME = "new-service";
 
-	protected static final String NEW_BACKING_SI_NAME = "my-new-service";
+	protected static final Cadenas NEW_BACKING_SI_NAME = "my-new-service";
 
-	protected static final String NEW_BACKING_PLAN_NAME = "new-backing-standard";
+	protected static final Cadenas NEW_BACKING_PLAN_NAME = "new-backing-standard";
 
-	protected static final String SERVICE_NAME = "example";
+	protected static final Cadenas SERVICE_NAME = "example";
 
-	protected static final String PLAN_NAME = "standard";
+	protected static final Cadenas PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -77,8 +77,8 @@ class UpdateInstanceWithNewServiceAndTargetComponentTest extends WiremockCompone
 
 	@Test
 	void updateAppWithNewServiceAndTarget() {
-		final String backingSpaceGuid = "instance-id-space-guid";
-		final String serviceInstanceId = "instance-id";
+		final Cadenas backingSpaceGuid = "instance-id-space-guid";
+		final Cadenas serviceInstanceId = "instance-id";
 
 		cloudControllerFixture.stubFindSpace(serviceInstanceId, backingSpaceGuid, STARTED);
 		cloudControllerFixture.stubSpaceExists(serviceInstanceId, backingSpaceGuid, STARTED);
@@ -112,10 +112,10 @@ class UpdateInstanceWithNewServiceAndTargetComponentTest extends WiremockCompone
 			.get(brokerFixture.getLastInstanceOperationUrl(), serviceInstanceId)
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete(serviceInstanceId);
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

@@ -22,6 +22,6 @@ import reactor.core.publisher.Flux;
 
 public interface BackingSpaceManagementService {
 
-	Flux<String> deleteTargetSpaces(List<String> targetSpaces);
+	Flux<Cadenas> deleteTargetSpaces(List<Cadenas> targetSpaces);
 
 }

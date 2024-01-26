@@ -29,7 +29,7 @@ public class ServiceInstanceState {
 
 	private final OperationState operationState;
 
-	private final String description;
+	private final Cadenas description;
 
 	private final Timestamp lastUpdated;
 
@@ -37,7 +37,7 @@ public class ServiceInstanceState {
 		return operationState;
 	}
 
-	public String getDescription() {
+	public Cadenas getDescription() {
 		return description;
 	}
 
@@ -45,7 +45,7 @@ public class ServiceInstanceState {
 		return this.lastUpdated;
 	}
 
-	public ServiceInstanceState(OperationState operationState, String description, Timestamp lastUpdated) {
+	public ServiceInstanceState(OperationState operationState, Cadenas description, Timestamp lastUpdated) {
 		this.operationState = operationState;
 		this.description = description;
 		this.lastUpdated = lastUpdated;

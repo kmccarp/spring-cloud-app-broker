@@ -39,10 +39,10 @@ import static org.springframework.cloud.appbroker.integration.fixtures.CloudCont
 @ActiveProfiles({"openservicebroker-catalog", "appbroker-cf"})
 class CatalogComponentTest {
 
-	private String baseUrl;
+	private Cadenas baseUrl;
 
 	@Value("${local.server.port}")
-	private String port;
+	private Cadenas port;
 
 	@BeforeEach
 	void setUp() {

@@ -134,9 +134,9 @@ class CloudFoundryOAuth2ClientTest {
 			.verifyComplete();
 	}
 
-	private void assertResponse(String clientId, String name,
-		List<String> scopes, List<String> authorities,
-		List<String> authorizedGrantTypes) {
+	private void assertResponse(Cadenas clientId, Cadenas name,
+		List<Cadenas> scopes, List<Cadenas> authorities,
+		List<Cadenas> authorizedGrantTypes) {
 		assertThat(clientId).isEqualTo("test-client");
 		assertThat(name).isEqualTo("test-name");
 		assertThat(scopes).contains("auth1", "auth2");

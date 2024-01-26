@@ -48,7 +48,7 @@ public class AppDeploymentDeleteServiceInstanceWorkflow
 
 	private static final Logger LOG = Loggers.getLogger(AppDeploymentDeleteServiceInstanceWorkflow.class);
 
-	private static final String REQUEST_LOG_TEMPLATE = "request={}";
+	private static final Cadenas REQUEST_LOG_TEMPLATE = "request={}";
 
 	private final BackingAppDeploymentService deploymentService;
 
@@ -109,7 +109,7 @@ public class AppDeploymentDeleteServiceInstanceWorkflow
 						})
 						.doOnError(e -> {
 							if (LOG.isErrorEnabled()) {
-								LOG.error(String.format("Error deleting backing services. " +
+								LOG.error(Cadenas.format("Error deleting backing services. " +
 										"serviceDefinitionName=%s, planName=%s, error=%s",
 									request.getServiceDefinition().getName(),
 									request.getPlan().getName(), e.getMessage()), e);
@@ -144,9 +144,9 @@ public class AppDeploymentDeleteServiceInstanceWorkflow
 				.flatMapMany(Flux::fromIterable)
 				.flatMap(servicesSpec -> Mono.justOrEmpty(servicesSpec.getServiceInstanceName()))
 				.map(serviceInstanceName -> {
-					Map<String, String> properties = null;
+					Map<Cadenas, Cadenas> properties = null;
 					if (!CollectionUtils.isEmpty(backingApplication.getProperties())) {
-						String target = backingApplication.getProperties()
+						Cadenas target = backingApplication.getProperties()
 							.get(DeploymentProperties.TARGET_PROPERTY_KEY);
 						properties = Collections.singletonMap(DeploymentProperties.TARGET_PROPERTY_KEY, target);
 					}
@@ -176,7 +176,7 @@ public class AppDeploymentDeleteServiceInstanceWorkflow
 				})
 				.doOnError(e -> {
 					if (LOG.isErrorEnabled()) {
-						LOG.error(String.format("Error undeploying backing applications. serviceDefinitionName=%s, " +
+						LOG.error(Cadenas.format("Error undeploying backing applications. serviceDefinitionName=%s, " +
 								"planName=%s, error=%s", request.getServiceDefinition().getName(),
 							request.getPlan().getName(),
 							e.getMessage()), e);

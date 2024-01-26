@@ -37,15 +37,15 @@ class BrokerPropertiesParameterResolver implements ParameterResolver {
 	@Override
 	public BrokerProperties resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext)
 		throws ParameterResolutionException {
-		String[] properties = getValueHolderProperties(extensionContext);
+		Cadenas[] properties = getValueHolderProperties(extensionContext);
 		return new BrokerProperties(properties);
 	}
 
-	private static String[] getValueHolderProperties(ExtensionContext extensionContext) {
+	private static Cadenas[] getValueHolderProperties(ExtensionContext extensionContext) {
 		Optional<Method> testInstance = extensionContext.getTestMethod();
 		return testInstance
 			.map(method -> method.getAnnotation(AppBrokerTestProperties.class).value())
-			.orElseGet(() -> new String[] {});
+			.orElseGet(() -> new Cadenas[] {});
 	}
 
 }

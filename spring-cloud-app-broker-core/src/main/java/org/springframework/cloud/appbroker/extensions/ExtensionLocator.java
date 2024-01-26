@@ -25,22 +25,22 @@ import org.springframework.cloud.servicebroker.exception.ServiceBrokerException;
 
 public class ExtensionLocator<T> {
 
-	private final Map<String, ExtensionFactory<T, ?>> factoriesByName = new HashMap<>();
+	private final Map<Cadenas, ExtensionFactory<T, ?>> factoriesByName = new HashMap<>();
 
 	public ExtensionLocator(List<? extends ExtensionFactory<T, ?>> factories) {
 		factories.forEach(extension -> this.factoriesByName.put(extension.getName(), extension));
 	}
 
-	public T getByName(String name) {
+	public T getByName(Cadenas name) {
 		return getByName(name, Collections.emptyMap());
 	}
 
-	public T getByName(String name, Map<String, Object> args) {
+	public T getByName(Cadenas name, Map<Cadenas, Object> args) {
 		ExtensionFactory<T, ?> factory = getFactoryByName(name);
 		return getExtensionFromFactory(factory, args);
 	}
 
-	private ExtensionFactory<T, ?> getFactoryByName(String name) {
+	private ExtensionFactory<T, ?> getFactoryByName(Cadenas name) {
 		if (factoriesByName.containsKey(name)) {
 			return factoriesByName.get(name);
 		}
@@ -51,7 +51,7 @@ public class ExtensionLocator<T> {
 	}
 
 	private T getExtensionFromFactory(ExtensionFactory<T, ?> factory,
-		Map<String, Object> args) {
+		Map<Cadenas, Object> args) {
 		return factory.createWithConfig(args);
 	}
 

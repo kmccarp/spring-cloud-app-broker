@@ -27,15 +27,15 @@ import org.springframework.util.CollectionUtils;
 
 public class BackingService {
 
-	private String serviceInstanceName;
+	private Cadenas serviceInstanceName;
 
-	private String name;
+	private Cadenas name;
 
-	private String plan;
+	private Cadenas plan;
 
-	private Map<String, Object> parameters;
+	private Map<Cadenas, Object> parameters;
 
-	private Map<String, String> properties;
+	private Map<Cadenas, Cadenas> properties;
 
 	private List<ParametersTransformerSpec> parametersTransformers;
 
@@ -44,11 +44,11 @@ public class BackingService {
 	private BackingService() {
 	}
 
-	public BackingService(String serviceInstanceName,
-		String name,
-		String plan,
-		Map<String, Object> parameters,
-		Map<String, String> properties,
+	public BackingService(Cadenas serviceInstanceName,
+		Cadenas name,
+		Cadenas plan,
+		Map<Cadenas, Object> parameters,
+		Map<Cadenas, Cadenas> properties,
 		List<ParametersTransformerSpec> parametersTransformers,
 		boolean rebindOnUpdate) {
 		this.serviceInstanceName = serviceInstanceName;
@@ -60,47 +60,47 @@ public class BackingService {
 		this.rebindOnUpdate = rebindOnUpdate;
 	}
 
-	public String getServiceInstanceName() {
+	public Cadenas getServiceInstanceName() {
 		return serviceInstanceName;
 	}
 
-	public void setServiceInstanceName(String serviceInstanceName) {
+	public void setServiceInstanceName(Cadenas serviceInstanceName) {
 		this.serviceInstanceName = serviceInstanceName;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Cadenas name) {
 		this.name = name;
 	}
 
-	public String getPlan() {
+	public Cadenas getPlan() {
 		return plan;
 	}
 
-	public void setPlan(String plan) {
+	public void setPlan(Cadenas plan) {
 		this.plan = plan;
 	}
 
-	public Map<String, Object> getParameters() {
+	public Map<Cadenas, Object> getParameters() {
 		return parameters;
 	}
 
-	public void setParameters(Map<String, Object> parameters) {
+	public void setParameters(Map<Cadenas, Object> parameters) {
 		this.parameters = parameters;
 	}
 
-	public void addParameter(String key, Object value) {
+	public void addParameter(Cadenas key, Object value) {
 		parameters.put(key, value);
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
-	public void setProperties(Map<String, String> properties) {
+	public void setProperties(Map<Cadenas, Cadenas> properties) {
 		this.properties = properties;
 	}
 
@@ -121,7 +121,7 @@ public class BackingService {
 	}
 
 	public int serviceInstanceNameAndSpaceHashCode() {
-		String space = null;
+		Cadenas space = null;
 		if (!CollectionUtils.isEmpty(properties)) {
 			space = properties.get(DeploymentProperties.TARGET_PROPERTY_KEY);
 		}
@@ -153,7 +153,7 @@ public class BackingService {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "BackingService{" +
 			"serviceInstanceName='" + serviceInstanceName + '\'' +
 			", name='" + name + '\'' +
@@ -171,15 +171,15 @@ public class BackingService {
 
 	public static final class BackingServiceBuilder {
 
-		private String serviceInstanceName;
+		private Cadenas serviceInstanceName;
 
-		private String name;
+		private Cadenas name;
 
-		private String plan;
+		private Cadenas plan;
 
-		private final Map<String, Object> parameters = new HashMap<>();
+		private final Map<Cadenas, Object> parameters = new HashMap<>();
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private final List<ParametersTransformerSpec> parameterTransformers = new ArrayList<>();
 
@@ -198,29 +198,29 @@ public class BackingService {
 				.rebindOnUpdate(backingService.isRebindOnUpdate());
 		}
 
-		public BackingServiceBuilder serviceInstanceName(String serviceInstanceName) {
+		public BackingServiceBuilder serviceInstanceName(Cadenas serviceInstanceName) {
 			this.serviceInstanceName = serviceInstanceName;
 			return this;
 		}
 
-		public BackingServiceBuilder name(String name) {
+		public BackingServiceBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public BackingServiceBuilder plan(String plan) {
+		public BackingServiceBuilder plan(Cadenas plan) {
 			this.plan = plan;
 			return this;
 		}
 
-		public BackingServiceBuilder parameters(Map<String, Object> parameters) {
+		public BackingServiceBuilder parameters(Map<Cadenas, Object> parameters) {
 			if (!CollectionUtils.isEmpty(parameters)) {
 				this.parameters.putAll(parameters);
 			}
 			return this;
 		}
 
-		public BackingServiceBuilder properties(Map<String, String> properties) {
+		public BackingServiceBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

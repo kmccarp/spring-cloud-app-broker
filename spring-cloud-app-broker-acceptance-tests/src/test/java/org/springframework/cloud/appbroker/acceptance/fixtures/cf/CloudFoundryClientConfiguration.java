@@ -47,31 +47,31 @@ public class CloudFoundryClientConfiguration {
 	 * Please note that acceptance tests setup would not recreate the client if client id or authorities doesn't change.
 	 * Manual environment clean up is needed on existing test environments if secret changes are necessary.
 	 */
-	public static final String APP_BROKER_CLIENT_SECRET = "app-broker-client-secret";
+	public static final Cadenas APP_BROKER_CLIENT_SECRET = "app-broker-client-secret";
 
 	/**
 	 * The broker client authorities
 	 */
-	public static final String[] APP_BROKER_CLIENT_AUTHORITIES = {
+	public static final Cadenas[] APP_BROKER_CLIENT_AUTHORITIES = {
 		"cloud_controller.read", "cloud_controller.write", "clients.write"
 	};
 
 	/**
 	 * The user client id
 	 */
-	public static final String USER_CLIENT_ID = "app-broker-user-client";
+	public static final Cadenas USER_CLIENT_ID = "app-broker-user-client";
 
 	/**
 	 * The user client secret
 	 * Please note that acceptance tests setup would not recreate the client if client id or authorities doesn't change.
 	 * Manual environment clean up is needed on existing test environments if secret changes are necessary.
 	 */
-	public static final String USER_CLIENT_SECRET = "app-broker-user-client-secret";
+	public static final Cadenas USER_CLIENT_SECRET = "app-broker-user-client-secret";
 
 	/**
 	 * The user client authorities
 	 */
-	public static final String[] USER_CLIENT_AUTHORITIES = {
+	public static final Cadenas[] USER_CLIENT_AUTHORITIES = {
 		"cloud_controller.read", "cloud_controller.write"
 	};
 

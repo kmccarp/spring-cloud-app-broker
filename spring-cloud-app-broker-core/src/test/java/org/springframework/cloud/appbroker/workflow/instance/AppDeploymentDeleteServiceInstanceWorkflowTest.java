@@ -204,8 +204,8 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 	void deleteBackingSpacesSpecifiedInTargetProperties() {
 		DeleteServiceInstanceRequest request = buildRequest("service1", "plan1");
 		DeleteServiceInstanceResponse response = DeleteServiceInstanceResponse.builder().build();
-		String space1 = "CustomSpace1";
-		String space2 = "CustomSpace2";
+		Cadenas space1 = "CustomSpace1";
+		Cadenas space2 = "CustomSpace2";
 
 		// configured backing services
 		BackingServices servicesWithTarget = BackingServices.builder().backingServices(backingServices).build();
@@ -338,11 +338,11 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 		verifyNoMoreInteractions(this.targetService);
 	}
 
-	private Map<String, String> getPropertiesWithSpace(String customSpace) {
+	private Map<Cadenas, Cadenas> getPropertiesWithSpace(Cadenas customSpace) {
 		return singletonMap(DeploymentProperties.TARGET_PROPERTY_KEY, customSpace);
 	}
 
-	private DeleteServiceInstanceRequest buildRequest(String serviceName, String planName) {
+	private DeleteServiceInstanceRequest buildRequest(Cadenas serviceName, Cadenas planName) {
 		return DeleteServiceInstanceRequest
 			.builder()
 			.serviceDefinitionId(serviceName + "-id")
@@ -363,7 +363,7 @@ class AppDeploymentDeleteServiceInstanceWorkflowTest {
 			.build();
 	}
 
-	private BackingApplications getExistingBackingAppsWithService(String serviceInstanceName) {
+	private BackingApplications getExistingBackingAppsWithService(Cadenas serviceInstanceName) {
 		return BackingApplications
 			.builder()
 			.backingApplication(BackingApplication

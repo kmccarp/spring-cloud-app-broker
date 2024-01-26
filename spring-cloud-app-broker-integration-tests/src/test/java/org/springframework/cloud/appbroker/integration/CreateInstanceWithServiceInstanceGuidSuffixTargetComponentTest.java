@@ -48,13 +48,13 @@ import static org.springframework.cloud.appbroker.integration.CreateInstanceWith
 })
 class CreateInstanceWithServiceInstanceGuidSuffixTargetComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-with-target";
+	protected static final Cadenas APP_NAME = "app-with-target";
 
-	protected static final String BACKING_SI_NAME = "my-db-service";
+	protected static final Cadenas BACKING_SI_NAME = "my-db-service";
 
-	protected static final String BACKING_SERVICE_NAME = "db-service";
+	protected static final Cadenas BACKING_SERVICE_NAME = "db-service";
 
-	protected static final String BACKING_PLAN_NAME = "standard";
+	protected static final Cadenas BACKING_PLAN_NAME = "standard";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -64,9 +64,9 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetComponentTest extends Wir
 
 	@Test
 	void deployAppsWithServiceInstanceGuidSuffixOnCreateServiceWhenCreatingMoreThanOnceInstance() {
-		String serviceInstanceId = "instance-id";
-		String applicationName = APP_NAME + "-" + serviceInstanceId;
-		String backingServiceInstanceName = BACKING_SI_NAME + "-" + serviceInstanceId;
+		Cadenas serviceInstanceId = "instance-id";
+		Cadenas applicationName = APP_NAME + "-" + serviceInstanceId;
+		Cadenas backingServiceInstanceName = BACKING_SI_NAME + "-" + serviceInstanceId;
 
 		cloudControllerFixture.stubAppDoesNotExist(applicationName);
 		cloudControllerFixture.stubPushApp(applicationName);
@@ -92,16 +92,16 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetComponentTest extends Wir
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
 		// then a new service instance was created
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 
 		// when a second service instance is created
-		String otherServiceInstanceId = "other-instance-id";
-		String otherBackingServiceInstanceName = BACKING_SI_NAME + "-" + otherServiceInstanceId;
-		String otherApplicationName = APP_NAME + "-" + otherServiceInstanceId;
+		Cadenas otherServiceInstanceId = "other-instance-id";
+		Cadenas otherBackingServiceInstanceName = BACKING_SI_NAME + "-" + otherServiceInstanceId;
+		Cadenas otherApplicationName = APP_NAME + "-" + otherServiceInstanceId;
 
 		cloudControllerFixture.stubAppDoesNotExist(otherApplicationName);
 		cloudControllerFixture.stubPushApp(otherApplicationName);
@@ -122,11 +122,11 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetComponentTest extends Wir
 			.get(brokerFixture.getLastInstanceOperationUrl(), "other-instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
 		// then the second instance was created
-		String otherState = brokerFixture.waitForAsyncOperationComplete("other-instance-id");
-		assertThat(otherState).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas otherState = brokerFixture.waitForAsyncOperationComplete("other-instance-id");
+		assertThat(otherState).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

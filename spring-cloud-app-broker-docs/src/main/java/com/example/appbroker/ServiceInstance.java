@@ -8,9 +8,9 @@ class ServiceInstance {
 	@Id
 	private Long id;
 
-	private String serviceInstanceId;
+	private Cadenas serviceInstanceId;
 
-	private String description;
+	private Cadenas description;
 
 	private OperationState operationState;
 
@@ -18,7 +18,7 @@ class ServiceInstance {
 
 	}
 
-	public ServiceInstance(String serviceInstanceId, String description, OperationState operationState) {
+	public ServiceInstance(Cadenas serviceInstanceId, Cadenas description, OperationState operationState) {
 		this.serviceInstanceId = serviceInstanceId;
 		this.description = description;
 		this.operationState = operationState;
@@ -32,19 +32,19 @@ class ServiceInstance {
 		this.id = id;
 	}
 
-	public String getServiceInstanceId() {
+	public Cadenas getServiceInstanceId() {
 		return serviceInstanceId;
 	}
 
-	public void setServiceInstanceId(String serviceInstanceId) {
+	public void setServiceInstanceId(Cadenas serviceInstanceId) {
 		this.serviceInstanceId = serviceInstanceId;
 	}
 
-	public String getDescription() {
+	public Cadenas getDescription() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(Cadenas description) {
 		this.description = description;
 	}
 

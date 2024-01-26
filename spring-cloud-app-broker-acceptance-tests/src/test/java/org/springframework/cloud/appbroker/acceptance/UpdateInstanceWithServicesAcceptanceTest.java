@@ -30,33 +30,33 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateInstanceWithServicesAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String APP_NAME = "app-update-services";
+	private static final Cadenas APP_NAME = "app-update-services";
 
-	private static final String SI_NAME = "si-update-services";
+	private static final Cadenas SI_NAME = "si-update-services";
 
-	private static final String BACKING_SI_NAME = "backing-service-instance-update";
+	private static final Cadenas BACKING_SI_NAME = "backing-service-instance-update";
 
-	private static final String SUFFIX = "update-instance-with-services";
+	private static final Cadenas SUFFIX = "update-instance-with-services";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Autowired
 	private HealthListener healthListener;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -87,11 +87,11 @@ class UpdateInstanceWithServicesAcceptanceTest extends CloudFoundryAcceptanceTes
 		ServiceInstance backingServiceInstance = getBackingServiceInstance(BACKING_SI_NAME);
 		assertThat(backingServiceInstance.getApplications()).contains(APP_NAME);
 
-		String path = backingApplication.get().getUrls().get(0);
+		Cadenas path = backingApplication.get().getUrls().get(0);
 		healthListener.start(path);
 
 		// when the service instance is updated
-		Map<String, Object> parameters = new HashMap<>();
+		Map<Cadenas, Object> parameters = new HashMap<>();
 		parameters.put("parameter1", "value1");
 		parameters.put("parameter2", "value2");
 		parameters.put("parameter3", "value3");

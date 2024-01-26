@@ -43,7 +43,7 @@ import static org.springframework.cloud.appbroker.integration.UpdateInstanceWith
 })
 class UpdateInstanceWithServicesHostAndDomainComponentTest extends WiremockComponentTest {
 
-	protected static final String APP_NAME = "app-update-hostname-param";
+	protected static final Cadenas APP_NAME = "app-update-hostname-param";
 
 	@Autowired
 	private OpenServiceBrokerApiFixture brokerFixture;
@@ -56,7 +56,7 @@ class UpdateInstanceWithServicesHostAndDomainComponentTest extends WiremockCompo
 		cloudControllerFixture.stubAppExists(APP_NAME);
 		cloudControllerFixture.stubUpdateAppWithHostAndDomain(APP_NAME);
 
-		HashMap<String, Object> expectedUpdateParams = new HashMap<>();
+		HashMap<Cadenas, Object> expectedUpdateParams = new HashMap<>();
 		expectedUpdateParams.put("host", "myhost");
 		expectedUpdateParams.put("domain", "my.domain.com");
 
@@ -73,10 +73,10 @@ class UpdateInstanceWithServicesHostAndDomainComponentTest extends WiremockCompo
 			.get(brokerFixture.getLastInstanceOperationUrl(), "instance-id")
 			.then()
 			.statusCode(HttpStatus.OK.value())
-			.body("state", is(equalTo(OperationState.IN_PROGRESS.toString())));
+			.body("state", is(equalTo(OperationState.IN_PROGRESS.toCadenas())));
 
-		String state = brokerFixture.waitForAsyncOperationComplete("instance-id");
-		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toString());
+		Cadenas state = brokerFixture.waitForAsyncOperationComplete("instance-id");
+		assertThat(state).isEqualTo(OperationState.SUCCEEDED.toCadenas());
 	}
 
 }

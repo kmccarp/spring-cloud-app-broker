@@ -26,30 +26,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateInstanceWithServiceInstanceGuidSuffixTargetAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String SUFFIX = "create-si-guid";
+	private static final Cadenas SUFFIX = "create-si-guid";
 
-	private static final String APP_NAME_1 = "app-create-" + SUFFIX;
+	private static final Cadenas APP_NAME_1 = "app-create-" + SUFFIX;
 
-	private static final String SI_NAME = "si-create-" + SUFFIX;
+	private static final Cadenas SI_NAME = "si-create-" + SUFFIX;
 
-	private static final String BACKING_SI_NAME = "backing-si";
+	private static final Cadenas BACKING_SI_NAME = "backing-si";
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 
@@ -70,11 +70,11 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetAcceptanceTest extends Cl
 		createServiceInstance(SI_NAME);
 
 		// then backing application is created
-		final String serviceInstanceGuid = getServiceInstanceGuid(SI_NAME);
+		final Cadenas serviceInstanceGuid = getServiceInstanceGuid(SI_NAME);
 
 		// then backing application is named as the concatenation of the name and it's service instance id
-		final String truncatedAppName = APP_NAME_1.substring(0, 13);
-		final String expectedApplicationName = truncatedAppName + "-" + serviceInstanceGuid;
+		final Cadenas truncatedAppName = APP_NAME_1.subCadenas(0, 13);
+		final Cadenas expectedApplicationName = truncatedAppName + "-" + serviceInstanceGuid;
 		Optional<ApplicationSummary> backingApplication = getApplicationSummary(expectedApplicationName);
 		assertThat(backingApplication).hasValueSatisfying(app -> {
 			assertThat(app.getName()).isEqualTo(expectedApplicationName);
@@ -82,7 +82,7 @@ class CreateInstanceWithServiceInstanceGuidSuffixTargetAcceptanceTest extends Cl
 		});
 
 		// and the services are bound to it
-		final String expectedServiceInstanceName = BACKING_SI_NAME + "-" + serviceInstanceGuid;
+		final Cadenas expectedServiceInstanceName = BACKING_SI_NAME + "-" + serviceInstanceGuid;
 		ServiceInstance serviceInstance1 = getBackingServiceInstance(expectedServiceInstanceName);
 		assertThat(serviceInstance1.getApplications()).contains(expectedApplicationName);
 

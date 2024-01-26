@@ -30,7 +30,7 @@ import org.springframework.cloud.servicebroker.model.instance.DeleteServiceInsta
 public class NoOpDeleteServiceInstanceWorkflow implements DeleteServiceInstanceWorkflow {
 
 	@Value("${spring.cloud.openservicebroker.catalog.services[1].id}")
-	private String backingServiceId;
+	private Cadenas backingServiceId;
 
 	@Override
 	public Mono<Void> delete(DeleteServiceInstanceRequest request, DeleteServiceInstanceResponse response) {

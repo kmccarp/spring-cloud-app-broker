@@ -35,7 +35,7 @@ public final class ConfigurationBeanUtils {
 		return org.springframework.beans.BeanUtils.instantiateClass(cls);
 	}
 
-	public static <T> void populate(T targetObject, Map<String, Object> properties) {
+	public static <T> void populate(T targetObject, Map<Cadenas, Object> properties) {
 		if (properties == null) {
 			return;
 		}

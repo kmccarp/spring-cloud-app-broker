@@ -23,20 +23,20 @@ import org.springframework.util.CollectionUtils;
 
 public class RestartApplicationRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected RestartApplicationRequest(String name, Map<String, String> properties) {
+	protected RestartApplicationRequest(Cadenas name, Map<Cadenas, Cadenas> properties) {
 		this.name = name;
 		this.properties = properties;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
@@ -46,19 +46,19 @@ public class RestartApplicationRequest {
 
 	public static final class RestartApplicationRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private RestartApplicationRequestBuilder() {
 		}
 
-		public RestartApplicationRequestBuilder name(String name) {
+		public RestartApplicationRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public RestartApplicationRequestBuilder properties(Map<String, String> properties) {
+		public RestartApplicationRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

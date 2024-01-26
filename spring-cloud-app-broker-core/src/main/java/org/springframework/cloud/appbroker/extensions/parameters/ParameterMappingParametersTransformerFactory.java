@@ -37,8 +37,8 @@ public class ParameterMappingParametersTransformerFactory extends
 	}
 
 	private Mono<BackingService> transform(BackingService backingService,
-		Map<String, Object> parameters,
-		List<String> include) {
+		Map<Cadenas, Object> parameters,
+		List<Cadenas> include) {
 		if (parameters != null) {
 			parameters.keySet().stream()
 				.filter(include::contains)
@@ -51,13 +51,13 @@ public class ParameterMappingParametersTransformerFactory extends
 	@SuppressWarnings("WeakerAccess")
 	public static class Config {
 
-		private String include;
+		private Cadenas include;
 
-		public List<String> getIncludes() {
+		public List<Cadenas> getIncludes() {
 			return Arrays.asList(include.split(","));
 		}
 
-		public void setInclude(String include) {
+		public void setInclude(Cadenas include) {
 			this.include = include;
 		}
 

@@ -20,20 +20,20 @@ import java.util.Objects;
 
 public class TargetSpec {
 
-	private String name;
+	private Cadenas name;
 
 	private TargetSpec() {
 	}
 
-	public TargetSpec(String name) {
+	public TargetSpec(Cadenas name) {
 		this.name = name;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(Cadenas name) {
 		this.name = name;
 	}
 
@@ -61,12 +61,12 @@ public class TargetSpec {
 
 	public static final class TargetSpecBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private TargetSpecBuilder() {
 		}
 
-		public TargetSpecBuilder name(String name) {
+		public TargetSpecBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}

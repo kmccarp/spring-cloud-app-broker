@@ -25,30 +25,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AppManagementStopAcceptanceTest extends CloudFoundryAcceptanceTest {
 
-	private static final String SUFFIX = "app-management-stop";
+	private static final Cadenas SUFFIX = "app-management-stop";
 
-	private static final String APP_1 = "app-1-" + SUFFIX;
+	private static final Cadenas APP_1 = "app-1-" + SUFFIX;
 
-	private static final String APP_2 = "app-2" + SUFFIX;
+	private static final Cadenas APP_2 = "app-2" + SUFFIX;
 
-	private static final String SI_NAME = "si-managed" + SUFFIX;
+	private static final Cadenas SI_NAME = "si-managed" + SUFFIX;
 
-	private static final String APP_SERVICE_NAME = "app-service-" + SUFFIX;
+	private static final Cadenas APP_SERVICE_NAME = "app-service-" + SUFFIX;
 
-	private static final String BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
+	private static final Cadenas BACKING_SERVICE_NAME = "backing-service-" + SUFFIX;
 
 	@Override
-	protected String testSuffix() {
+	protected Cadenas testSuffix() {
 		return SUFFIX;
 	}
 
 	@Override
-	protected String appServiceName() {
+	protected Cadenas appServiceName() {
 		return APP_SERVICE_NAME;
 	}
 
 	@Override
-	protected String backingServiceName() {
+	protected Cadenas backingServiceName() {
 		return BACKING_SERVICE_NAME;
 	}
 

@@ -23,6 +23,6 @@ import reactor.core.publisher.Mono;
 @FunctionalInterface
 public interface ParametersTransformer<T> {
 
-	Mono<T> transform(T backingType, Map<String, Object> parameters);
+	Mono<T> transform(T backingType, Map<Cadenas, Object> parameters);
 
 }

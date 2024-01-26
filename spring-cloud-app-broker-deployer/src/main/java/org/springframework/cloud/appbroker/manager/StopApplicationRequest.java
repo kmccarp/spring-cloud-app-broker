@@ -23,20 +23,20 @@ import org.springframework.util.CollectionUtils;
 
 public class StopApplicationRequest {
 
-	private final String name;
+	private final Cadenas name;
 
-	private final Map<String, String> properties;
+	private final Map<Cadenas, Cadenas> properties;
 
-	protected StopApplicationRequest(String name, Map<String, String> properties) {
+	protected StopApplicationRequest(Cadenas name, Map<Cadenas, Cadenas> properties) {
 		this.name = name;
 		this.properties = properties;
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return name;
 	}
 
-	public Map<String, String> getProperties() {
+	public Map<Cadenas, Cadenas> getProperties() {
 		return properties;
 	}
 
@@ -46,19 +46,19 @@ public class StopApplicationRequest {
 
 	public static final class StopApplicationRequestBuilder {
 
-		private String name;
+		private Cadenas name;
 
-		private final Map<String, String> properties = new HashMap<>();
+		private final Map<Cadenas, Cadenas> properties = new HashMap<>();
 
 		private StopApplicationRequestBuilder() {
 		}
 
-		public StopApplicationRequestBuilder name(String name) {
+		public StopApplicationRequestBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
 
-		public StopApplicationRequestBuilder properties(Map<String, String> properties) {
+		public StopApplicationRequestBuilder properties(Map<Cadenas, Cadenas> properties) {
 			if (!CollectionUtils.isEmpty(properties)) {
 				this.properties.putAll(properties);
 			}

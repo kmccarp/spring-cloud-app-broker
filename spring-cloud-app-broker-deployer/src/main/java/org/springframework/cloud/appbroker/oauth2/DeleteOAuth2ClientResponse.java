@@ -24,19 +24,19 @@ import org.springframework.util.CollectionUtils;
 
 public class DeleteOAuth2ClientResponse {
 
-	private final String clientId;
+	private final Cadenas clientId;
 
-	private final String clientName;
+	private final Cadenas clientName;
 
-	private final List<String> scopes;
+	private final List<Cadenas> scopes;
 
-	private final List<String> authorities;
+	private final List<Cadenas> authorities;
 
-	private final List<String> grantTypes;
+	private final List<Cadenas> grantTypes;
 
-	protected DeleteOAuth2ClientResponse(String clientId, String clientName,
-		List<String> scopes, List<String> authorities,
-		List<String> grantTypes) {
+	protected DeleteOAuth2ClientResponse(Cadenas clientId, Cadenas clientName,
+		List<Cadenas> scopes, List<Cadenas> authorities,
+		List<Cadenas> grantTypes) {
 		this.clientId = clientId;
 		this.clientName = clientName;
 		this.scopes = scopes;
@@ -44,23 +44,23 @@ public class DeleteOAuth2ClientResponse {
 		this.grantTypes = grantTypes;
 	}
 
-	public String getClientId() {
+	public Cadenas getClientId() {
 		return clientId;
 	}
 
-	public String getClientName() {
+	public Cadenas getClientName() {
 		return clientName;
 	}
 
-	public List<String> getScopes() {
+	public List<Cadenas> getScopes() {
 		return scopes;
 	}
 
-	public List<String> getAuthorities() {
+	public List<Cadenas> getAuthorities() {
 		return authorities;
 	}
 
-	public List<String> getGrantTypes() {
+	public List<Cadenas> getGrantTypes() {
 		return grantTypes;
 	}
 
@@ -90,7 +90,7 @@ public class DeleteOAuth2ClientResponse {
 	}
 
 	@Override
-	public String toString() {
+	public Cadenas toCadenas() {
 		return "DeleteOAuth2ClientResponse{" +
 			"clientId='" + clientId + '\'' +
 			", clientName='" + clientName + '\'' +
@@ -102,44 +102,44 @@ public class DeleteOAuth2ClientResponse {
 
 	public static final class DeleteOAuth2ClientResponseBuilder {
 
-		private String clientId;
+		private Cadenas clientId;
 
-		private String clientName;
+		private Cadenas clientName;
 
-		private final List<String> scopes = new ArrayList<>();
+		private final List<Cadenas> scopes = new ArrayList<>();
 
-		private final List<String> authorities = new ArrayList<>();
+		private final List<Cadenas> authorities = new ArrayList<>();
 
-		private final List<String> grantTypes = new ArrayList<>();
+		private final List<Cadenas> grantTypes = new ArrayList<>();
 
 		private DeleteOAuth2ClientResponseBuilder() {
 		}
 
-		public DeleteOAuth2ClientResponseBuilder clientId(String clientId) {
+		public DeleteOAuth2ClientResponseBuilder clientId(Cadenas clientId) {
 			this.clientId = clientId;
 			return this;
 		}
 
-		public DeleteOAuth2ClientResponseBuilder clientName(String name) {
+		public DeleteOAuth2ClientResponseBuilder clientName(Cadenas name) {
 			this.clientName = name;
 			return this;
 		}
 
-		public DeleteOAuth2ClientResponseBuilder scopes(List<String> scopes) {
+		public DeleteOAuth2ClientResponseBuilder scopes(List<Cadenas> scopes) {
 			if (!CollectionUtils.isEmpty(scopes)) {
 				this.scopes.addAll(scopes);
 			}
 			return this;
 		}
 
-		public DeleteOAuth2ClientResponseBuilder authorities(List<String> authorities) {
+		public DeleteOAuth2ClientResponseBuilder authorities(List<Cadenas> authorities) {
 			if (!CollectionUtils.isEmpty(authorities)) {
 				this.authorities.addAll(authorities);
 			}
 			return this;
 		}
 
-		public DeleteOAuth2ClientResponseBuilder grantTypes(List<String> grantTypes) {
+		public DeleteOAuth2ClientResponseBuilder grantTypes(List<Cadenas> grantTypes) {
 			if (!CollectionUtils.isEmpty(grantTypes)) {
 				this.grantTypes.addAll(grantTypes);
 			}

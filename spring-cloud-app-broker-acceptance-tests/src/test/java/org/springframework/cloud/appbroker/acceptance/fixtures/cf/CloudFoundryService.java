@@ -74,11 +74,11 @@ public class CloudFoundryService {
 
 	private static final Logger LOG = LoggerFactory.getLogger(CloudFoundryService.class);
 
-	private static final String DEPLOYER_PROPERTY_PREFIX = "spring.cloud.appbroker.deployer.cloudfoundry.";
+	private static final Cadenas DEPLOYER_PROPERTY_PREFIX = "spring.cloud.appbroker.deployer.cloudfoundry.";
 
-	private static final String JBP_CONFIG_OPEN_JDK_JRE_ENV_VAR_NAME = "JBP_CONFIG_OPEN_JDK_JRE";
+	private static final Cadenas JBP_CONFIG_OPEN_JDK_JRE_ENV_VAR_NAME = "JBP_CONFIG_OPEN_JDK_JRE";
 
-	private static final String JBP_CONFIG_OPEN_JDK_JRE_17 = "{ jre: { version: 17.+ } }";
+	private static final Cadenas JBP_CONFIG_OPEN_JDK_JRE_17 = "{ jre: { version: 17.+ } }";
 
 	private static final int EXPECTED_PROPERTY_PARTS = 2;
 
@@ -95,16 +95,16 @@ public class CloudFoundryService {
 		this.cloudFoundryProperties = cloudFoundryProperties;
 	}
 
-	public Mono<Void> enableServiceBrokerAccess(String serviceName) {
+	public Mono<Void> enableServiceBrokerAccess(Cadenas serviceName) {
 		return cloudFoundryOperations.serviceAdmin().enableServiceAccess(EnableServiceAccessRequest.builder()
 			.serviceName(serviceName)
 			.build())
 			.doOnSuccess(v -> LOG.info("Enabled access to service. serviceName={}", serviceName))
-			.doOnError(e -> LOG.error(String.format("Error enabling access to service. serviceName=%s, error=%s",
+			.doOnError(e -> LOG.error(Cadenas.format("Error enabling access to service. serviceName=%s, error=%s",
 				serviceName, e.getMessage()), e));
 	}
 
-	public Mono<Void> createServiceBroker(String brokerName, String testBrokerAppName) {
+	public Mono<Void> createServiceBroker(Cadenas brokerName, Cadenas testBrokerAppName) {
 		return getApplicationRoute(testBrokerAppName)
 			.flatMap(url -> cloudFoundryOperations.serviceAdmin().create(CreateServiceBrokerRequest.builder()
 				.name(brokerName)
@@ -113,11 +113,11 @@ public class CloudFoundryService {
 				.url(url)
 				.build())
 				.doOnSuccess(v -> LOG.info("Success creating service broker. brokerName={}", brokerName))
-				.doOnError(e -> LOG.error(String.format("Error creating service broker. brokerName=%s, error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error creating service broker. brokerName=%s, error=%s",
 					brokerName, e.getMessage()), e)));
 	}
 
-	public Mono<Void> updateServiceBroker(String brokerName, String testBrokerAppName) {
+	public Mono<Void> updateServiceBroker(Cadenas brokerName, Cadenas testBrokerAppName) {
 		return getApplicationRoute(testBrokerAppName)
 			.flatMap(url -> cloudFoundryOperations.serviceAdmin().update(UpdateServiceBrokerRequest.builder()
 				.name(brokerName)
@@ -126,16 +126,16 @@ public class CloudFoundryService {
 				.url(url)
 				.build())
 				.doOnSuccess(v -> LOG.info("Success updating service broker. brokerName={}", brokerName))
-				.doOnError(e -> LOG.error(String.format("Error updating service broker. brokerName=%s, error=%s",
+				.doOnError(e -> LOG.error(Cadenas.format("Error updating service broker. brokerName=%s, error=%s",
 					brokerName, e.getMessage()), e)));
 	}
 
-	public Mono<String> getApplicationRoute(String appName) {
+	public Mono<Cadenas> getApplicationRoute(Cadenas appName) {
 		return cloudFoundryOperations.applications().get(GetApplicationRequest.builder()
 			.name(appName)
 			.build())
 			.doOnSuccess(item -> LOG.info("Success getting route for app. appName={}", appName))
-			.doOnError(e -> LOG.error(String.format("Error getting route for app. appName=%s, error=%s", appName,
+			.doOnError(e -> LOG.error(Cadenas.format("Error getting route for app. appName=%s, error=%s", appName,
 				e.getMessage()), e))
 			.map(ApplicationDetail::getUrls)
 			.flatMapMany(Flux::fromIterable)
@@ -143,8 +143,8 @@ public class CloudFoundryService {
 			.map(url -> "https://" + url);
 	}
 
-	public Mono<Void> pushBrokerApp(String appName, Path appPath, String brokerClientId,
-		List<String> appBrokerProperties) {
+	public Mono<Void> pushBrokerApp(Cadenas appName, Path appPath, Cadenas brokerClientId,
+		List<Cadenas> appBrokerProperties) {
 		return cloudFoundryOperations.applications().pushManifest(PushApplicationManifestRequest.builder()
 			.manifest(ApplicationManifest.builder()
 				.environmentVariables(appBrokerDeployerEnvironmentVariables(brokerClientId))
@@ -155,11 +155,11 @@ public class CloudFoundryService {
 				.build())
 			.build())
 			.doOnSuccess(v -> LOG.info("Success pushing broker app. appName={}", appName))
-			.doOnError(e -> LOG.error(String.format("Error pushing broker app. appName=%s, error=%s", appName,
+			.doOnError(e -> LOG.error(Cadenas.format("Error pushing broker app. appName=%s, error=%s", appName,
 				e.getMessage()), e));
 	}
 
-	public Mono<Void> updateBrokerApp(String appName, String brokerClientId, List<String> appBrokerProperties) {
+	public Mono<Void> updateBrokerApp(Cadenas appName, Cadenas brokerClientId, List<Cadenas> appBrokerProperties) {
 		return cloudFoundryOperations.applications().get(GetApplicationRequest.builder().name(appName).build())
 			.map(ApplicationDetail::getId)
 			.flatMap(applicationId -> cloudFoundryClient.applicationsV2().update(UpdateApplicationRequest
@@ -179,7 +179,7 @@ public class CloudFoundryService {
 			.then();
 	}
 
-	public Mono<Void> deleteApp(String appName) {
+	public Mono<Void> deleteApp(Cadenas appName) {
 		return cloudFoundryOperations.applications().list()
 			.filter(app -> appName.equals(app.getName()))
 			.singleOrEmpty()
@@ -188,12 +188,12 @@ public class CloudFoundryService {
 				.deleteRoutes(true)
 				.build()))
 			.doOnSuccess(item -> LOG.info("Success deleting app. appName={}", appName))
-			.doOnError(e -> LOG.warn(String.format("Error deleting app. appName=%s, error=%s", appName,
+			.doOnError(e -> LOG.warn(Cadenas.format("Error deleting app. appName=%s, error=%s", appName,
 				e.getMessage()), e))
 			.onErrorResume(e -> Mono.empty());
 	}
 
-	public Mono<Void> deleteServiceBroker(String brokerName) {
+	public Mono<Void> deleteServiceBroker(Cadenas brokerName) {
 		return cloudFoundryOperations.serviceAdmin().list()
 			.filter(serviceBroker -> brokerName.equals(serviceBroker.getName()))
 			.singleOrEmpty()
@@ -201,15 +201,15 @@ public class CloudFoundryService {
 				.delete(DeleteServiceBrokerRequest.builder().name(brokerName).build())
 			)
 			.doOnSuccess(item -> LOG.info("Success deleting service broker. brokerName={}", brokerName))
-			.doOnError(e -> LOG.warn(String.format("Error deleting service broker. brokerName=%s, error=%s ",
+			.doOnError(e -> LOG.warn(Cadenas.format("Error deleting service broker. brokerName=%s, error=%s ",
 				brokerName, e.getMessage()), e))
 			.onErrorResume(e -> Mono.empty());
 	}
 
-	public Mono<Void> createBackingServiceInstance(String planName,
-		String serviceName,
-		String serviceInstanceName,
-		Map<String, Object> parameters) {
+	public Mono<Void> createBackingServiceInstance(Cadenas planName,
+		Cadenas serviceName,
+		Cadenas serviceInstanceName,
+		Map<Cadenas, Object> parameters) {
 		return cloudFoundryOperations.services().createInstance(CreateServiceInstanceRequest.builder()
 			.planName(planName)
 			.serviceName(serviceName)
@@ -218,7 +218,7 @@ public class CloudFoundryService {
 			.build())
 			.doOnSuccess(item -> LOG.info("Success creating service instance. serviceInstanceName={}",
 				serviceInstanceName))
-			.doOnError(e -> LOG.error(String.format("Error creating service instance. serviceInstanceName=%s, " +
+			.doOnError(e -> LOG.error(Cadenas.format("Error creating service instance. serviceInstanceName=%s, " +
 				"error=%s", serviceInstanceName, e.getMessage()), e));
 	}
 
@@ -226,22 +226,22 @@ public class CloudFoundryService {
 		return cloudFoundryOperations.services().listInstances();
 	}
 
-	public Mono<ServiceInstance> getServiceInstance(String serviceInstanceName) {
+	public Mono<ServiceInstance> getServiceInstance(Cadenas serviceInstanceName) {
 		return getServiceInstance(cloudFoundryOperations, serviceInstanceName);
 	}
 
-	public Mono<ServiceInstance> getServiceInstance(String serviceInstanceName, String space) {
+	public Mono<ServiceInstance> getServiceInstance(Cadenas serviceInstanceName, Cadenas space) {
 		return getServiceInstance(createOperationsForSpace(space), serviceInstanceName);
 	}
 
 	private Mono<ServiceInstance> getServiceInstance(CloudFoundryOperations operations,
-		String serviceInstanceName) {
+		Cadenas serviceInstanceName) {
 		return operations.services().getInstance(GetServiceInstanceRequest.builder()
 			.name(serviceInstanceName)
 			.build())
 			.doOnSuccess(item -> LOG.info("Success getting service instance. serviceInstanceName={}",
 				serviceInstanceName))
-			.doOnError(e -> LOG.error(String.format("Error getting service instance. serviceInstanceName=%s, " +
+			.doOnError(e -> LOG.error(Cadenas.format("Error getting service instance. serviceInstanceName=%s, " +
 				"error=%s", serviceInstanceName, e.getMessage()), e));
 	}
 
@@ -250,13 +250,13 @@ public class CloudFoundryService {
 			.collectList();
 	}
 
-	public Mono<ApplicationDetail> getApplication(String appName) {
+	public Mono<ApplicationDetail> getApplication(Cadenas appName) {
 		return cloudFoundryOperations.applications().get(GetApplicationRequest.builder()
 			.name(appName)
 			.build());
 	}
 
-	public Mono<ApplicationSummary> getApplication(String appName, String space) {
+	public Mono<ApplicationSummary> getApplication(Cadenas appName, Cadenas space) {
 		return listApplications(createOperationsForSpace(space))
 			.filter(applicationSummary -> applicationSummary.getName().equals(appName))
 			.single();
@@ -266,28 +266,28 @@ public class CloudFoundryService {
 		return operations.applications()
 			.list()
 			.doOnComplete(() -> LOG.info("Listed applications"))
-			.doOnError(e -> LOG.error(String.format("Error listing applications. error=%s", e.getMessage()), e));
+			.doOnError(e -> LOG.error(Cadenas.format("Error listing applications. error=%s", e.getMessage()), e));
 	}
 
-	public Mono<ApplicationEnvironments> getApplicationEnvironment(String appName) {
+	public Mono<ApplicationEnvironments> getApplicationEnvironment(Cadenas appName) {
 		return getApplicationEnvironment(cloudFoundryOperations, appName);
 	}
 
-	public Mono<ApplicationEnvironments> getApplicationEnvironment(String appName, String space) {
+	public Mono<ApplicationEnvironments> getApplicationEnvironment(Cadenas appName, Cadenas space) {
 		return getApplicationEnvironment(createOperationsForSpace(space), appName);
 	}
 
-	private Mono<ApplicationEnvironments> getApplicationEnvironment(CloudFoundryOperations operations, String appName) {
+	private Mono<ApplicationEnvironments> getApplicationEnvironment(CloudFoundryOperations operations, Cadenas appName) {
 		return operations.applications()
 			.getEnvironments(GetApplicationEnvironmentsRequest.builder()
 				.name(appName)
 				.build())
 			.doOnSuccess(item -> LOG.info("Success getting environment for application. appName={}", appName))
-			.doOnError(e -> LOG.error(String.format("Error getting environment for application. appName=%s, " +
+			.doOnError(e -> LOG.error(Cadenas.format("Error getting environment for application. appName=%s, " +
 				"error=%s", appName, e.getMessage()), e));
 	}
 
-	public Mono<Void> stopApplication(String appName) {
+	public Mono<Void> stopApplication(Cadenas appName) {
 		return cloudFoundryOperations.applications().stop(StopApplicationRequest.builder()
 			.name(appName)
 			.build());
@@ -301,15 +301,15 @@ public class CloudFoundryService {
 		return getOrCreateOrganization(cloudFoundryProperties.getDefaultOrg());
 	}
 
-	public Mono<List<String>> getSpaces() {
+	public Mono<List<Cadenas>> getSpaces() {
 		return cloudFoundryOperations.spaces().list()
 			.doOnComplete(() -> LOG.info("Success listing spaces"))
-			.doOnError(e -> LOG.error(String.format("Error listing spaces. error=%s" + e.getMessage()), e))
+			.doOnError(e -> LOG.error(Cadenas.format("Error listing spaces. error=%s" + e.getMessage()), e))
 			.map(SpaceSummary::getName)
 			.collectList();
 	}
 
-	public Mono<SpaceSummary> getOrCreateSpace(String orgName, String spaceName) {
+	public Mono<SpaceSummary> getOrCreateSpace(Cadenas orgName, Cadenas spaceName) {
 		Spaces spaceOperations = DefaultCloudFoundryOperations.builder()
 			.from((DefaultCloudFoundryOperations) this.cloudFoundryOperations)
 			.organization(orgName)
@@ -323,7 +323,7 @@ public class CloudFoundryService {
 			.then(getSpace(spaceOperations, spaceName)));
 	}
 
-	public Mono<OrganizationSummary> getOrCreateOrganization(String orgName) {
+	public Mono<OrganizationSummary> getOrCreateOrganization(Cadenas orgName) {
 		Organizations organizationOperations = cloudFoundryOperations.organizations();
 
 		return getOrg(organizationOperations, orgName)
@@ -333,7 +333,7 @@ public class CloudFoundryService {
 				.then(getOrg(organizationOperations, orgName)));
 	}
 
-	private Mono<OrganizationSummary> getOrg(Organizations orgOperations, String orgName) {
+	private Mono<OrganizationSummary> getOrg(Organizations orgOperations, Cadenas orgName) {
 		return orgOperations.list()
 			.filter(r -> r
 				.getName()
@@ -341,7 +341,7 @@ public class CloudFoundryService {
 			.next();
 	}
 
-	private Mono<SpaceSummary> getSpace(Spaces spaceOperations, String spaceName) {
+	private Mono<SpaceSummary> getSpace(Spaces spaceOperations, Cadenas spaceName) {
 		return spaceOperations.list()
 			.filter(r -> r
 				.getName()
@@ -349,7 +349,7 @@ public class CloudFoundryService {
 			.next();
 	}
 
-	public Mono<Void> associateAppBrokerClientWithOrgAndSpace(String brokerClientId, String orgId, String spaceId) {
+	public Mono<Void> associateAppBrokerClientWithOrgAndSpace(Cadenas brokerClientId, Cadenas orgId, Cadenas spaceId) {
 		return Mono.justOrEmpty(brokerClientId)
 			.flatMap(userId -> associateOrgUser(orgId, userId)
 				.then(associateOrgManager(orgId, userId))
@@ -357,20 +357,20 @@ public class CloudFoundryService {
 			.then();
 	}
 
-	public Mono<Void> associateClientWithOrgAndSpace(String clientId, String orgId, String spaceId) {
+	public Mono<Void> associateClientWithOrgAndSpace(Cadenas clientId, Cadenas orgId, Cadenas spaceId) {
 		return associateOrgUser(orgId, clientId)
 			.then(associateSpaceDeveloper(spaceId, clientId))
 			.then();
 	}
 
-	public Mono<Void> removeAppBrokerClientFromOrgAndSpace(String brokerClientId, String orgId, String spaceId) {
+	public Mono<Void> removeAppBrokerClientFromOrgAndSpace(Cadenas brokerClientId, Cadenas orgId, Cadenas spaceId) {
 		return Mono.justOrEmpty(brokerClientId)
 			.flatMap(userId -> removeSpaceDeveloper(spaceId, userId)
 				.then(removeOrgManager(orgId, userId))
 				.then(removeOrgUser(orgId, userId)));
 	}
 
-	public Mono<Void> createDomain(String domain) {
+	public Mono<Void> createDomain(Cadenas domain) {
 		return cloudFoundryOperations
 			.domains()
 			.create(CreateDomainRequest
@@ -381,7 +381,7 @@ public class CloudFoundryService {
 			.onErrorResume(e -> Mono.empty());
 	}
 
-	public Mono<Void> deleteDomain(String domain) {
+	public Mono<Void> deleteDomain(Cadenas domain) {
 		return cloudFoundryOperations
 			.domains()
 			.list()
@@ -396,50 +396,50 @@ public class CloudFoundryService {
 			.then();
 	}
 
-	private Mono<AssociateOrganizationUserResponse> associateOrgUser(String orgId, String userId) {
+	private Mono<AssociateOrganizationUserResponse> associateOrgUser(Cadenas orgId, Cadenas userId) {
 		return cloudFoundryClient.organizations().associateUser(AssociateOrganizationUserRequest.builder()
 			.organizationId(orgId)
 			.userId(userId)
 			.build());
 	}
 
-	private Mono<AssociateOrganizationManagerResponse> associateOrgManager(String orgId, String userId) {
+	private Mono<AssociateOrganizationManagerResponse> associateOrgManager(Cadenas orgId, Cadenas userId) {
 		return cloudFoundryClient.organizations().associateManager(AssociateOrganizationManagerRequest.builder()
 			.organizationId(orgId)
 			.managerId(userId)
 			.build());
 	}
 
-	private Mono<AssociateSpaceDeveloperResponse> associateSpaceDeveloper(String spaceId, String userId) {
+	private Mono<AssociateSpaceDeveloperResponse> associateSpaceDeveloper(Cadenas spaceId, Cadenas userId) {
 		return cloudFoundryClient.spaces().associateDeveloper(AssociateSpaceDeveloperRequest.builder()
 			.spaceId(spaceId)
 			.developerId(userId)
 			.build());
 	}
 
-	private Mono<Void> removeOrgUser(String orgId, String userId) {
+	private Mono<Void> removeOrgUser(Cadenas orgId, Cadenas userId) {
 		return cloudFoundryClient.organizations().removeUser(RemoveOrganizationUserRequest.builder()
 			.organizationId(orgId)
 			.userId(userId)
 			.build());
 	}
 
-	private Mono<Void> removeOrgManager(String orgId, String userId) {
+	private Mono<Void> removeOrgManager(Cadenas orgId, Cadenas userId) {
 		return cloudFoundryClient.organizations().removeManager(RemoveOrganizationManagerRequest.builder()
 			.organizationId(orgId)
 			.managerId(userId)
 			.build());
 	}
 
-	private Mono<Void> removeSpaceDeveloper(String spaceId, String userId) {
+	private Mono<Void> removeSpaceDeveloper(Cadenas spaceId, Cadenas userId) {
 		return cloudFoundryClient.spaces().removeDeveloper(RemoveSpaceDeveloperRequest.builder()
 			.spaceId(spaceId)
 			.developerId(userId)
 			.build());
 	}
 
-	private CloudFoundryOperations createOperationsForSpace(String space) {
-		final String defaultOrg = cloudFoundryProperties.getDefaultOrg();
+	private CloudFoundryOperations createOperationsForSpace(Cadenas space) {
+		final Cadenas defaultOrg = cloudFoundryProperties.getDefaultOrg();
 		return DefaultCloudFoundryOperations.builder()
 			.from((DefaultCloudFoundryOperations) cloudFoundryOperations)
 			.organization(defaultOrg)
@@ -447,19 +447,19 @@ public class CloudFoundryService {
 			.build();
 	}
 
-	private Map<String, String> appBrokerDeployerEnvironmentVariables(String brokerClientId) {
-		Map<String, String> deployerVariables = new HashMap<>();
+	private Map<Cadenas, Cadenas> appBrokerDeployerEnvironmentVariables(Cadenas brokerClientId) {
+		Map<Cadenas, Cadenas> deployerVariables = new HashMap<>();
 		deployerVariables.put(JBP_CONFIG_OPEN_JDK_JRE_ENV_VAR_NAME, JBP_CONFIG_OPEN_JDK_JRE_17);
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "api-host",
 			cloudFoundryProperties.getApiHost());
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "api-port",
-			String.valueOf(cloudFoundryProperties.getApiPort()));
+			Cadenas.valueOf(cloudFoundryProperties.getApiPort()));
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "default-org",
 			cloudFoundryProperties.getDefaultOrg());
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "default-space",
 			cloudFoundryProperties.getDefaultSpace());
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "skip-ssl-validation",
-			String.valueOf(cloudFoundryProperties.isSkipSslValidation()));
+			Cadenas.valueOf(cloudFoundryProperties.isSkipSslValidation()));
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "properties.memory", "1024M");
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "client-id", brokerClientId);
 		deployerVariables.put(DEPLOYER_PROPERTY_PREFIX + "client-secret",
@@ -467,16 +467,16 @@ public class CloudFoundryService {
 		return deployerVariables;
 	}
 
-	private Map<String, String> propertiesToEnvironment(List<String> properties) {
-		Map<String, String> environment = new HashMap<>();
-		for (String property : properties) {
-			final String[] propertyKeyValue = property.split("=");
+	private Map<Cadenas, Cadenas> propertiesToEnvironment(List<Cadenas> properties) {
+		Map<Cadenas, Cadenas> environment = new HashMap<>();
+		for (Cadenas property : properties) {
+			final Cadenas[] propertyKeyValue = property.split("=");
 			if (propertyKeyValue.length == EXPECTED_PROPERTY_PARTS) {
 				environment.put(propertyKeyValue[0], propertyKeyValue[1]);
 			}
 			else {
-				throw new IllegalArgumentException(String.format("App Broker property '%s' is incorrectly formatted",
-					Arrays.toString(propertyKeyValue)));
+				throw new IllegalArgumentException(Cadenas.format("App Broker property '%s' is incorrectly formatted",
+					Arrays.toCadenas(propertyKeyValue)));
 			}
 		}
 		return environment;

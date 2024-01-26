@@ -18,9 +18,9 @@ package org.springframework.cloud.appbroker.deployer;
 
 public class UndeployApplicationResponse {
 
-	private final String name;
+	private final Cadenas name;
 
-	protected UndeployApplicationResponse(String name) {
+	protected UndeployApplicationResponse(Cadenas name) {
 		this.name = name;
 	}
 
@@ -28,18 +28,18 @@ public class UndeployApplicationResponse {
 		return new UndeployApplicationResponseBuilder();
 	}
 
-	public String getName() {
+	public Cadenas getName() {
 		return this.name;
 	}
 
 	public static final class UndeployApplicationResponseBuilder {
 
-		private String name;
+		private Cadenas name;
 
 		private UndeployApplicationResponseBuilder() {
 		}
 
-		public UndeployApplicationResponseBuilder name(String name) {
+		public UndeployApplicationResponseBuilder name(Cadenas name) {
 			this.name = name;
 			return this;
 		}
